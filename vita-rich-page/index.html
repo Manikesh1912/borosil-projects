@@ -1,0 +1,1996 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <title>Borosil — The Slow Press</title>
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+         href="https://fonts.googleapis.com/css2?family=DM+Mono&family=Montserrat:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,500;1,500&display=swap"
+         rel="stylesheet"
+      />
+      <style>
+         :root {
+            --ink: #081e1b;
+            --jade: #035c54;
+            --mint: #a1bcb6;
+            --cream: #ece8dc;
+            --gold: #c99d51;
+         }
+         * {
+            box-sizing: border-box;
+         }
+         html {
+            scroll-behavior: smooth;
+         }
+         body {
+            margin: 0;
+            background: var(--ink);
+            color: var(--cream);
+            font-family: Montserrat, sans-serif;
+            overflow-x: hidden;
+         }
+         .mono {
+            font:
+               10px/1.4 "DM Mono",
+               monospace;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+         }
+         .noise {
+            position: fixed;
+            z-index: 20;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.1;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+         }
+         nav {
+            position: absolute;
+            z-index: 5;
+            top: 0;
+            width: 100%;
+            padding: 29px 4.5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #ffffff22;
+         }
+         .brand {
+            font: 500 19px "Playfair Display";
+            letter-spacing: 1px;
+         }
+         .brand sup {
+            font: 7px "DM Mono";
+         }
+         .navlinks {
+            display: flex;
+            gap: 31px;
+         }
+         .navlinks a {
+            color: #fff;
+            text-decoration: none;
+         }
+         .navbag {
+            width: 34px;
+            height: 34px;
+            border: 1px solid #fff8;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+         }
+         .hero {
+            height: 100svh;
+            min-height: 700px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(
+               115deg,
+               #071715 0%,
+               #0a322e 47%,
+               #0b201e 100%
+            );
+         }
+         .hero:after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+               90deg,
+               #081e1b 0%,
+               transparent 48%,
+               #081e1b66 100%
+            );
+            z-index: 1;
+         }
+         .hero-copy {
+            position: absolute;
+            z-index: 3;
+            left: 7%;
+            top: 25%;
+            width: 47%;
+         }
+         .kicker {
+            color: var(--gold);
+            margin-bottom: 18px;
+         }
+         .hero h1 {
+            margin: 0;
+            font: 500 clamp(71px, 10.2vw, 163px) / 0.78 "Playfair Display";
+            letter-spacing: -0.075em;
+         }
+         .hero h1 em {
+            color: #b7d8d0;
+         }
+         .hero-copy p {
+            margin: 31px 0 0;
+            max-width: 310px;
+            color: #b5cbc6;
+            font-size: 13px;
+            line-height: 1.7;
+         }
+         .explore {
+            position: absolute;
+            z-index: 4;
+            right: 5.5%;
+            bottom: 8%;
+            width: 128px;
+            height: 128px;
+            border-radius: 50%;
+            border: 1px solid #d6c079;
+            display: grid;
+            place-content: center;
+            text-align: center;
+            color: #e9d896;
+            text-decoration: none;
+            font: 10px/1.55 "DM Mono";
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: 0.35s;
+         }
+         .explore:hover {
+            background: var(--gold);
+            color: #0b201e;
+            transform: rotate(-15deg);
+         }
+         .story-num {
+            position: absolute;
+            z-index: 3;
+            left: 7%;
+            bottom: 7%;
+            color: #a8c2bd;
+         }
+         .story-num b {
+            color: var(--gold);
+            font-weight: 400;
+         }
+         .vertical {
+            position: absolute;
+            z-index: 3;
+            right: 4.5%;
+            top: 25%;
+            writing-mode: vertical-rl;
+            color: #d7ddd0;
+            display: flex;
+            gap: 15px;
+         }
+         .product-frame {
+            position: absolute;
+            z-index: 2;
+            right: 9%;
+            top: 13%;
+            width: min(41vw, 590px);
+            height: 76vh;
+            min-height: 540px;
+            overflow: hidden;
+            clip-path: polygon(14% 0, 100% 0, 86% 100%, 0 100%);
+            box-shadow: 0 30px 80px #0008;
+         }
+         .product-frame:before {
+            content: "";
+            position: absolute;
+            z-index: 2;
+            inset: 0;
+            background: linear-gradient(
+               160deg,
+               #005d5866,
+               transparent 45%,
+               #d4a96022
+            );
+            mix-blend-mode: multiply;
+         }
+         .product-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transform: scale(1.15);
+            filter: saturate(0.77) contrast(1.1);
+         }
+         .outline {
+            position: absolute;
+            z-index: 2;
+            right: 7%;
+            top: 10%;
+            width: min(43vw, 620px);
+            height: 80vh;
+            border: 1px solid #c99d5166;
+            clip-path: polygon(14% 0, 100% 0, 86% 100%, 0 100%);
+            transform: translate(13px, 13px);
+         }
+         .cut {
+            position: absolute;
+            z-index: 2;
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            right: 36%;
+            bottom: -220px;
+            border: 1px solid #d8c66855;
+         }
+         .cut:before {
+            content: "SLOW • PRESS • SLOW • PRESS •";
+            position: absolute;
+            left: 0;
+            top: 10px;
+            width: 100%;
+            font: 10px "DM Mono";
+            color: var(--gold);
+            letter-spacing: 3px;
+         }
+         .marquee {
+            height: 55px;
+            background: #c99d51;
+            color: #08201d;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+         }
+         .marquee span {
+            font: 500 17px "Playfair Display";
+            animation: slide 20s linear infinite;
+         }
+         .marquee i {
+            font-style: normal;
+            margin: 0 28px;
+            font-family: Montserrat;
+            font-size: 12px;
+         }
+         @keyframes slide {
+            to {
+               transform: translateX(-50%);
+            }
+         }
+         .manifesto {
+            min-height: 710px;
+            padding: 150px 7%;
+            position: relative;
+            background: #e7e2d5;
+            color: #0b302c;
+            overflow: hidden;
+         }
+         .manifesto:after {
+            content: "01";
+            position: absolute;
+            right: -2%;
+            bottom: -17%;
+            font: 500 41vw "Playfair Display";
+            line-height: 1;
+            color: #d4d2c9;
+         }
+         .manifesto-grid {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 0.75fr 1.25fr;
+            gap: 10%;
+         }
+         .manifesto h2 {
+            font: 500 clamp(57px, 7vw, 112px) / 0.83 "Playfair Display";
+            letter-spacing: -0.07em;
+            margin: 0;
+         }
+         .manifesto h2 i {
+            font-weight: 500;
+            color: #0f6c62;
+         }
+         .manifesto p {
+            font-size: 18px;
+            line-height: 1.7;
+            max-width: 510px;
+            margin: 5px 0 46px;
+         }
+         .facts {
+            display: flex;
+            border-top: 1px solid #1d504b;
+            padding-top: 22px;
+            max-width: 600px;
+            gap: 50px;
+         }
+         .facts b {
+            display: block;
+            font: 500 34px "Playfair Display";
+            letter-spacing: -2px;
+         }
+         .facts small {
+            font: 9px "DM Mono";
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #55736e;
+         }
+         .gallery {
+            background: #103b36;
+            padding: 125px 4.5% 105px;
+            position: relative;
+         }
+         .gallery-title {
+            padding-left: 2.5%;
+            margin-bottom: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+         }
+         .gallery-title h2 {
+            font: 500 clamp(50px, 6vw, 95px) / 0.85 "Playfair Display";
+            letter-spacing: -0.07em;
+            margin: 0;
+         }
+         .gallery-title h2 em {
+            color: #cfac67;
+         }
+         .gallery-title p {
+            max-width: 235px;
+            color: #b9cec8;
+            font-size: 12px;
+            line-height: 1.6;
+         }
+         .panels {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr 0.8fr;
+            gap: 1px;
+            background: #80a39b;
+         }
+         .panel {
+            min-height: 420px;
+            background: #123f39;
+            padding: 27px;
+            position: relative;
+            overflow: hidden;
+         }
+         .panel small {
+            color: #d4b574;
+         }
+         .panel h3 {
+            position: absolute;
+            bottom: 28px;
+            left: 27px;
+            margin: 0;
+            font: 500 28px/0.94 "Playfair Display";
+            letter-spacing: -1px;
+         }
+         .panel p {
+            position: absolute;
+            left: 27px;
+            right: 25px;
+            bottom: 28px;
+            margin: 0;
+            line-height: 1.55;
+            color: #b6cbc4;
+            font-size: 12px;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: 0.35s;
+         }
+         .panel:hover h3 {
+            transform: translateY(-54px);
+         }
+         .panel:hover p {
+            opacity: 1;
+            transform: none;
+         }
+         .orb {
+            position: absolute;
+            width: 210px;
+            height: 210px;
+            border-radius: 50%;
+            background: radial-gradient(
+               circle at 33% 25%,
+               #b7ded4,
+               #397e72 46%,
+               #0b2724 75%
+            );
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 60px #8ccabc55;
+         }
+         .filter {
+            position: absolute;
+            width: 190px;
+            height: 46px;
+            border: 1px solid #d7b56d;
+            top: 170px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-18deg);
+            border-radius: 50%;
+         }
+         .quiet {
+            position: absolute;
+            top: 105px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 196px;
+            height: 155px;
+            border-radius: 50% 50% 7px 7px;
+            background: linear-gradient(120deg, #164c45, #aec7bd66);
+            border: 1px solid #b8d2c899;
+         }
+         .quiet:after {
+            content: "43";
+            position: absolute;
+            inset: 32px 0;
+            text-align: center;
+            font: 500 83px "Playfair Display";
+            color: #d5b56f;
+            letter-spacing: -5px;
+         }
+         .shop {
+            min-height: 630px;
+            background: #08201d;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 100px 10%;
+            position: relative;
+            overflow: hidden;
+         }
+         .shop:before {
+            content: "";
+            position: absolute;
+            width: 760px;
+            height: 760px;
+            border: 1px solid #c99d5155;
+            border-radius: 50%;
+            left: -330px;
+            top: -250px;
+         }
+         .shop-copy {
+            position: relative;
+            z-index: 1;
+         }
+         .shop h2 {
+            font: 500 clamp(64px, 8vw, 120px) / 0.8 "Playfair Display";
+            letter-spacing: -0.09em;
+            margin: 17px 0 25px;
+         }
+         .shop h2 i {
+            color: #c4d9ce;
+         }
+         .price {
+            color: #c8d5ce;
+         }
+         .button {
+            margin-top: 33px;
+            display: inline-flex;
+            align-items: center;
+            gap: 25px;
+            border: 1px solid #d2b56e;
+            border-radius: 100px;
+            padding: 8px 8px 8px 21px;
+            color: #f6f0df;
+            text-decoration: none;
+         }
+         .button span {
+            display: grid;
+            place-items: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #c99d51;
+            color: #08201d;
+            font-size: 16px;
+         }
+         .shop img {
+            position: relative;
+            z-index: 1;
+            width: 290px;
+            height: 390px;
+            object-fit: cover;
+            object-position: 55% center;
+            clip-path: polygon(12% 0, 100% 0, 88% 100%, 0 100%);
+            filter: saturate(0.6) contrast(1.12);
+         }
+         footer {
+            padding: 23px 4.5%;
+            background: #051412;
+            color: #9cb6ae;
+            display: flex;
+            justify-content: space-between;
+         }
+         @media (max-width: 760px) {
+            .noise {
+               display: none;
+            }
+            nav {
+               padding: 21px 6%;
+            }
+            .navlinks {
+               display: none;
+            }
+            .hero-copy {
+               left: 7%;
+               top: 17%;
+               width: 80%;
+            }
+            .hero h1 {
+               font-size: 22vw;
+            }
+            .hero-copy p {
+               font-size: 11px;
+               margin-top: 22px;
+            }
+            .product-frame {
+               right: -19%;
+               top: 40%;
+               width: 80vw;
+               height: 54vh;
+               clip-path: polygon(12% 0, 100% 0, 88% 100%, 0 100%);
+            }
+            .outline {
+               display: none;
+            }
+            .explore {
+               right: 6%;
+               bottom: 4%;
+               width: 92px;
+               height: 92px;
+               font-size: 8px;
+            }
+            .story-num {
+               bottom: 5%;
+               font-size: 8px;
+            }
+            .vertical {
+               display: none;
+            }
+            .manifesto {
+               padding: 100px 7%;
+               min-height: 600px;
+            }
+            .manifesto-grid {
+               grid-template-columns: 1fr;
+               gap: 33px;
+            }
+            .manifesto p {
+               font-size: 16px;
+            }
+            .facts {
+               gap: 20px;
+            }
+            .facts b {
+               font-size: 28px;
+            }
+            .gallery {
+               padding: 85px 6%;
+            }
+            .gallery-title {
+               padding: 0;
+               display: block;
+               margin-bottom: 38px;
+            }
+            .gallery-title p {
+               margin-top: 20px;
+            }
+            .panels {
+               grid-template-columns: 1fr;
+            }
+            .panel {
+               min-height: 255px;
+            }
+            .shop {
+               padding: 85px 7%;
+               min-height: 560px;
+            }
+            .shop h2 {
+               font-size: 21vw;
+            }
+            .shop img {
+               position: absolute;
+               right: -42px;
+               bottom: 25px;
+               width: 220px;
+               height: 300px;
+               opacity: 0.55;
+            }
+            footer {
+               font-size: 7px;
+               padding: 17px 6%;
+            }
+         }
+         .films {
+            padding: 125px 4.5%;
+            background: #ded9ca;
+            color: #092a26;
+         }
+         .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            margin: 0 2.5% 48px;
+         }
+         .section-head h2 {
+            font: 500 clamp(49px, 6vw, 90px) / 0.85 "Playfair Display";
+            letter-spacing: -0.07em;
+            margin: 0;
+         }
+         .section-head h2 em {
+            color: #0b7167;
+         }
+         .section-head p {
+            max-width: 225px;
+            font-size: 12px;
+            line-height: 1.6;
+            margin: 0;
+         }
+         .film-grid {
+            display: grid;
+            grid-template-columns: 1.35fr 0.8fr 0.8fr;
+            gap: 12px;
+         }
+         .film {
+            height: 430px;
+            position: relative;
+            overflow: hidden;
+            background: #0b302c;
+            color: #fff;
+         }
+         .film:after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, #061b18aa, transparent 58%);
+         }
+         .film img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(0.55) contrast(1.05);
+            transform: scale(1.15);
+            transition: transform 0.7s;
+         }
+         .film:hover img {
+            transform: scale(1.25);
+         }
+         .film .play {
+            position: absolute;
+            z-index: 2;
+            top: 28px;
+            right: 28px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid #e7d9ae;
+            display: grid;
+            place-items: center;
+            color: #e7d9ae;
+            font-size: 13px;
+         }
+         .film .caption {
+            position: absolute;
+            z-index: 2;
+            left: 27px;
+            bottom: 25px;
+         }
+         .film .caption strong {
+            display: block;
+            margin-top: 8px;
+            font: 500 26px "Playfair Display";
+            letter-spacing: -1px;
+         }
+         .film-small {
+            background: linear-gradient(145deg, #245c54, #071b18);
+         }
+         .film-small:before {
+            content: "";
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            border: 1px solid #c99d51;
+            left: 50%;
+            top: 36%;
+            transform: translate(-50%, -50%);
+         }
+         .film-small:nth-child(3):before {
+            width: 140px;
+            height: 270px;
+            border-radius: 50%;
+         }
+         .film-small .mark-film {
+            position: absolute;
+            z-index: 1;
+            top: 42%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #d2ab62;
+            font: 500 90px "Playfair Display";
+            letter-spacing: -7px;
+         }
+         .film small {
+            position: relative;
+            z-index: 2;
+         }
+         .viewer {
+            padding: 130px 7%;
+            background: #071a18;
+            min-height: 720px;
+            position: relative;
+            overflow: hidden;
+         }
+         .viewer:before {
+            content: "";
+            position: absolute;
+            width: 1050px;
+            height: 1050px;
+            border-radius: 50%;
+            border: 1px solid #c99d5144;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+         }
+         .viewer-copy {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+         }
+         .viewer h2 {
+            font: 500 clamp(54px, 7vw, 105px) / 0.8 "Playfair Display";
+            letter-spacing: -0.08em;
+            margin: 16px 0;
+            color: #f0ebdc;
+         }
+         .viewer h2 i {
+            color: #c99d51;
+         }
+         .viewer .tip {
+            color: #adc6bd;
+            font-size: 11px;
+         }
+         .spin-stage {
+            position: relative;
+            z-index: 2;
+            width: 390px;
+            height: 420px;
+            margin: 38px auto 18px;
+            perspective: 1000px;
+            cursor: grab;
+            touch-action: none;
+         }
+         .spin-stage:active {
+            cursor: grabbing;
+         }
+         .spin-stage:before {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 32px;
+            left: 45px;
+            bottom: 12px;
+            background: #000b;
+            border-radius: 50%;
+            filter: blur(12px);
+         }
+         .spin-product {
+            position: absolute;
+            left: 73px;
+            top: 0;
+            width: 250px;
+            height: 380px;
+            transform-style: preserve-3d;
+            transition: transform 0.12s linear;
+         }
+         .spin-product img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 51% center;
+            clip-path: polygon(10% 0, 100% 0, 91% 100%, 0 100%);
+            filter: saturate(0.7) contrast(1.12);
+            box-shadow: 24px 20px 22px #0008;
+         }
+         .spin-gloss {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+               110deg,
+               transparent 30%,
+               #fff5 48%,
+               transparent 62%
+            );
+            mix-blend-mode: screen;
+            pointer-events: none;
+            clip-path: polygon(10% 0, 100% 0, 91% 100%, 0 100%);
+         }
+         .viewer-actions {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+         }
+         .view-btn {
+            font: 10px "DM Mono";
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #e8e1cf;
+            background: transparent;
+            border: 1px solid #c99d5188;
+            border-radius: 30px;
+            padding: 14px 20px;
+            cursor: pointer;
+         }
+         .view-btn:hover {
+            background: #c99d51;
+            color: #08201d;
+         }
+         .reviews {
+            background: #e7e2d5;
+            color: #0b302c;
+            padding: 120px 7%;
+         }
+         .reviews-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            margin-bottom: 56px;
+         }
+         .reviews-top h2 {
+            font: 500 clamp(51px, 6vw, 90px) / 0.83 "Playfair Display";
+            letter-spacing: -0.07em;
+            margin: 0;
+         }
+         .reviews-top h2 i {
+            color: #0b7167;
+         }
+         .rating {
+            font: 500 30px "Playfair Display";
+            text-align: right;
+         }
+         .rating small {
+            display: block;
+            font: 9px "DM Mono";
+            letter-spacing: 1px;
+            margin-top: 5px;
+         }
+         .review-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid #154d47;
+         }
+         .review {
+            padding: 28px 30px 28px 0;
+            border-right: 1px solid #154d47;
+            margin-right: 28px;
+            min-height: 245px;
+         }
+         .review:last-child {
+            border: 0;
+         }
+         .stars {
+            color: #b58334;
+            letter-spacing: 4px;
+            font-size: 13px;
+         }
+         .review blockquote {
+            margin: 27px 0;
+            font: 500 24px/1.15 "Playfair Display";
+            letter-spacing: -0.5px;
+         }
+         .review cite {
+            font-style: normal;
+            color: #58736e;
+            font: 10px "DM Mono";
+            letter-spacing: 1px;
+            text-transform: uppercase;
+         }
+         .modal {
+            position: fixed;
+            z-index: 50;
+            inset: 0;
+            background: #061916ee;
+            display: none;
+            place-items: center;
+            padding: 30px;
+         }
+         .modal.open {
+            display: grid;
+         }
+         .modal-box {
+            position: relative;
+            width: min(100%, 970px);
+            height: min(90vh, 680px);
+            background: #e8e4d8;
+            color: #0a302b;
+            overflow: hidden;
+         }
+         .close-modal {
+            position: absolute;
+            z-index: 5;
+            right: 20px;
+            top: 18px;
+            border: 0;
+            background: #0a302b;
+            color: #fff;
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            font-size: 19px;
+            cursor: pointer;
+         }
+         .modal-copy {
+            position: absolute;
+            z-index: 2;
+            left: 7%;
+            top: 10%;
+            max-width: 270px;
+         }
+         .modal-copy h2 {
+            font: 500 54px/0.84 "Playfair Display";
+            letter-spacing: -3px;
+            margin: 12px 0;
+         }
+         .modal-copy p {
+            font-size: 12px;
+            line-height: 1.6;
+         }
+         .exploded {
+            position: absolute;
+            right: 7%;
+            top: 7%;
+            width: 480px;
+            height: 530px;
+            transform: scale(0.88);
+            transform-origin: top right;
+         }
+         .part {
+            position: absolute;
+            background: linear-gradient(100deg, #4f615b, #f5f3e8 45%, #52655f);
+            box-shadow: 18px 20px 24px #08201d55;
+         }
+         .part b {
+            position: absolute;
+            white-space: nowrap;
+            font: 9px "DM Mono";
+            letter-spacing: 1px;
+            color: #0b3f39;
+         }
+         .part.one {
+            width: 112px;
+            height: 115px;
+            left: 184px;
+            top: 5px;
+            border-radius: 42px 42px 9px 9px;
+         }
+         .part.one b {
+            right: -120px;
+            top: 35px;
+         }
+         .part.two {
+            width: 190px;
+            height: 65px;
+            left: 146px;
+            top: 140px;
+            border-radius: 50% 50% 16px 16px;
+         }
+         .part.two b {
+            right: -120px;
+            top: 24px;
+         }
+         .part.three {
+            width: 162px;
+            height: 132px;
+            left: 160px;
+            top: 222px;
+            border-radius: 40% 40% 15px 15px;
+            background: linear-gradient(90deg, #41665d, #d7f4bd 50%, #305248);
+         }
+         .part.three b {
+            left: -128px;
+            top: 50px;
+         }
+         .part.four {
+            width: 218px;
+            height: 170px;
+            left: 132px;
+            top: 377px;
+            border-radius: 42% 42% 28px 28px;
+            background: linear-gradient(105deg, #55706a, #eef1e5 42%, #455e59);
+         }
+         .part.four:after {
+            content: "BOROSIL";
+            position: absolute;
+            top: 61px;
+            left: 52px;
+            font: 500 23px "Montserrat";
+            letter-spacing: -1px;
+         }
+         .part.four b {
+            right: -115px;
+            top: 70px;
+         }
+         .join-line {
+            position: absolute;
+            left: 238px;
+            top: 108px;
+            height: 35px;
+            border-left: 1px dashed #b58334;
+         }
+         .line2 {
+            top: 204px;
+            height: 20px;
+         }
+         .line3 {
+            top: 352px;
+            height: 23px;
+         }
+         @media (max-width: 760px) {
+            .films {
+               padding: 85px 6%;
+            }
+            .section-head {
+               margin: 0 0 35px;
+               display: block;
+            }
+            .section-head p {
+               margin-top: 19px;
+            }
+            .film-grid {
+               grid-template-columns: 1fr;
+            }
+            .film {
+               height: 300px;
+            }
+            .viewer {
+               padding: 90px 5%;
+               min-height: 640px;
+            }
+            .spin-stage {
+               transform: scale(0.76);
+               margin: -10px auto -10px;
+            }
+            .reviews {
+               padding: 85px 7%;
+            }
+            .reviews-top {
+               display: block;
+               margin-bottom: 35px;
+            }
+            .rating {
+               text-align: left;
+               margin-top: 22px;
+            }
+            .review-grid {
+               grid-template-columns: 1fr;
+            }
+            .review {
+               border-right: 0;
+               border-bottom: 1px solid #154d47;
+               margin: 0;
+               padding: 27px 0;
+               min-height: auto;
+            }
+            .modal {
+               padding: 10px;
+            }
+            .modal-box {
+               height: 94vh;
+            }
+            .modal-copy {
+               left: 7%;
+               top: 8%;
+            }
+            .modal-copy h2 {
+               font-size: 42px;
+            }
+            .exploded {
+               right: 50%;
+               top: 37%;
+               transform: translateX(50%) scale(0.65);
+               transform-origin: top center;
+            }
+         }
+      </style>
+      <style>
+         .film video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(0.65) contrast(1.05);
+            transform: scale(1.15);
+            transition: transform 0.7s;
+         }
+         .film:hover video {
+            transform: scale(1.25);
+         }
+         .cinema {
+            height: 100vh;
+            min-height: 700px;
+            position: relative;
+            overflow: hidden;
+            background: #061b18;
+            color: #f0eadb;
+         }
+         .cinema video {
+            position: absolute;
+            width: 112%;
+            height: 112%;
+            left: -6%;
+            top: -6%;
+            object-fit: cover;
+            filter: saturate(0.63) contrast(1.08);
+         }
+         .cinema:after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+               90deg,
+               #061b18cc 0%,
+               #061b1833 55%,
+               #061b18aa 100%
+            );
+         }
+         .cinema-copy {
+            position: absolute;
+            z-index: 2;
+            left: 7%;
+            bottom: 13%;
+            max-width: 450px;
+         }
+         .cinema-copy h2 {
+            font: 500 clamp(60px, 8vw, 126px) / 0.78 "Playfair Display";
+            letter-spacing: -0.08em;
+            margin: 14px 0;
+         }
+         .cinema-copy h2 i {
+            color: #d2b56d;
+         }
+         .cinema-copy p {
+            max-width: 280px;
+            color: #d1ddd7;
+            font-size: 13px;
+            line-height: 1.6;
+         }
+         .cinema-index {
+            position: absolute;
+            z-index: 2;
+            right: 5%;
+            bottom: 9%;
+            text-align: right;
+         }
+         .cinema-index b {
+            display: block;
+            color: #d2b56d;
+            font: 500 34px "Playfair Display";
+         }
+         .cinema-index span {
+            color: #dce5dd;
+         }
+         .two-film {
+            background: #e6e0d1;
+            color: #082a25;
+            padding: 120px 7%;
+            display: grid;
+            grid-template-columns: 0.7fr 1.3fr;
+            gap: 10%;
+            align-items: center;
+            overflow: hidden;
+         }
+         .two-film-copy h2 {
+            font: 500 clamp(53px, 6.5vw, 100px) / 0.82 "Playfair Display";
+            letter-spacing: -0.08em;
+            margin: 16px 0;
+         }
+         .two-film-copy h2 i {
+            color: #0c6b61;
+         }
+         .two-film-copy p {
+            font-size: 14px;
+            line-height: 1.7;
+            max-width: 260px;
+         }
+         .video-stack {
+            height: 660px;
+            position: relative;
+         }
+         .video-stack video {
+            position: absolute;
+            object-fit: cover;
+            box-shadow: 22px 25px 38px #04201d55;
+         }
+         .video-main {
+            width: 66%;
+            height: 100%;
+            right: 0;
+            top: 0;
+         }
+         .video-small {
+            width: 44%;
+            height: 52%;
+            left: 0;
+            bottom: 4%;
+            border: 8px solid #e6e0d1;
+         }
+         .video-note {
+            position: absolute;
+            z-index: 2;
+            left: -13%;
+            top: 9%;
+            writing-mode: vertical-rl;
+            color: #b38337;
+         }
+         .parallax-video {
+            will-change: transform;
+         }
+         @media (max-width: 760px) {
+            .cinema {
+               min-height: 630px;
+            }
+            .cinema-copy {
+               left: 7%;
+               bottom: 11%;
+            }
+            .cinema-copy p {
+               font-size: 11px;
+            }
+            .two-film {
+               padding: 85px 7%;
+               display: block;
+            }
+            .two-film-copy {
+               margin-bottom: 35px;
+            }
+            .video-stack {
+               height: 460px;
+            }
+            .video-note {
+               display: none;
+            }
+         }
+      </style>
+      <style>
+         .hero {
+            background: #071b18;
+            isolation: isolate;
+         }
+         .hero-video {
+            position: absolute;
+            z-index: -1;
+            inset: -6%;
+            width: 112%;
+            height: 112%;
+            object-fit: cover;
+            filter: brightness(0.58) saturate(0.64) contrast(1.08);
+            transform: scale(1.03);
+         }
+         .hero:after {
+            background: linear-gradient(
+               90deg,
+               #061714e8 0%,
+               #06171480 40%,
+               transparent 72%
+            );
+         }
+         .hero .product-frame,
+         .hero .outline,
+         .hero .cut {
+            display: none;
+         }
+         .hero-copy {
+            left: 7%;
+            top: auto;
+            bottom: 14%;
+            width: min(630px, 65%);
+         }
+         .hero h1 {
+            font-size: clamp(80px, 11.7vw, 185px);
+            letter-spacing: -0.095em;
+            line-height: 0.73;
+         }
+         .hero h1 em {
+            color: #e9e4d7;
+            font-style: italic;
+         }
+         .hero-copy p {
+            margin-top: 29px;
+            color: #d0ded8;
+            max-width: 365px;
+            font-size: 14px;
+         }
+         .hero-copy:after {
+            content: "A quiet revolution in the everyday.";
+            position: absolute;
+            left: 0;
+            top: -100px;
+            color: #d5b56f;
+            font: 10px "DM Mono";
+            letter-spacing: 1.7px;
+            text-transform: uppercase;
+         }
+         .hero-side-note {
+            position: absolute;
+            z-index: 3;
+            right: 7%;
+            top: 52%;
+            width: 205px;
+            border-top: 1px solid #d5b56f;
+            padding-top: 13px;
+            color: #d1ddd7;
+            font-size: 11px;
+            line-height: 1.55;
+         }
+         .hero-side-note b {
+            color: #d5b56f;
+            display: block;
+            margin-bottom: 8px;
+         }
+         .hero .explore {
+            bottom: 8%;
+            right: 5.5%;
+            background: #d5b56f;
+            border-color: #d5b56f;
+            color: #08201d;
+         }
+         .hero .story-num {
+            left: auto;
+            right: 7%;
+            bottom: 29%;
+            text-align: right;
+         }
+         .hero .vertical {
+            display: none;
+         }
+         .manifesto {
+            min-height: 760px;
+            background: #0b2925;
+            color: #eee8d9;
+            padding: 145px 7%;
+            isolation: isolate;
+         }
+         .manifesto:after {
+            color: #ffffff0b;
+            right: 2%;
+            bottom: -9%;
+         }
+         .manifest-video {
+            position: absolute;
+            z-index: -1;
+            right: -2%;
+            top: 0;
+            width: 56%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.6) saturate(0.56) contrast(1.1);
+            clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);
+         }
+         .manifesto:before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            inset: 0;
+            background: linear-gradient(
+               90deg,
+               #0b2925 0%,
+               #0b2925ef 42%,
+               #0b292555 75%,
+               transparent
+            );
+         }
+         .manifesto-grid {
+            grid-template-columns: 0.72fr 1.28fr;
+            gap: 7%;
+            max-width: 980px;
+         }
+         .manifesto h2 {
+            font-size: clamp(65px, 7.2vw, 116px);
+            color: #f2ede0;
+         }
+         .manifesto h2 i {
+            color: #d3af68;
+         }
+         .manifesto p {
+            color: #c7d6cf;
+            max-width: 470px;
+            font-size: 17px;
+         }
+         .manifesto .facts {
+            border-color: #b9c8bd88;
+            max-width: 510px;
+         }
+         .manifesto .facts b {
+            color: #d5b56f;
+         }
+         .manifesto .facts small {
+            color: #b6c9c1;
+         }
+         .manifesto .mono {
+            color: #d4b670;
+         }
+         @media (max-width: 760px) {
+            .hero-copy {
+               left: 7%;
+               bottom: 13%;
+               width: 86%;
+            }
+            .hero h1 {
+               font-size: 23vw;
+            }
+            .hero-copy:after {
+               top: -65px;
+               font-size: 8px;
+            }
+            .hero-side-note {
+               display: none;
+            }
+            .hero .story-num {
+               left: 7%;
+               right: auto;
+               bottom: 5%;
+               text-align: left;
+            }
+            .hero .explore {
+               bottom: 5%;
+               right: 6%;
+            }
+            .manifesto {
+               padding: 105px 7%;
+               min-height: 650px;
+            }
+            .manifest-video {
+               width: 100%;
+               right: 0;
+               height: 55%;
+               top: auto;
+               bottom: 0;
+               clip-path: none;
+               opacity: 0.5;
+            }
+            .manifesto:before {
+               background: linear-gradient(
+                  #0b2925 0%,
+                  #0b2925d9 48%,
+                  #0b292566 100%
+               );
+            }
+            .manifesto-grid {
+               grid-template-columns: 1fr;
+            }
+            .manifesto p {
+               font-size: 15px;
+            }
+         }
+      </style>
+      <style>
+         /* Deck scroll system: stacked-card transitions between major sections */
+         .deck {
+            position: relative;
+         }
+         .deck .card {
+            position: sticky;
+            top: 0;
+            min-height: 100svh;
+            transform-origin: center center;
+            will-change: transform;
+            backface-visibility: hidden;
+         }
+         @media (max-width: 760px) {
+            .deck .card {
+               min-height: 100svh;
+            }
+         }
+         @media (prefers-reduced-motion: reduce) {
+            .deck .card {
+               position: static !important;
+               transform: none !important;
+               filter: none !important;
+               box-shadow: none !important;
+            }
+         }
+      </style>
+   </head>
+   <body>
+      <div class="noise"></div>
+      <div class="deck">
+      <section class="hero card">
+         <nav>
+            <div class="brand">BOROSIL<sup>®</sup></div>
+            <div class="navlinks mono">
+               <a href="#craft">The Press</a><a href="#craft">Craft</a
+               ><a href="#shop">Buy</a>
+            </div>
+            <a class="navbag mono" href="#shop">01</a>
+         </nav>
+         <div class="hero-copy">
+            <div class="kicker mono">Slow Juicer / Emerald Edition</div>
+            <h1>Press<br /><em>what</em><br />matters.</h1>
+            <p>
+               An exacting cold-press ritual, built around more depth of flavour
+               and the quiet confidence of a beautifully made object.
+            </p>
+         </div>
+         <div class="outline"></div>
+         <div class="product-frame">
+            <img
+               src="assets/borosil-slow-juicer.webp"
+               alt="Borosil emerald slow juicer pressing fresh orange juice"
+            />
+         </div>
+         <div class="cut"></div>
+         <a class="explore" href="#craft">Begin<br />the ritual&nbsp; ↓</a>
+         <div class="story-num mono">
+            <b>01 / 03</b>&nbsp;&nbsp; Emerald slow press
+         </div>
+         <div class="vertical mono">
+            Scroll to discover&nbsp;&nbsp;—&nbsp;&nbsp; A study in slowness
+         </div>
+      </section>
+      <div class="marquee">
+         <span
+            >THE ART OF EXTRACTION <i>✦</i> SLOWNESS, MADE BEAUTIFUL
+            <i>✦</i> THE ART OF EXTRACTION <i>✦</i> SLOWNESS, MADE BEAUTIFUL
+            <i>✦</i> THE ART OF EXTRACTION <i>✦</i> SLOWNESS, MADE BEAUTIFUL
+            <i>✦</i></span
+         >
+      </div>
+      <section class="manifesto card" id="craft">
+         <div class="manifesto-grid">
+            <div class="mono">[ 01 / THE RITUAL ]</div>
+            <div>
+               <h2>A deeper<br />kind of <i>fresh.</i></h2>
+               <p>
+                  At its heart, the Borosil Slow Juicer is about restraint. Slow
+                  rotation gently releases the character in every ingredient—so
+                  each glass arrives richer in colour, nuance and clarity.
+               </p>
+               <div class="facts">
+                  <div><b>43</b><small>Revolutions / min</small></div>
+                  <div><b>99%</b><small>Juice yield</small></div>
+                  <div><b>0</b><small>Added noise</small></div>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <section class="gallery card">
+         <div class="gallery-title">
+            <h2>Made to<br /><em>reveal.</em></h2>
+            <p>
+               Every element works in sequence. The result: a calm, complete
+               extraction ritual.
+            </p>
+         </div>
+         <div class="panels">
+            <article class="panel">
+               <small class="mono">01 / Living colour</small>
+               <div class="orb"></div>
+               <h3>Keep the brightness.</h3>
+               <p>
+                  Low-speed pressing means less heat and less oxidation from
+                  first pour to last.
+               </p>
+            </article>
+            <article class="panel">
+               <small class="mono">02 / Fine filtration</small>
+               <div class="filter"></div>
+               <h3>Silk, not pulp.</h3>
+               <p>
+                  A precision filter creates a luxuriously smooth, clean finish.
+               </p>
+            </article>
+            <article class="panel">
+               <small class="mono">03 / Quiet power</small>
+               <div class="quiet"></div>
+               <h3>Morning, uninterrupted.</h3>
+               <p>
+                  A measured motor that belongs in the calmest part of your day.
+               </p>
+            </article>
+         </div>
+      </section>
+
+      <section class="films card" id="journal">
+         <div class="section-head">
+            <h2>The ritual,<br /><em>in motion.</em></h2>
+            <p>
+               Three small films about how an unhurried morning comes together.
+            </p>
+         </div>
+         <div class="film-grid">
+            <article class="film">
+               <video
+                  src="assets/Vita-Rich-Slow-Juicer.mp4"
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  aria-label="Fresh juice ritual video cover"
+               ></video>
+               <div class="play">▶</div>
+               <div class="caption">
+                  <small class="mono">Film 01 / 01:42</small
+                  ><strong>Pressing the first light.</strong>
+               </div>
+            </article>
+            <article class="film film-small">
+               <div class="mark-film">43</div>
+               <div class="play">▶</div>
+               <div class="caption">
+                  <small class="mono">Film 02 / 00:38</small
+                  ><strong>The quiet drive.</strong>
+               </div>
+            </article>
+            <article class="film film-small">
+               <div class="mark-film">✦</div>
+               <div class="play">▶</div>
+               <div class="caption">
+                  <small class="mono">Film 03 / 01:09</small
+                  ><strong>A brighter pour.</strong>
+               </div>
+            </article>
+         </div>
+      </section>
+      <section class="viewer card">
+         <div class="viewer-copy">
+            <div class="mono" style="color: #c99d51">
+               Product exploration / 360°
+            </div>
+            <h2>Turn the<br /><i>ordinary</i> over.</h2>
+            <p class="tip mono">Drag the object to explore its form</p>
+         </div>
+         <div class="spin-stage" id="spinStage">
+            <div class="spin-product" id="spinProduct">
+               <img
+                  src="assets/vita-rich.png"
+                  alt="Interactive Borosil juicer view"
+               />
+               <div class="spin-gloss"></div>
+            </div>
+         </div>
+         <div class="viewer-actions">
+            <button class="view-btn" id="resetView">Reset view</button
+            ><button class="view-btn" id="openExploded">
+               Explore every part ↗
+            </button>
+         </div>
+      </section>
+      <section class="reviews card">
+         <div class="reviews-top">
+            <h2>Made for<br /><i>the ritual.</i></h2>
+            <div class="rating">
+               4.9 / 5<small>From 1,240 considered mornings</small>
+            </div>
+         </div>
+         <div class="review-grid">
+            <article class="review">
+               <div class="stars">★★★★★</div>
+               <blockquote>
+                  “It has completely changed the pace of my kitchen. Beautiful
+                  to leave out, even better to use.”
+               </blockquote>
+               <cite>Rhea M. / Mumbai</cite>
+            </article>
+            <article class="review">
+               <div class="stars">★★★★★</div>
+               <blockquote>
+                  “The juice tastes clearer somehow. It is the closest thing to
+                  a small morning ceremony.”
+               </blockquote>
+               <cite>Abhinav S. / Bengaluru</cite>
+            </article>
+            <article class="review">
+               <div class="stars">★★★★★</div>
+               <blockquote>
+                  “Quiet, substantial, and very well resolved. Every part feels
+                  considered.”
+               </blockquote>
+               <cite>Natasha K. / Delhi</cite>
+            </article>
+         </div>
+      </section>
+      <section class="cinema card">
+         <video
+            class="parallax-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            src="assets/Borosil_45sec_Juicer.mp4"
+            aria-label="Borosil slow juicer in use"
+         ></video>
+         <div class="cinema-copy">
+            <div class="mono" style="color: #d2b56d">
+               A film by Borosil / 45 seconds
+            </div>
+            <h2>There is<br /><i>time</i> in every drop.</h2>
+            <p>
+               Witness the measured transformation of whole ingredients into a
+               vibrant daily pour.
+            </p>
+         </div>
+         <div class="cinema-index mono">
+            <b>01</b><span>Slow motion study</span>
+         </div>
+      </section>
+      <section class="two-film card">
+         <div class="two-film-copy">
+            <div class="mono" style="color: #a6752b">
+               The art of staying slow
+            </div>
+            <h2>Let the<br /><i>colour</i> stay.</h2>
+            <p>
+               Designed to make the moments between preparation and pleasure
+               feel every bit as considered.
+            </p>
+         </div>
+         <div class="video-stack">
+            <span class="video-note mono">Two perspectives / one ritual</span
+            ><video
+               class="video-main parallax-video"
+               autoplay
+               muted
+               loop
+               playsinline
+               src="assets/2nd-cut-Vita-Rich-Juicer.mp4"
+               aria-label="Slow juicer product film"
+            ></video
+            ><video
+               class="video-small parallax-video"
+               autoplay
+               muted
+               loop
+               playsinline
+               src="assets/Vita-Rich-Cold-Press-Slow-Juicer.mp4"
+               aria-label="Slow juicer detail film"
+            ></video>
+         </div>
+      </section>
+      <section class="cinema card">
+         <video
+            class="parallax-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            src="assets/Vita-Rich-Slow-Juicer.mp4"
+            aria-label="Vita Rich juicer lifestyle film"
+         ></video>
+         <div class="cinema-copy">
+            <div class="mono" style="color: #d2b56d">
+               A brighter way to begin
+            </div>
+            <h2>Make a<br /><i>ritual</i> of it.</h2>
+            <p>
+               A single beautiful object for the smallest, richest part of your
+               day.
+            </p>
+         </div>
+         <div class="cinema-index mono">
+            <b>02</b><span>Morning, uninterrupted</span>
+         </div>
+      </section>
+      <section class="shop card" id="shop">
+         <div class="shop-copy">
+            <div class="mono" style="color: #c99d51">
+               Borosil slow juicer / Emerald
+            </div>
+            <h2>Take your<br /><i>time.</i></h2>
+            <div class="price mono">
+               Emerald Edition &nbsp; — &nbsp; ₹14,999
+            </div>
+            <a href="#" class="button mono">Add to basket <span>↗</span></a>
+         </div>
+         <img src="assets/borosil-slow-juicer.webp" alt="Borosil slow juicer" />
+      </section>
+      </div>
+      <footer class="mono">
+         <span>© Borosil 2026</span><span>A daily ritual, considered</span
+         ><span>India / English</span>
+      </footer>
+      <div class="modal" id="explodedModal" aria-hidden="true">
+         <div class="modal-box">
+            <button class="close-modal" id="closeExploded" aria-label="Close">
+               ×
+            </button>
+            <div class="modal-copy">
+               <div class="mono" style="color: #a7752b">
+                  01 / An object, resolved
+               </div>
+               <h2>Every part<br />has a place.</h2>
+               <p>
+                  A considered exploded view of the slow press assembly. Four
+                  precisely made elements, designed to work as one calm,
+                  complete ritual.
+               </p>
+            </div>
+            <div class="exploded">
+               <div class="part one"><b>01 / Feed chute</b></div>
+               <div class="join-line"></div>
+               <div class="part two"><b>02 / Press cap</b></div>
+               <div class="join-line line2"></div>
+               <div class="part three"><b>03 / Fine filter</b></div>
+               <div class="join-line line3"></div>
+               <div class="part four"><b>04 / Silent motor</b></div>
+            </div>
+         </div>
+      </div>
+      <script>
+         const stage = document.getElementById("spinStage"),
+            product = document.getElementById("spinProduct"),
+            reset = document.getElementById("resetView"),
+            modal = document.getElementById("explodedModal");
+         let down = false,
+            start = 0,
+            angle = -10;
+         function render() {
+            product.style.transform = `rotateY(${angle}deg) rotateX(2deg)`;
+         }
+         stage.addEventListener("pointerdown", (e) => {
+            down = true;
+            start = e.clientX;
+            stage.setPointerCapture(e.pointerId);
+         });
+         stage.addEventListener("pointermove", (e) => {
+            if (!down) return;
+            angle += (e.clientX - start) * 0.6;
+            start = e.clientX;
+            render();
+         });
+         stage.addEventListener("pointerup", () => (down = false));
+         reset.onclick = () => {
+            angle = -10;
+            render();
+         };
+         document.getElementById("openExploded").onclick = () => {
+            modal.classList.add("open");
+            modal.setAttribute("aria-hidden", "false");
+         };
+         document.getElementById("closeExploded").onclick = () => {
+            modal.classList.remove("open");
+            modal.setAttribute("aria-hidden", "true");
+         };
+         modal.addEventListener("click", (e) => {
+            if (e.target === modal)
+               document.getElementById("closeExploded").click();
+         });
+         render();
+      </script>
+      <script>
+         const parallaxFilms = [
+            ...document.querySelectorAll(".parallax-video"),
+         ];
+         let ticking = false;
+         addEventListener(
+            "scroll",
+            () => {
+               if (ticking) return;
+               ticking = true;
+               requestAnimationFrame(() => {
+                  parallaxFilms.forEach((f) => {
+                     const r = f.parentElement.getBoundingClientRect(),
+                        offset =
+                           (r.top + innerHeight * 0.5) / innerHeight - 0.5;
+                     f.style.transform = `translate3d(0, ${offset * -20}px, 0) scale(1.13)`;
+                  });
+                  ticking = false;
+               });
+            },
+            { passive: true },
+         );
+      </script>
+      <script>
+         const hero = document.querySelector(".hero"),
+            heroFilm = document.createElement("video"),
+            heroNote = document.createElement("aside"),
+            chapter = document.querySelector(".manifesto"),
+            chapterFilm = document.createElement("video");
+         heroFilm.className = "hero-video";
+         heroFilm.src = "assets/Vita-Rich-Slow-Juicer.mp4";
+         heroFilm.autoplay = true;
+         heroFilm.muted = true;
+         heroFilm.loop = true;
+         heroFilm.playsInline = true;
+         heroFilm.setAttribute("aria-hidden", "true");
+         hero.prepend(heroFilm);
+         heroNote.className = "hero-side-note";
+         heroNote.innerHTML =
+            '<b class="mono">THE 01 / EMERALD</b>A new kind of kitchen essential. Designed as carefully as the ritual it creates.';
+         hero.append(heroNote);
+         chapterFilm.className = "manifest-video";
+         chapterFilm.src =
+            "assets/Vita-Rich-Cold-Press-Slow-Juicer.mp4";
+         chapterFilm.autoplay = true;
+         chapterFilm.muted = true;
+         chapterFilm.loop = true;
+         chapterFilm.playsInline = true;
+         chapterFilm.setAttribute("aria-hidden", "true");
+         chapter.prepend(chapterFilm);
+      </script>
+      <script>
+         hero.querySelector("h1").innerHTML = "The art<br>of <em>slow.</em>";
+         hero.querySelector(".hero-copy p").textContent =
+            "A beautiful way to begin. Considered engineering, held in the quiet rhythm of every press.";
+         chapter.querySelector("h2").innerHTML = "Fresh, in<br><i>full.</i>";
+         chapter.querySelector(
+            ".manifesto-grid > div:first-child",
+         ).textContent = "[ 01 / THE FRESHNESS SYSTEM ]";
+         chapter.querySelector(".manifesto-grid p").textContent =
+            "A slow press protects the things that make a glass feel alive: the colour, the texture, the brightness. Nothing rushed. Nothing lost to heat.";
+      </script>
+      <script>
+         (function () {
+            const deck = document.querySelector(".deck");
+            if (!deck) return;
+            const cards = [...deck.querySelectorAll(".card")];
+            if (cards.length < 2) return;
+
+            if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+            cards.forEach((card, i) => {
+               card.style.zIndex = i + 1;
+            });
+
+            const mobileQuery = matchMedia("(max-width: 760px)");
+            let mobile = mobileQuery.matches;
+            mobileQuery.addEventListener("change", (e) => {
+               mobile = e.matches;
+            });
+
+            const covered = new Array(cards.length).fill(0);
+            const incoming = new Array(cards.length).fill(1);
+            let ticking = false;
+
+            function update() {
+               const vh = window.innerHeight;
+               const maxTranslate = mobile ? 40 : 80;
+               const maxScaleDelta = mobile ? 0.03 : 0.06;
+               const maxDim = mobile ? 0.06 : 0.12;
+
+               for (let i = 0; i < cards.length - 1; i++) {
+                  const nextTop = cards[i + 1].getBoundingClientRect().top;
+                  const p = Math.min(1, Math.max(0, (vh - nextTop) / vh));
+                  incoming[i + 1] = p;
+                  covered[i] = p;
+               }
+
+               cards.forEach((card, i) => {
+                  const ty = i === 0 ? 0 : maxTranslate * (1 - incoming[i]);
+                  const scale = 1 - maxScaleDelta * covered[i];
+                  const dim = 1 - maxDim * covered[i];
+                  card.style.transform = `translate3d(0, ${ty.toFixed(2)}px, 0) scale(${scale.toFixed(4)})`;
+                  card.style.filter =
+                     covered[i] > 0.005 ? `brightness(${dim.toFixed(3)})` : "";
+                  card.style.boxShadow =
+                     covered[i] > 0.01
+                        ? `0 -${(20 + covered[i] * 40).toFixed(0)}px ${(50 + covered[i] * 60).toFixed(0)}px -10px rgba(0,0,0,${(0.12 + covered[i] * 0.28).toFixed(2)})`
+                        : "";
+               });
+            }
+
+            function onScroll() {
+               if (ticking) return;
+               ticking = true;
+               requestAnimationFrame(() => {
+                  update();
+                  ticking = false;
+               });
+            }
+
+            addEventListener("scroll", onScroll, { passive: true });
+            addEventListener("resize", onScroll, { passive: true });
+            update();
+         })();
+      </script>
+   </body>
+</html>
