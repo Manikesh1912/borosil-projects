@@ -1,0 +1,2534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>Klip N Store — Borosil</title>
+
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Arial, Helvetica, sans-serif;
+  background:#eee9df;
+  color:#18201b;
+  overflow-x:hidden;
+}
+
+img,
+video{
+  display:block;
+  max-width:100%;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+  height:245vh;
+}
+
+.hero-stage{
+  position:sticky;
+  top:0;
+
+  width:100%;
+  height:100vh;
+  min-height:650px;
+
+  overflow:hidden;
+  isolation:isolate;
+
+  background:#273229;
+}
+
+
+/* =========================================================
+   HERO SCENE
+========================================================= */
+
+.hero-scene{
+  position:absolute;
+  inset:0;
+
+  transform:scale(1.08);
+
+  will-change:transform;
+  z-index:-10;
+}
+
+.hero-scene img{
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+  object-position:center;
+
+  display:block;
+}
+
+.scene-overlay{
+  position:absolute;
+  inset:0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(15,22,17,.58) 0%,
+      rgba(15,22,17,.28) 38%,
+      rgba(15,22,17,.08) 72%,
+      rgba(15,22,17,.16) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(8,14,10,.30) 0%,
+      transparent 38%,
+      rgba(8,12,9,.28) 100%
+    );
+}
+
+.scene-vignette{
+  position:absolute;
+  inset:0;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      transparent 45%,
+      rgba(15,20,16,.16) 100%
+    );
+
+  pointer-events:none;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header{
+  position:absolute;
+
+  top:0;
+  left:0;
+
+  width:100%;
+  height:88px;
+
+  padding:0 5vw;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  border-bottom:1px solid rgba(255,255,255,.12);
+
+  z-index:50;
+}
+
+.logo{
+  font-size:20px;
+  font-weight:700;
+  letter-spacing:.08em;
+
+  color:#f5f2e9;
+}
+
+.nav{
+  display:flex;
+  gap:45px;
+
+  font-size:10px;
+  letter-spacing:.2em;
+
+  color:rgba(255,255,255,.78);
+}
+
+.nav span{
+  cursor:pointer;
+}
+
+
+/* =========================================================
+   HERO COPY
+========================================================= */
+
+.hero-copy{
+  position:absolute;
+
+  left:5vw;
+  top:50%;
+
+  transform:translateY(-50%);
+
+  z-index:20;
+
+  color:#f5f2e9;
+
+  will-change:transform,opacity;
+}
+
+.eyebrow{
+  font-size:9px;
+  letter-spacing:.32em;
+
+  opacity:.55;
+
+  margin-bottom:18px;
+}
+
+.hero-copy h1{
+  font-size:clamp(42px,5vw,76px);
+
+  font-weight:400;
+  line-height:.95;
+  letter-spacing:-.055em;
+}
+
+.hero-copy p{
+  margin-top:22px;
+
+  max-width:270px;
+
+  font-size:12px;
+  line-height:1.7;
+
+  color:rgba(255,255,255,.58);
+}
+
+
+/* =========================================================
+   HERO SHADOW
+========================================================= */
+
+.hero-shadow{
+  position:absolute;
+
+  width:48vw;
+  height:8vw;
+
+  right:12vw;
+  bottom:12vh;
+
+  border-radius:50%;
+
+  background:rgba(0,0,0,.27);
+
+  filter:blur(35px);
+
+  z-index:3;
+
+  will-change:transform,opacity;
+}
+
+
+/* =========================================================
+   TABLETOP
+========================================================= */
+
+.tabletop{
+  position:absolute;
+
+  left:-8%;
+  bottom:-45%;
+
+  width:116%;
+  height:72%;
+
+  border-radius:50% 50% 0 0;
+
+  /* FROSTED GLASS */
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.13),
+      rgba(255,255,255,.035) 50%,
+      rgba(255,255,255,.10)
+    );
+
+  backdrop-filter:
+    blur(10px)
+    saturate(120%);
+
+  -webkit-backdrop-filter:
+    blur(10px)
+    saturate(120%);
+
+  border-top:1px solid rgba(255,255,255,.28);
+
+  box-shadow:
+    0 -12px 35px rgba(255,255,255,.06),
+    inset 0 1px 0 rgba(255,255,255,.20);
+
+  z-index:25;
+
+  transform:
+    translateY(0)
+    scaleX(.92);
+
+  will-change:transform;
+
+  overflow:hidden;
+}
+
+
+/* SUBTLE GLASS TEXTURE */
+
+.tabletop::after{
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  background:
+    radial-gradient(
+      circle at 18% 25%,
+      rgba(255,255,255,.12),
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(255,255,255,.08),
+      transparent 28%
+    ),
+    repeating-linear-gradient(
+      115deg,
+      rgba(255,255,255,.025) 0px,
+      rgba(255,255,255,.025) 1px,
+      transparent 1px,
+      transparent 5px
+    );
+
+  opacity:.55;
+
+  pointer-events:none;
+}
+
+
+/* GLASS EDGE */
+
+.tabletop::before{
+  content:"";
+
+  position:absolute;
+
+  left:8%;
+  right:8%;
+  top:0;
+
+  height:1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,.42),
+      transparent
+    );
+
+  opacity:.65;
+}
+
+
+/* =========================================================
+   COLLECTION
+========================================================= */
+
+.collection{
+  position:absolute;
+
+  inset:0;
+
+  z-index:30;
+
+  pointer-events:none;
+
+  opacity:0;
+
+  will-change:opacity;
+}
+
+.collection-title{
+  position:absolute;
+
+  top:17%;
+  left:50%;
+
+  transform:
+    translateX(-50%)
+    translateY(30px);
+
+  text-align:center;
+
+  will-change:transform,opacity;
+}
+
+.collection-title span{
+  display:block;
+
+  font-size:9px;
+  letter-spacing:.34em;
+
+  color:#687067;
+}
+
+.collection-title h2{
+  margin-top:13px;
+
+  font-size:clamp(25px,3vw,42px);
+
+  font-weight:400;
+  letter-spacing:-.04em;
+
+  color:#202920;
+}
+
+
+/* =========================================================
+   COLLECTION PRODUCTS
+========================================================= */
+
+.collection-product{
+  position:absolute;
+
+  bottom:5%;
+
+  width:28vw;
+  max-width:430px;
+
+  will-change:transform,opacity;
+}
+
+.collection-product img{
+  width:100%;
+  height:auto;
+
+  filter:
+    drop-shadow(
+      0 22px 18px rgba(20,25,20,.20)
+    )
+    drop-shadow(
+      0 45px 32px rgba(20,25,20,.12)
+    );
+}
+
+.collection-product::after{
+  content:"";
+
+  position:absolute;
+
+  left:12%;
+  right:12%;
+  bottom:2px;
+
+  height:32px;
+
+  background:rgba(25,30,25,.22);
+
+  filter:blur(18px);
+
+  opacity:.85;
+
+  z-index:-1;
+}
+
+.rectangle{
+  left:7%;
+
+  transform:
+    translateY(120%)
+    rotate(-3deg)
+    scale(.85);
+}
+
+.round{
+  left:50%;
+
+  width:24vw;
+
+  transform:
+    translate(-50%,120%)
+    rotate(2deg)
+    scale(.85);
+}
+
+.square{
+  right:7%;
+
+  transform:
+    translateY(120%)
+    rotate(3deg)
+    scale(.85);
+}
+
+.product-label{
+  margin-top:12px;
+
+  text-align:center;
+
+  font-size:9px;
+  letter-spacing:.25em;
+
+  color:#566056;
+}
+
+
+/* =========================================================
+   HERO SCROLL UI
+========================================================= */
+
+.scroll-ui{
+  position:absolute;
+
+  left:5vw;
+  right:5vw;
+  bottom:32px;
+
+  display:flex;
+  align-items:center;
+
+  gap:25px;
+
+  z-index:50;
+}
+
+.scroll-line{
+  flex:1;
+
+  height:1px;
+
+  background:rgba(255,255,255,.2);
+
+  overflow:hidden;
+}
+
+.scroll-line span{
+  display:block;
+
+  width:0;
+  height:100%;
+
+  background:#fff;
+
+  will-change:width;
+}
+
+.scroll-text{
+  display:flex;
+  align-items:center;
+
+  gap:12px;
+
+  font-size:9px;
+  letter-spacing:.2em;
+
+  color:rgba(255,255,255,.7);
+
+  white-space:nowrap;
+}
+
+.scroll-arrow{
+  font-size:15px;
+}
+
+
+/* =========================================================
+   VIDEO
+========================================================= */
+
+.video-section{
+  position:relative;
+
+  height:100vh;
+  min-height:650px;
+
+  overflow:hidden;
+
+  background:#111;
+}
+
+.video-wrap{
+  position:absolute;
+  inset:0;
+
+  overflow:hidden;
+
+  transform:scale(1.04);
+
+  will-change:transform;
+}
+
+.video-wrap video{
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+
+  transform:scale(1.02);
+
+  will-change:transform;
+}
+
+.video-overlay{
+  position:absolute;
+  inset:0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.18),
+      transparent 35%,
+      rgba(0,0,0,.28)
+    );
+
+  pointer-events:none;
+}
+
+
+/* =========================================================
+   VIDEO CONTENT
+========================================================= */
+
+.video-content{
+  position:absolute;
+
+  left:5vw;
+  bottom:8vh;
+
+  z-index:5;
+
+  color:white;
+
+  opacity:.9;
+}
+
+.video-number{
+  font-size:9px;
+  letter-spacing:.3em;
+
+  margin-bottom:12px;
+
+  opacity:.65;
+}
+
+.video-content p{
+  font-size:12px;
+  letter-spacing:.08em;
+
+  color:rgba(255,255,255,.72);
+}
+
+.video-label{
+  position:absolute;
+
+  right:5vw;
+  bottom:8vh;
+
+  z-index:5;
+
+  display:flex;
+  align-items:center;
+
+  gap:14px;
+
+  color:rgba(255,255,255,.7);
+
+  font-size:9px;
+  letter-spacing:.22em;
+}
+
+.video-label::before{
+  content:"";
+
+  width:38px;
+  height:1px;
+
+  background:rgba(255,255,255,.5);
+}
+
+
+/* =========================================================
+   PACK / STORE / SERVE — DESKTOP
+========================================================= */
+
+.use-cases{
+  position:relative;
+
+  width:100%;
+  min-height:100vh;
+
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+
+  overflow:hidden;
+
+  background:#182019;
+}
+
+.use-panel{
+  position:relative;
+
+  width:100%;
+  min-width:0;
+  min-height:100vh;
+
+  overflow:hidden;
+  isolation:isolate;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+
+  padding:7vh 3.5vw 5vh;
+
+  transition:
+    filter .6s ease;
+}
+
+.use-panel:hover{
+  transform:none;
+}
+
+
+/* =========================================================
+   PANEL COLORS
+========================================================= */
+
+.use-panel.pack{
+  background:#344435;
+}
+
+.use-panel.store{
+  background:#a96043;
+}
+
+.use-panel.serve{
+  background:#30424d;
+}
+
+
+/* =========================================================
+   PANEL TEXT
+========================================================= */
+
+.panel-top{
+  position:relative;
+
+  z-index:5;
+}
+
+.panel-number{
+  font-size:9px;
+
+  letter-spacing:.25em;
+
+  color:rgba(255,255,255,.55);
+
+  margin-bottom:18px;
+}
+
+.panel-title{
+  font-family:Georgia, "Times New Roman", serif;
+
+  font-size:clamp(40px,4vw,68px);
+
+  font-weight:400;
+
+  line-height:.95;
+
+  letter-spacing:-.045em;
+
+  color:#f7f3eb;
+}
+
+.panel-description{
+  margin-top:18px;
+
+  max-width:180px;
+
+  font-size:10px;
+
+  line-height:1.7;
+
+  letter-spacing:.12em;
+
+  text-transform:uppercase;
+
+  color:rgba(255,255,255,.68);
+}
+
+
+/* =========================================================
+   PRODUCT AREA
+========================================================= */
+
+.panel-product{
+  position:absolute;
+
+  left:8%;
+  right:8%;
+
+  bottom:10%;
+
+  z-index:2;
+
+  display:flex;
+
+  justify-content:center;
+  align-items:center;
+}
+
+.panel-product img{
+  width:100%;
+  max-width:430px;
+
+  height:auto;
+
+  object-fit:contain;
+
+  filter:
+    drop-shadow(
+      0 30px 24px rgba(0,0,0,.22)
+    )
+    drop-shadow(
+      0 55px 35px rgba(0,0,0,.12)
+    );
+
+  transition:
+    transform 1s cubic-bezier(.16,1,.3,1);
+}
+
+.use-panel:hover .panel-product img{
+  transform:none;
+}
+
+
+/* =========================================================
+   PANEL LIGHT
+========================================================= */
+
+.panel-light{
+  position:absolute;
+
+  width:70%;
+
+  height:55%;
+
+  right:-25%;
+  bottom:0;
+
+  border-radius:50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,.14),
+      transparent 65%
+    );
+
+  filter:blur(25px);
+
+  z-index:-1;
+
+  pointer-events:none;
+}
+
+
+/* =========================================================
+   BOTTOM COPY
+========================================================= */
+
+.panel-bottom{
+  position:relative;
+
+  z-index:5;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.panel-bottom span{
+  font-size:8px;
+
+  letter-spacing:.24em;
+
+  color:rgba(255,255,255,.55);
+}
+
+.panel-line{
+  width:45px;
+
+  height:1px;
+
+  background:rgba(255,255,255,.4);
+}
+
+.use-cases::before{
+  content:"";
+
+  position:absolute;
+
+  left:0;
+  right:0;
+  top:0;
+
+  height:100px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.18),
+      transparent
+    );
+
+  z-index:10;
+
+  pointer-events:none;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:700px){
+
+  /* =====================================================
+     HERO
+  ===================================================== */
+
+  .hero{
+    height:280vh;
+  }
+
+  .hero-stage{
+    min-height:600px;
+  }
+
+  .header{
+    height:70px;
+
+    padding:0 6vw;
+  }
+
+  .logo{
+    font-size:17px;
+  }
+
+  .nav{
+    display:none;
+  }
+
+  .header::after{
+    content:"MENU";
+
+    font-size:9px;
+
+    letter-spacing:.2em;
+
+    color:rgba(255,255,255,.8);
+  }
+
+
+  .hero-copy{
+    left:6vw;
+    top:22%;
+  }
+
+  .hero-copy h1{
+    font-size:42px;
+  }
+
+  .hero-copy p{
+    max-width:220px;
+
+    font-size:10px;
+  }
+
+
+  .hero-shadow{
+    width:80vw;
+    height:15vw;
+
+    right:5vw;
+    bottom:16%;
+  }
+
+
+  .tabletop{
+    height:58%;
+
+    bottom:-35%;
+  }
+
+
+  .collection-title{
+    top:15%;
+  }
+
+  .collection-title h2{
+    font-size:26px;
+  }
+
+
+  /* =====================================================
+     MOBILE PRODUCT CAROUSEL
+  ===================================================== */
+
+  .collection{
+    touch-action:pan-y;
+  }
+
+  .collection-product{
+    width:82vw;
+    max-width:none;
+
+    left:50%;
+    right:auto;
+
+    bottom:11%;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transition:
+      transform .55s cubic-bezier(.16,1,.3,1),
+      opacity .35s ease;
+
+    will-change:transform;
+  }
+
+  .collection-product img{
+    width:100%;
+    height:auto;
+  }
+
+  .collection-product.mobile-active{
+    z-index:3;
+  }
+
+  .collection-product.mobile-next{
+    z-index:2;
+  }
+
+  .collection-product.mobile-prev{
+    z-index:1;
+  }
+
+  .product-label{
+    margin-top:10px;
+  }
+
+
+  /* =====================================================
+     SCROLL UI
+  ===================================================== */
+
+  .scroll-ui{
+    left:6vw;
+    right:6vw;
+
+    bottom:24px;
+  }
+
+
+  /* =====================================================
+     VIDEO
+  ===================================================== */
+
+  .video-section{
+    min-height:600px;
+  }
+
+  .video-content{
+    left:6vw;
+    bottom:6vh;
+  }
+
+  .video-label{
+    right:6vw;
+    bottom:6vh;
+  }
+
+
+  /* =====================================================
+     MOBILE PACK / STORE / SERVE
+
+     These are actual cards.
+     They do NOT touch the viewport edges.
+  ===================================================== */
+
+  .use-cases{
+    position:relative;
+    display:block;
+    width:100%;
+
+    /* 3 card transitions */
+    height:300vh;
+    min-height:1800px;
+
+    overflow:visible;
+    background:#eee9df;
+
+    touch-action:pan-y;
+  }
+
+
+  /* =====================================================
+     CARD
+  ===================================================== */
+
+  .use-panel{
+
+    position:absolute;
+
+    top:7vh;
+    left:10vw;
+
+    width:80vw;
+    height:76vh;
+
+    min-height:0;
+
+    border-radius:24px;
+
+    padding:
+      7vh
+      8vw
+      6vh;
+
+    overflow:hidden;
+
+    box-shadow:
+      0 18px 45px rgba(0,0,0,.16),
+      0 4px 12px rgba(0,0,0,.08);
+
+    transition:
+      transform .65s cubic-bezier(.16,1,.3,1),
+      opacity .45s ease;
+
+    will-change:transform,opacity;
+
+    pointer-events:none;
+  }
+
+
+  .use-panel:hover{
+    transform:none;
+  }
+
+
+  /* =====================================================
+     ACTIVE CARD
+  ===================================================== */
+
+  .use-panel.stack-active{
+
+    transform:
+      translate3d(0,0,0)
+      rotate(0deg)
+      scale(1);
+
+    opacity:1;
+
+    z-index:3;
+
+    pointer-events:auto;
+  }
+
+
+  /* =====================================================
+     SECOND CARD
+  ===================================================== */
+
+  .use-panel.stack-next{
+
+    transform:
+      translate3d(18px,28px,0)
+      rotate(1.8deg)
+      scale(.94);
+
+    opacity:1;
+
+    z-index:2;
+  }
+
+
+  /* =====================================================
+     THIRD CARD
+  ===================================================== */
+
+  .use-panel.stack-next-2{
+
+    transform:
+      translate3d(-16px,54px,0)
+      rotate(-2deg)
+      scale(.88);
+
+    opacity:1;
+
+    z-index:1;
+  }
+
+
+  .use-panel.stack-hidden{
+
+    transform:
+      translate3d(0,40px,0)
+      scale(.90);
+
+    opacity:0;
+
+    z-index:0;
+  }
+
+
+  /* =====================================================
+     MOBILE CARD CONTENT
+  ===================================================== */
+
+  .panel-title{
+    font-size:52px;
+  }
+
+  .panel-description{
+    max-width:190px;
+  }
+
+  .panel-product{
+
+    left:8%;
+    right:8%;
+
+    bottom:17%;
+  }
+
+  .panel-product img{
+    max-width:360px;
+  }
+
+
+  .panel-bottom{
+    bottom:0;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+  html{
+    scroll-behavior:auto;
+  }
+
+  *,
+  *::before,
+  *::after{
+    animation:none!important;
+    transition:none!important;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     01 — HERO
+===================================================== -->
+
+<section class="hero">
+
+  <div class="hero-stage">
+
+
+    <!-- SCENE -->
+
+    <div class="hero-scene">
+
+      <img
+        src="assets/klip-scene.png"
+        alt="Klip N Store kitchen scene"
+      >
+
+      <div class="scene-overlay"></div>
+      <div class="scene-vignette"></div>
+
+    </div>
+
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+      <div class="logo">
+        BOROSIL
+      </div>
+
+      <nav class="nav">
+
+        <span>KLIP N STORE</span>
+        <span>ABOUT</span>
+        <span>EXPLORE</span>
+
+      </nav>
+
+    </header>
+
+
+    <!-- HERO COPY -->
+
+    <div class="hero-copy">
+
+      <div class="eyebrow">
+        GLASS STORAGE
+      </div>
+
+      <h1>
+        Klip N Store
+      </h1>
+
+      <p>
+        Simple storage for everyday living.
+      </p>
+
+    </div>
+
+
+    <!-- SHADOW -->
+
+    <div class="hero-shadow"></div>
+
+
+    <!-- TABLETOP -->
+
+    <div class="tabletop"></div>
+
+
+    <!-- PRODUCTS -->
+
+    <div class="collection">
+
+      <div class="collection-title">
+
+        <span>
+          KLIP N STORE
+        </span>
+
+        <h2>
+          Three shapes. One simple idea.
+        </h2>
+
+      </div>
+
+
+      <div class="collection-product rectangle">
+
+        <img
+          src="assets/rectangle.png"
+          alt="Rectangle Klip N Store"
+        >
+
+        <div class="product-label">
+          RECTANGLE
+        </div>
+
+      </div>
+
+
+      <div class="collection-product round">
+
+        <img
+          src="assets/round.png"
+          alt="Round Klip N Store"
+        >
+
+        <div class="product-label">
+          ROUND
+        </div>
+
+      </div>
+
+
+      <div class="collection-product square">
+
+        <img
+          src="assets/square.png"
+          alt="Square Klip N Store"
+        >
+
+        <div class="product-label">
+          SQUARE
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- SCROLL UI -->
+
+    <div class="scroll-ui">
+
+      <div class="scroll-line">
+        <span></span>
+      </div>
+
+      <div class="scroll-text">
+
+        <span>
+          SCROLL TO EXPLORE
+        </span>
+
+        <span class="scroll-arrow">
+          ↓
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     02 — VIDEO
+===================================================== -->
+
+<section class="video-section">
+
+  <div class="video-wrap">
+
+    <video
+      src="assets/klip-video.mp4"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+    ></video>
+
+    <div class="video-overlay"></div>
+
+  </div>
+
+
+  <div class="video-content">
+
+    <div class="video-number">
+      02
+    </div>
+
+    <p>
+      MADE FOR THE WAY YOU LIVE.
+    </p>
+
+  </div>
+
+
+  <div class="video-label">
+    KLIP N STORE
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     03 — PACK / STORE / SERVE
+===================================================== -->
+
+<section class="use-cases">
+
+
+  <!-- PACK -->
+
+  <article class="use-panel pack">
+
+    <div class="panel-top">
+
+      <div class="panel-number">
+        01
+      </div>
+
+      <h2 class="panel-title">
+        Pack
+      </h2>
+
+      <p class="panel-description">
+        Goodness on the go.
+      </p>
+
+    </div>
+
+
+    <div class="panel-product">
+
+      <img
+        src="assets/rectangle.png"
+        alt="Klip N Store for packing"
+      >
+
+    </div>
+
+
+    <div class="panel-light"></div>
+
+
+    <div class="panel-bottom">
+
+      <span>
+        READY WHEN YOU ARE
+      </span>
+
+      <div class="panel-line"></div>
+
+    </div>
+
+  </article>
+
+
+  <!-- STORE -->
+
+  <article class="use-panel store">
+
+    <div class="panel-top">
+
+      <div class="panel-number">
+        02
+      </div>
+
+      <h2 class="panel-title">
+        Store
+      </h2>
+
+      <p class="panel-description">
+        Fresher for longer.
+      </p>
+
+    </div>
+
+
+    <div class="panel-product">
+
+      <img
+        src="assets/round.png"
+        alt="Klip N Store for storage"
+      >
+
+    </div>
+
+
+    <div class="panel-light"></div>
+
+
+    <div class="panel-bottom">
+
+      <span>
+        KEEP IT FRESH
+      </span>
+
+      <div class="panel-line"></div>
+
+    </div>
+
+  </article>
+
+
+  <!-- SERVE -->
+
+  <article class="use-panel serve">
+
+    <div class="panel-top">
+
+      <div class="panel-number">
+        03
+      </div>
+
+      <h2 class="panel-title">
+        Serve
+      </h2>
+
+      <p class="panel-description">
+        Straight to the table.
+      </p>
+
+    </div>
+
+
+    <div class="panel-product">
+
+      <img
+        src="assets/square.png"
+        alt="Klip N Store for serving"
+      >
+
+    </div>
+
+
+    <div class="panel-light"></div>
+
+
+    <div class="panel-bottom">
+
+      <span>
+        FROM KITCHEN TO TABLE
+      </span>
+
+      <div class="panel-line"></div>
+
+    </div>
+
+  </article>
+
+
+</section>
+
+
+
+<script>
+
+/* =========================================================
+   HERO ELEMENTS
+========================================================= */
+
+const hero =
+  document.querySelector(".hero");
+
+const heroScene =
+  document.querySelector(".hero-scene");
+
+const heroCopy =
+  document.querySelector(".hero-copy");
+
+const heroShadow =
+  document.querySelector(".hero-shadow");
+
+const tabletop =
+  document.querySelector(".tabletop");
+
+const collection =
+  document.querySelector(".collection");
+
+const collectionTitle =
+  document.querySelector(".collection-title");
+
+const rectangle =
+  document.querySelector(".collection-product.rectangle");
+
+const round =
+  document.querySelector(".collection-product.round");
+
+const square =
+  document.querySelector(".collection-product.square");
+
+const progress =
+  document.querySelector(".scroll-line span");
+
+
+/* =========================================================
+   VIDEO
+========================================================= */
+
+const videoSection =
+  document.querySelector(".video-section");
+
+const videoWrap =
+  document.querySelector(".video-wrap");
+
+const video =
+  document.querySelector(".video-wrap video");
+
+
+/* =========================================================
+   USE CASES
+========================================================= */
+
+const useCases =
+  document.querySelector(".use-cases");
+
+const usePanels =
+  Array.from(
+    document.querySelectorAll(".use-panel")
+  );
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function clamp(value,min,max){
+
+  return Math.min(
+    Math.max(value,min),
+    max
+  );
+
+}
+
+
+function easeInOut(value){
+
+  return value < .5
+
+    ? 4 * value * value * value
+
+    : 1 -
+      Math.pow(
+        -2 * value + 2,
+        3
+      ) / 2;
+
+}
+
+
+function easeOut(value){
+
+  return 1 -
+    Math.pow(
+      1 - value,
+      3
+    );
+
+}
+
+
+/* =========================================================
+   MOBILE PRODUCT CAROUSEL
+========================================================= */
+
+const mobileProducts = [
+  rectangle,
+  round,
+  square
+];
+
+let mobileProductIndex = 0;
+
+
+/* =========================================================
+   MOBILE PRODUCT POSITION
+========================================================= */
+
+function updateMobileCarousel(
+  reveal = 1
+){
+
+  if(window.innerWidth > 700){
+    return;
+  }
+
+  mobileProducts.forEach(
+    (product,index) => {
+
+      product.classList.remove(
+        "mobile-active",
+        "mobile-next",
+        "mobile-prev"
+      );
+
+
+      if(index === mobileProductIndex){
+
+        product.classList.add(
+          "mobile-active"
+        );
+
+        product.style.transform = `
+          translate3d(
+            -50%,
+            0,
+            0
+          )
+          rotate(0deg)
+          scale(1)
+        `;
+
+        product.style.opacity =
+          reveal;
+
+      }
+      else{
+
+        product.style.opacity = 0;
+
+        product.style.transform = `
+          translate3d(
+            -50%,
+            0,
+            0
+          )
+          scale(.96)
+        `;
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   HERO ANIMATION
+========================================================= */
+
+function updateHero(){
+
+  const rect =
+    hero.getBoundingClientRect();
+
+  const total =
+    hero.offsetHeight -
+    window.innerHeight;
+
+  const raw =
+    -rect.top / total;
+
+  const scroll =
+    clamp(raw,0,1);
+
+
+  /* =========================================
+     CAMERA
+  ========================================= */
+
+  const camera =
+    easeInOut(
+      clamp(
+        scroll / .42,
+        0,
+        1
+      )
+    );
+
+
+  heroScene.style.transform = `
+    scale(${1.08 - camera * .08})
+    translate(
+      ${camera * -18}px,
+      ${camera * -10}px
+    )
+  `;
+
+
+  /* =========================================
+     COPY
+  ========================================= */
+
+  const copyProgress =
+    clamp(
+      (scroll - .04) / .25,
+      0,
+      1
+    );
+
+  const copyEase =
+    easeInOut(copyProgress);
+
+  heroCopy.style.opacity =
+    1 - copyEase;
+
+  heroCopy.style.transform = `
+    translateY(
+      ${-50 - copyEase * 35}%
+    )
+  `;
+
+
+  /* =========================================
+     SHADOW
+  ========================================= */
+
+  heroShadow.style.transform = `
+    translateX(${scroll * -35}px)
+    scale(${1 - scroll * .12})
+  `;
+
+  heroShadow.style.opacity =
+    1 - scroll * .45;
+
+
+  /* =========================================
+     TABLETOP
+  ========================================= */
+
+  const reveal =
+    clamp(
+      (scroll - .20) / .38,
+      0,
+      1
+    );
+
+  const revealEase =
+    easeInOut(reveal);
+
+  const surfaceY =
+    55 -
+    revealEase * 100;
+
+  const surfaceScale =
+    .92 +
+    revealEase * .08;
+
+  tabletop.style.transform = `
+    translateY(${surfaceY}%)
+    scaleX(${surfaceScale})
+  `;
+
+
+  /* =========================================
+     COLLECTION
+  ========================================= */
+
+  const collectionProgress =
+    clamp(
+      (scroll - .39) / .35,
+      0,
+      1
+    );
+
+  const collectionEase =
+    easeOut(collectionProgress);
+
+  collection.style.opacity =
+    window.innerWidth <= 700
+      ? clamp(
+          (scroll - .39) / .12,
+          0,
+          1
+        )
+      : collectionEase;
+
+
+  /* =========================================
+     COLLECTION TITLE
+  ========================================= */
+
+  const titleY =
+    30 -
+    collectionEase * 30;
+
+  collectionTitle.style.transform = `
+    translateX(-50%)
+    translateY(${titleY}px)
+  `;
+
+
+  /* =========================================
+     MOBILE PRODUCTS
+  ========================================= */
+
+  if(window.innerWidth <= 700){
+
+    /*
+      MOBILE PRODUCT SCROLL
+
+      Rectangle stays longest,
+      then Round, then Square.
+    */
+
+    const productProgress =
+      clamp(
+        (scroll - .39) / .48,
+        0,
+        1
+      );
+
+
+    let newProductIndex;
+
+
+    if(productProgress < .55){
+
+      newProductIndex = 0;
+
+    }
+    else if(productProgress < .80){
+
+      newProductIndex = 1;
+
+    }
+    else{
+
+      newProductIndex = 2;
+
+    }
+
+
+    if(
+      newProductIndex !==
+      mobileProductIndex
+    ){
+
+      mobileProductIndex =
+        newProductIndex;
+
+    }
+
+
+    updateMobileCarousel(1);
+
+  }
+
+
+  /* =========================================
+     DESKTOP PRODUCTS
+  ========================================= */
+
+  else{
+
+
+    /* RECTANGLE */
+
+    const rectangleProgress =
+      clamp(
+        (scroll - .39) / .28,
+        0,
+        1
+      );
+
+    const rectangleEase =
+      easeOut(rectangleProgress);
+
+    rectangle.style.transform = `
+      translateY(
+        ${120 - rectangleEase * 120}%
+      )
+      rotate(
+        ${-3 + rectangleEase * 3}deg
+      )
+      scale(
+        ${.85 + rectangleEase * .15}
+      )
+    `;
+
+    rectangle.style.opacity =
+      rectangleEase;
+
+
+    /* ROUND */
+
+    const roundProgress =
+      clamp(
+        (scroll - .46) / .28,
+        0,
+        1
+      );
+
+    const roundEase =
+      easeOut(roundProgress);
+
+    round.style.transform = `
+      translate(
+        -50%,
+        ${120 - roundEase * 120}%
+      )
+      rotate(
+        ${2 - roundEase * 2}deg
+      )
+      scale(
+        ${.85 + roundEase * .15}
+      )
+    `;
+
+    round.style.opacity =
+      roundEase;
+
+
+    /* SQUARE */
+
+    const squareProgress =
+      clamp(
+        (scroll - .53) / .28,
+        0,
+        1
+      );
+
+    const squareEase =
+      easeOut(squareProgress);
+
+    square.style.transform = `
+      translateY(
+        ${120 - squareEase * 120}%
+      )
+      rotate(
+        ${3 - squareEase * 3}deg
+      )
+      scale(
+        ${.85 + squareEase * .15}
+      )
+    `;
+
+    square.style.opacity =
+      squareEase;
+
+  }
+
+
+  /* =========================================
+     HERO PROGRESS
+  ========================================= */
+
+  progress.style.width =
+    `${scroll * 100}%`;
+
+}
+
+
+/* =========================================================
+   VIDEO ANIMATION
+========================================================= */
+
+function updateVideo(){
+
+  const rect =
+    videoSection.getBoundingClientRect();
+
+  const vh =
+    window.innerHeight;
+
+
+  const entering =
+    clamp(
+      1 -
+      rect.top / vh,
+      0,
+      1
+    );
+
+
+  const leaving =
+    clamp(
+      -rect.bottom / vh,
+      0,
+      1
+    );
+
+
+  const videoScale =
+    1.04 +
+    leaving * .025;
+
+  videoWrap.style.transform = `
+    scale(${videoScale})
+  `;
+
+
+  video.style.transform = `
+    scale(
+      ${1.02 + entering * .015}
+    )
+  `;
+
+}
+
+
+/* =========================================================
+   MASTER UPDATE
+========================================================= */
+
+let ticking = false;
+
+function update(){
+
+  if(!ticking){
+
+    window.requestAnimationFrame(
+      () => {
+
+        updateHero();
+        updateVideo();
+
+        if(window.innerWidth <= 700){
+
+          updateUseCardsOnScroll();
+
+        }
+
+        ticking = false;
+
+      }
+    );
+
+    ticking = true;
+
+  }
+
+}
+
+
+window.addEventListener(
+  "scroll",
+  update,
+  {passive:true}
+);
+
+window.addEventListener(
+  "resize",
+  update
+);
+
+
+/* =========================================================
+   MOBILE PACK / STORE / SERVE STACK
+========================================================= */
+
+let useCardIndex = 0;
+
+
+/* =========================================================
+   UPDATE CARD STACK
+========================================================= */
+
+function updateUseCardStack(){
+
+  if(window.innerWidth > 700){
+    return;
+  }
+
+  const total =
+    usePanels.length;
+
+  usePanels.forEach(
+    (panel,index) => {
+
+      const position =
+        (
+          index -
+          useCardIndex +
+          total
+        ) % total;
+
+
+      if(position === 0){
+
+        panel.className =
+          panel.className
+            .replace(
+              /\bstack-\S+/g,
+              ""
+            )
+            .trim();
+
+        panel.classList.add(
+          "stack-active"
+        );
+
+        panel.style.opacity = 1;
+
+        panel.style.transform = `
+          translate3d(
+            0,
+            0,
+            0
+          )
+          rotate(0deg)
+          scale(1)
+        `;
+
+      }
+      else if(position === 1){
+
+        panel.className =
+          panel.className
+            .replace(
+              /\bstack-\S+/g,
+              ""
+            )
+            .trim();
+
+        panel.classList.add(
+          "stack-next"
+        );
+
+        panel.style.opacity = 1;
+
+        panel.style.transform = `
+          translate3d(
+            18px,
+            28px,
+            0
+          )
+          rotate(1.8deg)
+          scale(.94)
+        `;
+
+      }
+      else{
+
+        panel.className =
+          panel.className
+            .replace(
+              /\bstack-\S+/g,
+              ""
+            )
+            .trim();
+
+        panel.classList.add(
+          "stack-next-2"
+        );
+
+        panel.style.opacity = 1;
+
+        panel.style.transform = `
+          translate3d(
+            -16px,
+            54px,
+            0
+          )
+          rotate(-1.4deg)
+          scale(.93)
+        `;
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   MOBILE CARD SCROLL CONTROL
+========================================================= */
+
+function updateUseCardsOnScroll(){
+
+  if(window.innerWidth > 700){
+    return;
+  }
+
+  const rect =
+    useCases.getBoundingClientRect();
+
+  const vh =
+    window.innerHeight;
+
+
+  /*
+    The card section is 300vh.
+
+    While inside this section:
+    - cards stay locked in the viewport
+    - scrolling changes the active card
+
+    Once the section is finished:
+    - cards are released
+    - normal page scrolling continues
+  */
+
+  const sectionHeight =
+    useCases.offsetHeight;
+
+  const scrollDistance =
+    sectionHeight - vh;
+
+
+  const scrolled =
+    clamp(
+      -rect.top,
+      0,
+      scrollDistance
+    );
+
+
+  const progress =
+    scrollDistance > 0
+      ? scrolled / scrollDistance
+      : 0;
+
+
+  /* =====================================
+     LOCK CARDS ONLY WHILE SECTION IS ACTIVE
+  ===================================== */
+
+  const sectionActive =
+    rect.top <= 0 &&
+    rect.bottom >= vh;
+
+
+  usePanels.forEach(panel => {
+
+    if(sectionActive){
+
+      panel.style.position = "fixed";
+      panel.style.top = "7vh";
+      panel.style.left = "10vw";
+      panel.style.width = "80vw";
+
+    }
+    else{
+
+      panel.style.position = "absolute";
+      panel.style.top = "7vh";
+      panel.style.left = "10vw";
+      panel.style.width = "80vw";
+
+    }
+
+  });
+
+
+  /* =====================================
+     CARD SEQUENCE
+  ===================================== */
+
+  let newCardIndex;
+
+
+  /* PACK */
+
+  if(progress < .42){
+
+    newCardIndex = 0;
+
+  }
+
+
+  /* STORE */
+
+  else if(progress < .72){
+
+    newCardIndex = 1;
+
+  }
+
+
+  /* SERVE */
+
+  else{
+
+    newCardIndex = 2;
+
+  }
+
+
+  if(newCardIndex !== useCardIndex){
+
+    useCardIndex =
+      newCardIndex;
+
+    updateUseCardStack();
+
+  }
+
+}
+
+
+/* =========================================================
+   INITIAL CARD STATE
+========================================================= */
+
+updateUseCardStack();
+updateUseCardsOnScroll();
+
+
+/* =========================================================
+   RESIZE
+========================================================= */
+
+window.addEventListener(
+  "resize",
+  () => {
+
+    if(window.innerWidth <= 700){
+
+      updateUseCardStack();
+      updateUseCardsOnScroll();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   VIDEO AUTOPLAY FALLBACK
+========================================================= */
+
+if(video){
+
+  video.muted = true;
+
+
+  const playVideo = () => {
+
+    video
+      .play()
+      .catch(() => {});
+
+  };
+
+
+  playVideo();
+
+
+  document.addEventListener(
+    "visibilitychange",
+    () => {
+
+      if(
+        document.visibilityState ===
+        "visible"
+      ){
+
+        playVideo();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   INITIAL UPDATE
+========================================================= */
+
+update();
+
+</script>
+
+
+</body>
+
+</html>
