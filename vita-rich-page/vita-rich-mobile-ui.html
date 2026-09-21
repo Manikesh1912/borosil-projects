@@ -1,0 +1,1234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Borosil — The Ritual of Freshness</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0b0f0c;
+    --ink:#f4f1e9;
+    --ink-dim:rgba(244,241,233,.72);
+    --ink-faint:rgba(244,241,233,.45);
+    --accent:#e9a13c;
+    --accent-soft:rgba(233,161,60,.5);
+    --accent-jade:#5ad9b0;
+    --accent-jade-soft:rgba(90,217,176,.4);
+    --overlay-tint:6,8,6;
+    --ease:cubic-bezier(.22,.68,0,1);
+    --nav-h:76px;
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Playfair Display',serif;font-weight:400;margin:0;letter-spacing:.2px;}
+  p{margin:0;}
+  a{color:inherit;text-decoration:none;}
+  img,video{display:block;max-width:100%;}
+  button{font-family:inherit;cursor:pointer;background:none;border:none;color:inherit;}
+  .eyebrow{
+    font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--accent);font-weight:500;margin-bottom:18px;display:block;
+    transition:letter-spacing .6s var(--ease);
+  }
+  ::selection{background:var(--accent);color:#151515;}
+
+  /* ---------------- Scroll progress bar ---------------- */
+  .scroll-progress{
+    position:fixed;top:0;left:0;height:2px;width:0%;z-index:110;
+    background:linear-gradient(90deg,var(--accent-jade),var(--accent));
+    box-shadow:0 0 12px var(--accent-soft);
+    transition:width .1s linear;
+  }
+
+  /* ---------------- Ambient glow layer ---------------- */
+  .ambient-glow{position:fixed;inset:0;z-index:2;pointer-events:none;mix-blend-mode:screen;overflow:hidden;}
+  .ambient-glow span{
+    position:absolute;border-radius:50%;filter:blur(90px);opacity:.16;
+    animation:ambientFloat 16s ease-in-out infinite;
+  }
+  .ambient-glow span:nth-child(1){
+    width:38vw;height:38vw;left:-8vw;top:8vh;background:var(--accent-jade);
+  }
+  .ambient-glow span:nth-child(2){
+    width:32vw;height:32vw;right:-6vw;bottom:10vh;background:var(--accent);
+    animation-delay:-8s;animation-duration:19s;
+  }
+  @keyframes ambientFloat{
+    0%,100%{transform:translate(0,0) scale(1);}
+    50%{transform:translate(3vw,-4vw) scale(1.12);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ambient-glow span{animation:none;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important;transition-duration:.001ms !important;}
+  }
+
+  /* ---------------- Nav ---------------- */
+  .nav{
+    position:fixed;top:22px;left:50%;transform:translateX(-50%);
+    z-index:100;width:min(92vw,760px);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 26px;border-radius:999px;
+    background:rgba(20,22,18,.35);
+    border:1px solid rgba(244,241,233,.16);
+    backdrop-filter:blur(18px) saturate(140%);
+    -webkit-backdrop-filter:blur(18px) saturate(140%);
+    transition:padding .5s var(--ease),background .5s var(--ease),top .5s var(--ease),box-shadow .5s var(--ease);
+  }
+  .nav.is-scrolled{
+    top:14px;padding:10px 22px;
+    background:rgba(12,14,11,.72);
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+  }
+  .nav__logo{font-family:'Playfair Display',serif;font-size:1.05rem;letter-spacing:.12em;font-weight:500;}
+  .nav__links{display:flex;gap:28px;font-size:.82rem;letter-spacing:.02em;}
+  .nav__link{position:relative;color:var(--ink-dim);transition:color .3s;}
+  .nav__link.is-active{color:var(--ink);}
+  .nav__link::after{
+    content:"";position:absolute;left:0;right:0;bottom:-6px;height:1px;background:var(--ink);
+    transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease);
+  }
+  .nav__link.is-active::after{transform:scaleX(1);}
+  .nav__link:not(.is-active):hover{color:var(--ink);}
+  .nav__link:not(.is-active):hover::after{transform:scaleX(1);}
+  .nav__cart{position:relative;display:flex;align-items:center;transition:transform .3s var(--ease);}
+  .nav__cart:hover{transform:scale(1.1);}
+  .nav__cart svg{width:19px;height:19px;stroke:var(--ink);}
+  .nav__cart-count{
+    position:absolute;top:-8px;right:-9px;min-width:15px;height:15px;border-radius:50%;
+    background:var(--ink);color:#111;font-size:.6rem;display:flex;align-items:center;justify-content:center;
+    font-weight:600;padding:0 3px;
+  }
+  @media (max-width:640px){
+    .nav{width:92vw;padding:12px 18px;}
+    .nav__links{display:none;}
+  }
+
+  /* ---------------- Progress rail ---------------- */
+  .progress-rail{
+    position:fixed;right:34px;top:50%;transform:translateY(-50%);
+    z-index:90;display:flex;flex-direction:column;align-items:center;gap:10px;
+    font-size:.7rem;letter-spacing:.1em;color:var(--ink-faint);
+    transition:opacity .4s;
+  }
+  .progress-rail span{padding:4px 0;transition:color .3s,letter-spacing .3s;}
+  .progress-rail span.is-active{color:var(--accent);letter-spacing:.16em;}
+  .progress-rail .rail-line{width:1px;height:34px;background:rgba(244,241,233,.25);}
+  @media (max-width:900px){.progress-rail{display:none;}}
+
+  /* ---------------- Section shell ---------------- */
+  .panel{
+    position:relative;width:100%;height:100vh;min-height:560px;
+    overflow:hidden;display:flex;align-items:center;
+  }
+  .media{
+    position:absolute;inset:0;width:100%;height:100%;overflow:hidden;
+  }
+  .media video,.media img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    will-change:transform;
+  }
+  .media__overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(6,8,6,.55) 0%,rgba(6,8,6,.15) 32%,rgba(6,8,6,.15) 60%,rgba(6,8,6,.65) 100%);
+    pointer-events:none;
+  }
+  .play-cta{
+    display:inline-flex;align-items:center;gap:12px;font-size:.82rem;letter-spacing:.03em;color:var(--ink);
+  }
+  .play-cta__icon{
+    width:44px;height:44px;border-radius:50%;border:1px solid rgba(244,241,233,.55);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;
+    transition:background .3s,transform .3s,box-shadow .3s;
+  }
+  .play-cta:hover .play-cta__icon{background:rgba(244,241,233,.12);transform:scale(1.06);}
+  .play-cta__icon.is-playing{box-shadow:0 0 0 0 var(--accent-soft);animation:playPulse 2.6s ease-out infinite;}
+  @keyframes playPulse{
+    0%{box-shadow:0 0 0 0 var(--accent-soft);}
+    70%{box-shadow:0 0 0 14px rgba(233,161,60,0);}
+    100%{box-shadow:0 0 0 0 rgba(233,161,60,0);}
+  }
+  .play-cta__icon svg{width:13px;height:13px;fill:var(--ink);margin-left:1px;}
+  .play-cta__icon.is-playing svg.icon-play{display:none;}
+  .play-cta__icon:not(.is-playing) svg.icon-pause{display:none;}
+
+  /* ---------------- Hero ---------------- */
+  .hero__content{
+    position:relative;z-index:5;padding:0 8vw;max-width:640px;
+  }
+  .hero__heading{
+    font-size:clamp(3.4rem,9vw,7.2rem);line-height:.98;font-style:italic;
+    margin:6px 0 22px;
+  }
+  .hero__sub{font-size:1rem;line-height:1.6;color:var(--ink-dim);max-width:360px;margin-bottom:34px;font-weight:300;}
+  .scrolldown{
+    position:absolute;left:8vw;bottom:44px;z-index:5;display:flex;align-items:center;gap:10px;
+    font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);
+  }
+  .scrolldown__pill{
+    width:20px;height:32px;border:1px solid rgba(244,241,233,.5);border-radius:20px;position:relative;
+  }
+  .scrolldown__pill::after{
+    content:"";position:absolute;top:6px;left:50%;width:3px;height:6px;background:var(--ink);
+    border-radius:2px;transform:translateX(-50%);animation:scrollDot 1.8s infinite ease;
+  }
+  @keyframes scrollDot{0%{opacity:1;top:6px;}70%{opacity:0;top:18px;}100%{opacity:0;top:6px;}}
+
+  /* ---------------- Storage ---------------- */
+  .storage__content{
+    position:relative;z-index:5;margin-left:auto;padding:0 8vw;max-width:440px;text-align:left;
+  }
+  .storage__heading{font-size:clamp(2.6rem,5.2vw,4rem);margin-bottom:18px;}
+  .storage__sub{color:var(--ink-dim);font-size:1rem;line-height:1.6;font-weight:300;max-width:340px;}
+  .storage .play-cta{position:absolute;left:8vw;bottom:64px;z-index:5;}
+
+  /* ---------------- Frame / product experience ---------------- */
+  .frame-panel{height:130vh;}
+  .frame-panel .media{position:sticky;top:0;height:100vh;}
+  .frame__copy{
+    position:relative;z-index:6;padding:0 8vw;max-width:380px;
+  }
+  .frame__heading{font-size:clamp(2.6rem,5vw,3.8rem);line-height:1.06;margin-bottom:18px;}
+  .frame__sub{color:var(--ink-dim);font-size:.98rem;line-height:1.6;font-weight:300;margin-bottom:26px;max-width:320px;}
+  .frame__link{font-size:.82rem;letter-spacing:.05em;display:inline-flex;align-items:center;gap:10px;border-bottom:1px solid rgba(244,241,233,.4);padding-bottom:6px;}
+  .frame__device{
+    position:absolute;right:6vw;top:50%;width:min(58vw,900px);
+    aspect-ratio:16/10.2;
+    transform:translateY(-50%) scale(.86) rotateX(6deg);
+    opacity:0;will-change:transform,opacity;
+  }
+  .frame__bezel{
+    width:100%;height:100%;border-radius:26px;background:#0e0e0c;
+    border:10px solid #161713;box-shadow:0 40px 90px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.06);
+    overflow:hidden;position:relative;
+  }
+  .frame__screen{position:absolute;inset:0;overflow:hidden;border-radius:16px;}
+  .frame__screen video,.frame__screen img{width:100%;height:100%;object-fit:cover;}
+  .frame__screen .play-badge{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.5);backdrop-filter:blur(6px);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .frame__screen .play-badge svg{width:16px;height:16px;fill:#fff;margin-left:2px;}
+  .scroll-indicator{
+    position:absolute;right:34px;top:60%;z-index:6;display:flex;flex-direction:column;align-items:center;gap:10px;
+    font-size:.68rem;letter-spacing:.12em;color:var(--ink-faint);text-transform:uppercase;
+  }
+  .scroll-indicator .dot{
+    width:6px;height:6px;border-radius:50%;background:var(--accent);
+    box-shadow:0 0 0 0 var(--accent-soft);animation:dotPulse 2.2s ease-out infinite;
+  }
+  @keyframes dotPulse{
+    0%{box-shadow:0 0 0 0 var(--accent-soft);}
+    70%{box-shadow:0 0 0 10px rgba(233,161,60,0);}
+    100%{box-shadow:0 0 0 0 rgba(233,161,60,0);}
+  }
+  .scroll-indicator .line{width:1px;height:48px;background:rgba(244,241,233,.3);}
+  @media (max-width:900px){
+    .frame-panel{
+      height:auto;min-height:auto;overflow:visible;
+      flex-direction:column;justify-content:flex-start;align-items:center;text-align:center;
+      padding:110px 8vw 70px;
+    }
+    .frame-panel .media{position:absolute;inset:0;height:100%;}
+    .frame__copy{position:relative;padding:0;max-width:100%;margin-bottom:36px;}
+    .frame__sub{margin-left:auto;margin-right:auto;}
+    .frame__device{
+      position:relative;right:auto;top:auto;left:auto;width:100%;max-width:440px;
+      margin:0 auto;transform:none;opacity:1;
+    }
+    .scroll-indicator{display:none;}
+  }
+
+  /* ---------------- Slider ---------------- */
+  .slider-panel{height:auto;min-height:100vh;flex-direction:column;justify-content:flex-start;background:#08090a;padding:110px 0 60px;}
+  .slider-panel .media{display:none;}
+  .slider__head{
+    width:100%;display:flex;align-items:flex-end;justify-content:space-between;
+    padding:0 8vw;margin-bottom:56px;position:relative;z-index:3;
+  }
+  .slider__heading{font-size:clamp(2rem,4.2vw,3.2rem);}
+  .slider__explore{font-size:.82rem;display:flex;align-items:center;gap:8px;letter-spacing:.03em;flex-shrink:0;}
+  .slider__viewport{position:relative;width:100%;overflow:hidden;padding:0 4vw;}
+  .slider__track{display:flex;align-items:center;gap:5vw;will-change:transform;padding:0 40vw;}
+  .card{
+    position:relative;flex:0 0 min(52vw,560px);height:min(62vw,620px);border-radius:22px;overflow:hidden;
+    background:#141614;transform:scale(.82);filter:blur(3px);opacity:.55;
+    transition:box-shadow .4s;will-change:transform,filter,opacity;
+    border:1px solid rgba(244,241,233,.08);
+  }
+  .card video,.card img{width:100%;height:100%;object-fit:cover;}
+  .card__overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.75) 100%);}
+  .card__label{position:absolute;left:22px;bottom:20px;z-index:2;}
+  .card__title{display:block;font-family:'Playfair Display',serif;font-size:1.3rem;}
+  .card__subtitle{display:block;font-size:.78rem;color:var(--ink-dim);margin-top:4px;}
+  .card__play{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;z-index:2;}
+  .card__play svg{width:11px;height:11px;fill:#fff;margin-left:1px;}
+  .slider__arrow{
+    position:absolute;top:50%;transform:translateY(-50%);z-index:5;
+    width:46px;height:46px;border-radius:50%;border:1px solid rgba(244,241,233,.3);
+    display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:var(--ink);
+    transition:background .3s,border-color .3s,transform .3s var(--ease);
+  }
+  .slider__arrow:hover{
+    background:rgba(244,241,233,.1);border-color:var(--accent);
+    transform:translateY(-50%) scale(1.1);
+  }
+  .slider__arrow--prev{left:2vw;}
+  .slider__arrow--next{right:2vw;}
+  .slider__dots{display:flex;justify-content:center;gap:8px;margin-top:44px;}
+  .slider__dots span{
+    width:6px;height:6px;border-radius:50%;background:rgba(244,241,233,.3);cursor:pointer;
+    transition:background .3s,width .3s;
+  }
+  .slider__dots span:hover{background:rgba(244,241,233,.55);}
+  .slider__dots span.is-active{background:var(--accent);width:22px;border-radius:4px;}
+  @media (max-width:900px){
+    .slider__head{flex-direction:column;align-items:flex-start;gap:14px;margin-bottom:34px;}
+    .card{flex-basis:74vw;height:78vw;}
+    .slider__track{padding:0 13vw;gap:6vw;}
+  }
+
+  /* ---------------- Final CTA ---------------- */
+  .final-panel{
+    height:auto;min-height:100vh;padding:130px 8vw;flex-direction:column;align-items:center;text-align:center;
+    background:radial-gradient(90% 70% at 50% 0%,rgba(233,161,60,.09),transparent 60%),#10130d;
+  }
+  .final-panel .media img{opacity:.28;}
+  .final__heading{font-size:clamp(2.4rem,5vw,3.6rem);margin-bottom:52px;position:relative;z-index:3;}
+  .features{
+    position:relative;z-index:3;display:flex;gap:60px;margin-bottom:56px;flex-wrap:wrap;justify-content:center;
+  }
+  .feature{display:flex;flex-direction:column;align-items:center;gap:14px;max-width:200px;}
+  .feature__icon{
+    width:52px;height:52px;border-radius:50%;border:1px solid rgba(244,241,233,.3);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .feature__icon svg{width:22px;height:22px;stroke:var(--ink);fill:none;}
+  .feature strong{font-size:.96rem;font-weight:500;}
+  .feature span{font-size:.8rem;color:var(--ink-dim);font-weight:300;}
+  .cta-btn{
+    position:relative;z-index:3;display:inline-flex;align-items:center;gap:12px;
+    background:var(--ink);color:#141410;padding:16px 34px;border-radius:999px;
+    font-size:.88rem;letter-spacing:.03em;font-weight:500;
+    transition:transform .3s var(--ease),box-shadow .3s var(--ease);
+    overflow:hidden;
+  }
+  .cta-btn::before{
+    content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;
+    background:linear-gradient(115deg,transparent,rgba(255,255,255,.55),transparent);
+    transform:skewX(-20deg);transition:left .6s var(--ease);
+  }
+  .cta-btn:hover::before{left:120%;}
+  .cta-btn:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(233,161,60,.25);}
+
+  /* generic reveal helpers */
+  .fx{opacity:0;transform:translateY(30px);}
+
+  /* ---------------- Exploded / engineering view ---------------- */
+  .exploded-panel{justify-content:center;text-align:center;}
+  .exploded__content{position:relative;z-index:5;padding:0 8vw;max-width:640px;margin:0 auto;display:flex;flex-direction:column;align-items:center;}
+  .exploded__heading{font-size:clamp(2.6rem,5.5vw,4.4rem);margin-bottom:18px;}
+  .exploded__sub{color:var(--ink-dim);font-size:1rem;line-height:1.6;font-weight:300;max-width:420px;margin-bottom:34px;}
+  .exploded-panel .play-cta{margin-bottom:28px;}
+
+  /* ---------------- How it works demo ---------------- */
+  .demo-panel{justify-content:center;text-align:center;}
+  .demo__content{position:relative;z-index:5;padding:0 8vw;max-width:640px;margin:0 auto;display:flex;flex-direction:column;align-items:center;}
+  .demo__heading{font-size:clamp(2.6rem,5.5vw,4.4rem);margin-bottom:18px;}
+  .demo__sub{color:var(--ink-dim);font-size:1rem;line-height:1.6;font-weight:300;max-width:420px;margin-bottom:34px;}
+  .demo-panel .play-cta{margin-bottom:28px;}
+
+  /* ---------------- Product features accordion ---------------- */
+  .accordion-panel{
+    height:auto;min-height:100vh;padding:120px 8vw;align-items:center;gap:8vw;
+    background:radial-gradient(120% 100% at 85% 0%,rgba(90,217,176,.08),transparent 55%),#0d100b;
+  }
+  .accordion-panel .media{position:static;inset:auto;}
+  .accordion__visual{
+    position:relative;flex:0 0 40%;max-width:480px;border-radius:22px;overflow:hidden;
+    aspect-ratio:4/5;box-shadow:0 40px 90px rgba(0,0,0,.5);
+  }
+  .accordion__visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .accordion__visual::after{
+    content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.55) 100%);
+  }
+  .accordion__body{flex:1;max-width:560px;}
+  .accordion__heading{font-size:clamp(2.2rem,4.4vw,3.2rem);margin-bottom:14px;}
+  .accordion__sub{color:var(--ink-dim);font-size:.98rem;line-height:1.6;font-weight:300;max-width:460px;margin-bottom:42px;}
+  .accordion-list{width:100%;border-top:1px solid rgba(244,241,233,.14);}
+  .accordion-item{border-bottom:1px solid rgba(244,241,233,.14);}
+  .accordion-item__head{
+    width:100%;display:flex;align-items:center;justify-content:space-between;
+    padding:24px 2px;text-align:left;font-size:1.05rem;font-family:'Playfair Display',serif;
+    transition:padding-left .35s var(--ease);
+  }
+  .accordion-item__head:hover{padding-left:10px;}
+  .accordion-item__num{font-family:'Inter',sans-serif;font-size:.72rem;color:var(--ink-faint);letter-spacing:.1em;margin-right:16px;transition:color .35s;}
+  .accordion-item.is-open .accordion-item__num{color:var(--accent);}
+  .accordion-item__title{flex:1;transition:color .35s;}
+  .accordion-item__head:hover .accordion-item__title{color:var(--accent);}
+  .accordion-item__icon{
+    width:26px;height:26px;border-radius:50%;border:1px solid rgba(244,241,233,.35);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;
+    transition:border-color .35s,transform .45s var(--ease);
+  }
+  .accordion-item.is-open .accordion-item__icon{border-color:var(--accent);transform:rotate(180deg);}
+  .accordion-item__icon::before,.accordion-item__icon::after{
+    content:"";position:absolute;background:var(--ink);transition:transform .35s var(--ease);
+  }
+  .accordion-item__icon::before{width:10px;height:1px;}
+  .accordion-item__icon::after{width:1px;height:10px;}
+  .accordion-item.is-open .accordion-item__icon::after{transform:rotate(90deg) scaleY(0);}
+  .accordion-item__panel{max-height:0;overflow:hidden;transition:max-height .5s var(--ease);}
+  .accordion-item.is-open .accordion-item__panel{max-height:220px;}
+  .accordion-item__panel p{
+    padding:0 2px 24px 42px;color:var(--ink-dim);font-size:.92rem;line-height:1.65;font-weight:300;max-width:440px;
+  }
+  @media (max-width:900px){
+    .accordion-panel{flex-direction:column;padding:90px 8vw;gap:40px;}
+    .accordion__visual{max-width:100%;width:100%;aspect-ratio:4/3;}
+  }
+
+  /* ---------------- Customer reviews (horizontal slider) ---------------- */
+  .review-panel .media{display:none;}
+  .review-panel{background:radial-gradient(90% 70% at 50% 0%,rgba(90,217,176,.07),transparent 60%),#090b0f;}
+  .card.review-card{
+    background:linear-gradient(155deg,#171911,#101208);display:flex;flex-direction:column;
+    justify-content:space-between;padding:44px 38px;height:min(48vw,420px);
+  }
+  .review-card__stars{color:var(--accent);font-size:1rem;letter-spacing:3px;margin-bottom:22px;}
+  .review-card__quote{font-family:'Playfair Display',serif;font-style:italic;font-size:1.2rem;line-height:1.55;color:var(--ink);}
+  .review-card__author{display:flex;align-items:center;gap:12px;margin-top:26px;}
+  .review-card__avatar{
+    width:38px;height:38px;border-radius:50%;background:rgba(244,241,233,.12);
+    display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:.95rem;
+  }
+  .review-card__name{font-size:.9rem;font-weight:500;}
+  .review-card__meta{font-size:.74rem;color:var(--ink-faint);margin-top:2px;}
+  @media (max-width:900px){
+    .review-panel .card.review-card{flex-basis:78vw;height:64vh;padding:32px 26px;}
+  }
+
+  /* ---------------- Ritual in Motion (pinned step scroller) ---------------- */
+  .ritual-panel{
+    height:100vh;position:relative;overflow:hidden;
+    flex-direction:column;justify-content:flex-end;align-items:flex-start;padding:0;
+  }
+  .ritual__media{position:absolute;inset:0;z-index:1;}
+  .ritual__slide{
+    position:absolute;inset:0;opacity:0;transition:opacity .7s ease;
+  }
+  .ritual__slide.is-active{opacity:1;z-index:2;}
+  .ritual__slide video,.ritual__slide img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    transform:scale(1.1);transition:transform 1.4s ease;will-change:transform;
+  }
+  .ritual__slide.is-active video,.ritual__slide.is-active img{transform:scale(1);}
+  .ritual__content{
+    position:relative;z-index:5;padding:0 8vw;margin-bottom:38px;max-width:520px;
+  }
+  .ritual__heading{font-size:clamp(2.6rem,6vw,4.6rem);margin-bottom:14px;transition:opacity .25s,transform .35s;}
+  .ritual__sub{color:var(--ink-dim);font-size:.98rem;line-height:1.6;font-weight:300;max-width:400px;transition:opacity .25s,transform .35s;}
+  .ritual__progress{position:relative;z-index:5;width:100%;padding:0 8vw;margin-bottom:2px;}
+  .ritual__progress-track{width:100%;height:2px;background:rgba(244,241,233,.15);border-radius:2px;overflow:hidden;}
+  .ritual__progress-fill{
+    display:block;height:100%;width:0%;border-radius:2px;
+    background:linear-gradient(90deg,var(--accent-jade),var(--accent));
+  }
+  .ritual__steps{
+    position:relative;z-index:5;display:flex;width:100%;padding:0 8vw;
+    border-top:1px solid rgba(244,241,233,.14);
+  }
+  .ritual__step{
+    flex:1;text-align:left;padding:20px 18px 26px 0;border-right:1px solid rgba(244,241,233,.14);
+    display:flex;flex-direction:column;gap:6px;opacity:.5;transition:opacity .35s var(--ease);
+  }
+  .ritual__step:last-child{border-right:none;padding-right:0;}
+  .ritual__step:hover{opacity:.8;}
+  .ritual__step.is-active{opacity:1;}
+  .ritual__step-num{font-size:.7rem;letter-spacing:.12em;color:var(--ink-faint);transition:color .35s;}
+  .ritual__step.is-active .ritual__step-num{color:var(--accent);}
+  .ritual__step-label{font-family:'Playfair Display',serif;font-size:1.05rem;}
+  .ritual-panel .scroll-indicator{right:auto;left:34px;top:34px;flex-direction:row;align-items:center;}
+  .ritual-panel .scroll-indicator .line{width:48px;height:1px;}
+  @media (max-width:900px){
+    .ritual__content{padding:0 7vw;margin-bottom:26px;max-width:100%;}
+    .ritual__sub{max-width:100%;}
+    .ritual__progress{padding:0 7vw;}
+    .ritual__steps{padding:0 7vw;}
+    .ritual__step{padding:14px 8px 18px 0;}
+    .ritual__step-label{font-size:.82rem;}
+    .ritual__step-num{font-size:.62rem;}
+    .ritual-panel .scroll-indicator{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" data-scroll-progress></div>
+<div class="ambient-glow" aria-hidden="true"><span></span><span></span></div>
+
+<nav class="nav" data-nav>
+  <a href="#" class="nav__logo">BOROSIL</a>
+  <div class="nav__links">
+    <a href="#" class="nav__link is-active">Home</a>
+    <a href="#" class="nav__link">Product</a>
+  </div>
+  <a href="#" class="nav__cart" aria-label="Cart">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4"><path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h7.2a2 2 0 0 0 2-1.6L20 8H6"/><circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/></svg>
+    <span class="nav__cart-count">2</span>
+  </a>
+</nav>
+
+<div class="progress-rail" data-progress>
+  <span data-i="0" class="is-active">01</span>
+  <span class="rail-line"></span>
+  <span data-i="1">02</span>
+  <span data-i="2">03</span>
+  <span data-i="3">04</span>
+  <span data-i="4">05</span>
+  <span data-i="5">06</span>
+  <span data-i="6">07</span>
+  <span data-i="7">08</span>
+  <span data-i="8">09</span>
+  <span data-i="9">10</span>
+</div>
+
+<!-- 1. HERO — Juicing process -->
+<section class="panel hero" data-panel="0">
+  <div class="media" data-media>
+    <video autoplay muted loop playsinline preload="auto" poster="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/vita-rich.png?v=1789633755">
+      <source src="https://cdn.shopify.com/videos/c/o/v/37115ebe25524c7d9ddea970cc3231f5.mp4" type="video/mp4" />
+    </video>
+    <div class="media__overlay"></div>
+  </div>
+  <div class="hero__content">
+    <span class="eyebrow fx">The Ritual Of</span>
+    <h1 class="hero__heading fx">Freshness</h1>
+    <p class="hero__sub fx">From nature's best, to your glass.<br />Pure. Fresh. Every time.</p>
+    <button type="button" class="play-cta fx" data-video-toggle>
+      <span class="play-cta__icon is-playing">
+        <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l16 8-16 8z"/></svg>
+        <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+      </span>
+      Watch the process
+    </button>
+  </div>
+  <div class="scrolldown"><span class="scrolldown__pill"></span> Scroll Down</div>
+</section>
+
+<!-- 2. STORAGE -->
+<section class="panel storage" data-panel="1">
+  <div class="media" data-media>
+    <video autoplay muted loop playsinline preload="auto" poster="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/borosil-slow-juicer.webp?v=1789633756">
+      <source src="https://cdn.shopify.com/videos/c/o/v/6f5751cfd8b54f19b7ea19cda7d570bf.mp4" type="video/mp4" />
+    </video>
+    <div class="media__overlay"></div>
+  </div>
+  <button type="button" class="play-cta fx" data-video-toggle>
+    <span class="play-cta__icon is-playing">
+      <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l16 8-16 8z"/></svg>
+      <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+    </span>
+    Watch the storage
+  </button>
+  <div class="storage__content">
+    <span class="eyebrow fx">Pure Goodness</span>
+    <h2 class="storage__heading fx">Stored Fresh</h2>
+    <p class="storage__sub fx">Every drop, locked in for a healthier tomorrow.</p>
+  </div>
+</section>
+
+<!-- 3. PRODUCT EXPERIENCE (frame) -->
+<section class="panel frame-panel" data-panel="2">
+  <div class="media" data-media data-parallax>
+    <img src="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/vita-rich.png?v=1789633755" alt="" />
+    <div class="media__overlay"></div>
+  </div>
+  <div class="frame__copy">
+    <span class="eyebrow fx">Designed For</span>
+    <h2 class="frame__heading fx">A Healthier<br />You</h2>
+    <p class="frame__sub fx">Premium design. Everyday wellness.<br />The Borosil Juicer.</p>
+    <a href="#" class="frame__link fx">— Explore Product →</a>
+  </div>
+  <div class="frame__device" data-frame-device>
+    <div class="frame__bezel">
+      <div class="frame__screen">
+        <video muted loop playsinline preload="auto" poster="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/borosil-slow-juicer.webp?v=1789633756">
+          <source src="https://cdn.shopify.com/videos/c/o/v/034735f197c94e5db13fc43f1a604869.mp4" type="video/mp4" />
+        </video>
+        <span class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l16 8-16 8z"/></svg></span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator"><span class="dot"></span><span class="line"></span>Scroll</div>
+</section>
+
+<!-- 4. HORIZONTAL SLIDER -->
+<section class="panel slider-panel" data-panel="3">
+  <div class="slider__head">
+    <div>
+      <span class="eyebrow fx">Real Ingredients. Real Goodness.</span>
+      <h2 class="slider__heading fx">Juices for Every Mood</h2>
+    </div>
+    <a href="#" class="slider__explore fx">Explore All →</a>
+  </div>
+  <div class="slider__viewport">
+    <button class="slider__arrow slider__arrow--prev" aria-label="Previous" data-arrow="-1">‹</button>
+    <div class="slider__track" data-track>
+      <div class="card" data-card>
+        <video muted loop playsinline preload="metadata"><source src="https://cdn.shopify.com/videos/c/o/v/d8d0b2c298274d8d80b6edbd2fba5db8.mp4" type="video/mp4" /></video>
+        <div class="card__overlay"></div>
+        <span class="card__play"><svg viewBox="0 0 24 24"><path d="M6 4l16 8-16 8z"/></svg></span>
+        <div class="card__label"><span class="card__title">Green Detox</span><span class="card__subtitle">Fresh. Clean. Energize.</span></div>
+      </div>
+      <div class="card" data-card>
+        <video muted loop playsinline preload="metadata"><source src="https://cdn.shopify.com/videos/c/o/v/0c3b0591efda445ca6f6eb3e9766ba0d.mp4" type="video/mp4" /></video>
+        <div class="card__overlay"></div>
+        <span class="card__play"><svg viewBox="0 0 24 24"><path d="M6 4l16 8-16 8z"/></svg></span>
+        <div class="card__label"><span class="card__title">Orange Zest</span><span class="card__subtitle">Vitamin C, Naturally.</span></div>
+      </div>
+      <div class="card" data-card>
+        <video muted loop playsinline preload="metadata"><source src="https://cdn.shopify.com/videos/c/o/v/37115ebe25524c7d9ddea970cc3231f5.mp4" type="video/mp4" /></video>
+        <div class="card__overlay"></div>
+        <span class="card__play"><svg viewBox="0 0 24 24"><path d="M6 4l16 8-16 8z"/></svg></span>
+        <div class="card__label"><span class="card__title">Glow Blend</span><span class="card__subtitle">Beet. Apple. Better You.</span></div>
+      </div>
+      <div class="card" data-card>
+        <video muted loop playsinline preload="metadata"><source src="https://cdn.shopify.com/videos/c/o/v/034735f197c94e5db13fc43f1a604869.mp4" type="video/mp4" /></video>
+        <div class="card__overlay"></div>
+        <span class="card__play"><svg viewBox="0 0 24 24"><path d="M6 4l16 8-16 8z"/></svg></span>
+        <div class="card__label"><span class="card__title">Citrus Rush</span><span class="card__subtitle">Zesty. Bright. Bold.</span></div>
+      </div>
+      <div class="card" data-card>
+        <video muted loop playsinline preload="metadata"><source src="https://cdn.shopify.com/videos/c/o/v/6f5751cfd8b54f19b7ea19cda7d570bf.mp4" type="video/mp4" /></video>
+        <div class="card__overlay"></div>
+        <span class="card__play"><svg viewBox="0 0 24 24"><path d="M6 4l16 8-16 8z"/></svg></span>
+        <div class="card__label"><span class="card__title">Berry Bliss</span><span class="card__subtitle">Antioxidant Rich.</span></div>
+      </div>
+    </div>
+    <button class="slider__arrow slider__arrow--next" aria-label="Next" data-arrow="1">›</button>
+  </div>
+  <div class="slider__dots" data-dots></div>
+</section>
+
+<!-- 5. FINAL CTA -->
+<section class="panel final-panel" data-panel="4">
+  <div class="media"><img src="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/vita-rich.png?v=1789633755" alt="" /></div>
+  <span class="eyebrow fx">The Complete</span>
+  <h2 class="final__heading fx">Juicing Experience</h2>
+  <div class="features">
+    <div class="feature fx">
+      <span class="feature__icon"><svg viewBox="0 0 24 24" stroke-width="1.4"><path d="M4 14c0-6 4-10 10-10 0 6-4 10-10 10zM4 14c4 0 8 2 8 8"/></svg></span>
+      <strong>100% Natural</strong>
+      <span>No added preservatives</span>
+    </div>
+    <div class="feature fx">
+      <span class="feature__icon"><svg viewBox="0 0 24 24" stroke-width="1.4"><path d="M12 3l7 3v6c0 5-3 8-7 9-4-1-7-4-7-9V6z"/></svg></span>
+      <strong>Safe &amp; Durable</strong>
+      <span>Premium quality materials</span>
+    </div>
+    <div class="feature fx">
+      <span class="feature__icon"><svg viewBox="0 0 24 24" stroke-width="1.4"><path d="M5 12l3 3 11-11M5 19l3 3 11-11"/></svg></span>
+      <strong>Easy to Clean</strong>
+      <span>Hassle-free maintenance</span>
+    </div>
+  </div>
+  <a href="#" class="cta-btn fx">Shop Now →</a>
+</section>
+
+<!-- 6. ENGINEERED / EXPLODED VIEW -->
+<section class="panel exploded-panel" data-panel="5">
+  <div class="media" data-media>
+    <video autoplay muted loop playsinline preload="auto" poster="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/vita-rich.png?v=1789633755">
+      <source src="https://cdn.shopify.com/videos/c/o/v/1be49cc939c5401aaf756c6ebb497ecc.mp4" type="video/mp4" />
+    </video>
+    <div class="media__overlay"></div>
+  </div>
+  <div class="exploded__content">
+    <span class="eyebrow fx">Engineered For Excellence</span>
+    <h2 class="exploded__heading fx">Precision, Piece by Piece</h2>
+    <p class="exploded__sub fx">Every component of the Vita Rich Juicer is engineered for performance, durability, and effortless everyday care.</p>
+    <button type="button" class="play-cta fx" data-video-toggle>
+      <span class="play-cta__icon is-playing">
+        <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l16 8-16 8z"/></svg>
+        <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+      </span>
+      Watch the breakdown
+    </button>
+    <a href="#" class="cta-btn fx">Explore the Engineering →</a>
+  </div>
+</section>
+
+<!-- 7. HOW IT WORKS — product demo -->
+<section class="panel demo-panel" data-panel="6">
+  <div class="media" data-media>
+    <video autoplay muted loop playsinline preload="auto" poster="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/vita-rich.png?v=1789633755">
+      <source src="https://cdn.shopify.com/videos/c/o/v/0c3b0591efda445ca6f6eb3e9766ba0d.mp4" type="video/mp4" />
+    </video>
+    <div class="media__overlay"></div>
+  </div>
+  <div class="demo__content">
+    <span class="eyebrow fx">See It In Action</span>
+    <h2 class="demo__heading fx">How It Works</h2>
+    <p class="demo__sub fx">From whole fruit to fresh glass in seconds — smooth, quiet, effortless every single time.</p>
+    <button type="button" class="play-cta fx" data-video-toggle>
+      <span class="play-cta__icon is-playing">
+        <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l16 8-16 8z"/></svg>
+        <svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+      </span>
+      Watch the demo
+    </button>
+    <a href="#" class="cta-btn fx">Shop the Juicer →</a>
+  </div>
+</section>
+
+<!-- 8. PRODUCT FEATURES — accordion -->
+<section class="panel accordion-panel" data-panel="7">
+  <div class="accordion__visual fx">
+    <img src="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/vita-rich.png?v=1789633755" alt="Borosil Vita Rich Juicer" />
+  </div>
+  <div class="accordion__body">
+    <span class="eyebrow fx">Crafted With Care</span>
+    <h2 class="accordion__heading fx">Why You'll Love It</h2>
+    <p class="accordion__sub fx">Four thoughtful details that make the Vita Rich Juicer effortless to use, every single day.</p>
+    <div class="accordion-list fx" data-accordion>
+      <div class="accordion-item is-open">
+        <button type="button" class="accordion-item__head" data-accordion-toggle>
+          <span class="accordion-item__num">01</span>
+          <span class="accordion-item__title">Cold-Press Technology</span>
+          <span class="accordion-item__icon"></span>
+        </button>
+        <div class="accordion-item__panel">
+          <p>Juices at low speed to minimize heat and oxidation — preserving more nutrients, enzymes, and natural flavor in every glass.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button type="button" class="accordion-item__head" data-accordion-toggle>
+          <span class="accordion-item__num">02</span>
+          <span class="accordion-item__title">Whisper-Quiet Motor</span>
+          <span class="accordion-item__icon"></span>
+        </button>
+        <div class="accordion-item__panel">
+          <p>Powerful enough for the toughest greens, yet virtually silent — so mornings stay peaceful, not noisy.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button type="button" class="accordion-item__head" data-accordion-toggle>
+          <span class="accordion-item__num">03</span>
+          <span class="accordion-item__title">Wide Feeding Chute</span>
+          <span class="accordion-item__icon"></span>
+        </button>
+        <div class="accordion-item__panel">
+          <p>Fits whole fruits and vegetables with minimal chopping, cutting prep time down so you juice more and prep less.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <button type="button" class="accordion-item__head" data-accordion-toggle>
+          <span class="accordion-item__num">04</span>
+          <span class="accordion-item__title">Easy-Clean Design</span>
+          <span class="accordion-item__icon"></span>
+        </button>
+        <div class="accordion-item__panel">
+          <p>Detachable, dishwasher-safe parts mean cleanup takes minutes — not the chore that keeps juicers in the cupboard.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. CUSTOMER REVIEWS — horizontal slider -->
+<section class="panel slider-panel review-panel" data-panel="8">
+  <div class="slider__head">
+    <div>
+      <span class="eyebrow fx">Loved By Thousands</span>
+      <h2 class="slider__heading fx">What Our Customers Say</h2>
+    </div>
+    <a href="#" class="slider__explore fx">Read All Reviews →</a>
+  </div>
+  <div class="slider__viewport">
+    <button class="slider__arrow slider__arrow--prev" aria-label="Previous" data-arrow="-1">‹</button>
+    <div class="slider__track" data-track>
+      <div class="card review-card" data-card>
+        <span class="review-card__stars">★★★★★</span>
+        <p class="review-card__quote">"The quietest juicer I've ever owned. My mornings actually feel calm now — and the juice yield is noticeably higher than my old one."</p>
+        <div class="review-card__author">
+          <span class="review-card__avatar">P</span>
+          <div><span class="review-card__name">Priya M.</span><span class="review-card__meta">Verified Buyer · Mumbai</span></div>
+        </div>
+      </div>
+      <div class="card review-card" data-card>
+        <span class="review-card__stars">★★★★★</span>
+        <p class="review-card__quote">"Cleanup used to be my least favorite part of juicing. With Vita Rich, I'm done rinsing parts in under two minutes."</p>
+        <div class="review-card__author">
+          <span class="review-card__avatar">R</span>
+          <div><span class="review-card__name">Rohit S.</span><span class="review-card__meta">Verified Buyer · Pune</span></div>
+        </div>
+      </div>
+      <div class="card review-card" data-card>
+        <span class="review-card__stars">★★★★★</span>
+        <p class="review-card__quote">"Beautifully built and genuinely premium. It looks as good on my counter as the juice tastes fresh in my glass."</p>
+        <div class="review-card__author">
+          <span class="review-card__avatar">A</span>
+          <div><span class="review-card__name">Ananya K.</span><span class="review-card__meta">Verified Buyer · Bengaluru</span></div>
+        </div>
+      </div>
+      <div class="card review-card" data-card>
+        <span class="review-card__stars">★★★★★</span>
+        <p class="review-card__quote">"The wide chute is a game changer — I can drop in whole apples without chopping. Saves me so much time every day."</p>
+        <div class="review-card__author">
+          <span class="review-card__avatar">V</span>
+          <div><span class="review-card__name">Vikram T.</span><span class="review-card__meta">Verified Buyer · Delhi</span></div>
+        </div>
+      </div>
+      <div class="card review-card" data-card>
+        <span class="review-card__stars">★★★★★</span>
+        <p class="review-card__quote">"Worth every rupee. The cold-press difference is real — juice stays fresh in the fridge for days without separating."</p>
+        <div class="review-card__author">
+          <span class="review-card__avatar">S</span>
+          <div><span class="review-card__name">Sneha D.</span><span class="review-card__meta">Verified Buyer · Chennai</span></div>
+        </div>
+      </div>
+    </div>
+    <button class="slider__arrow slider__arrow--next" aria-label="Next" data-arrow="1">›</button>
+  </div>
+  <div class="slider__dots" data-dots></div>
+</section>
+
+<!-- 10. RITUAL IN MOTION — pinned step scroller -->
+<section class="panel ritual-panel" data-panel="9">
+  <div class="ritual__media" data-ritual-media>
+    <div class="ritual__slide is-active" data-ritual-slide="0">
+      <video muted loop playsinline preload="auto" poster="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/vita-rich.png?v=1789633755">
+        <source src="https://cdn.shopify.com/videos/c/o/v/034735f197c94e5db13fc43f1a604869.mp4" type="video/mp4" />
+      </video>
+      <div class="media__overlay"></div>
+    </div>
+    <div class="ritual__slide" data-ritual-slide="1">
+      <video muted loop playsinline preload="auto" poster="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/vita-rich.png?v=1789633755">
+        <source src="https://cdn.shopify.com/videos/c/o/v/6f5751cfd8b54f19b7ea19cda7d570bf.mp4" type="video/mp4" />
+      </video>
+      <div class="media__overlay"></div>
+    </div>
+    <div class="ritual__slide" data-ritual-slide="2">
+      <video muted loop playsinline preload="auto" poster="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/borosil-slow-juicer.webp?v=1789633756">
+        <source src="https://cdn.shopify.com/videos/c/o/v/37115ebe25524c7d9ddea970cc3231f5.mp4" type="video/mp4" />
+      </video>
+      <div class="media__overlay"></div>
+    </div>
+    <div class="ritual__slide" data-ritual-slide="3">
+      <video muted loop playsinline preload="auto" poster="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/vita-rich.png?v=1789633755">
+        <source src="https://cdn.shopify.com/videos/c/o/v/1be49cc939c5401aaf756c6ebb497ecc.mp4  " type="video/mp4" />
+      </video>
+      <div class="media__overlay"></div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator"><span class="dot"></span><span class="line"></span>Scroll</div>
+
+  <div class="ritual__content">
+    <span class="eyebrow fx">The Ritual, Frame By Frame</span>
+    <h2 class="ritual__heading" data-ritual-heading>Prepare</h2>
+    <p class="ritual__sub" data-ritual-sub>Whole fruit, rinsed and ready — no peeling, no fuss.</p>
+  </div>
+
+  <div class="ritual__progress">
+    <span class="ritual__progress-track"><span class="ritual__progress-fill" data-ritual-progress></span></span>
+  </div>
+
+  <div class="ritual__steps" data-ritual-steps>
+    <button type="button" class="ritual__step is-active" data-ritual-step="0">
+      <span class="ritual__step-num">01</span><span class="ritual__step-label">Prepare</span>
+    </button>
+    <button type="button" class="ritual__step" data-ritual-step="1">
+      <span class="ritual__step-num">02</span><span class="ritual__step-label">Extract</span>
+    </button>
+    <button type="button" class="ritual__step" data-ritual-step="2">
+      <span class="ritual__step-num">03</span><span class="ritual__step-label">Pour</span>
+    </button>
+    <button type="button" class="ritual__step" data-ritual-step="3">
+      <span class="ritual__step-num">04</span><span class="ritual__step-label">Enjoy</span>
+    </button>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasGSAP = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
+
+  /* ---------- Nav scroll state ---------- */
+  var nav = document.querySelector('[data-nav]');
+  function onScrollNav(){
+    if (window.scrollY > 40) nav.classList.add('is-scrolled');
+    else nav.classList.remove('is-scrolled');
+  }
+  window.addEventListener('scroll', onScrollNav, { passive: true });
+  onScrollNav();
+
+  /* ---------- Scroll progress bar ---------- */
+  var progressBar = document.querySelector('[data-scroll-progress]');
+  function onScrollProgress(){
+    var doc = document.documentElement;
+    var max = doc.scrollHeight - window.innerHeight;
+    var pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', onScrollProgress, { passive: true });
+  window.addEventListener('resize', onScrollProgress);
+  onScrollProgress();
+
+  /* ---------- Play/pause toggles ---------- */
+  document.querySelectorAll('[data-video-toggle]').forEach(function(btn){
+    var panel = btn.closest('.panel');
+    var video = panel.querySelector('.media video');
+    var icon = btn.querySelector('.play-cta__icon');
+    btn.addEventListener('click', function(){
+      if (!video) return;
+      if (video.paused) { video.play(); icon.classList.add('is-playing'); }
+      else { video.pause(); icon.classList.remove('is-playing'); }
+    });
+  });
+
+  if (reduced || !hasGSAP) {
+    document.querySelectorAll('.fx').forEach(function(el){ el.style.opacity = 1; el.style.transform = 'none'; });
+    document.querySelector('.frame__device').style.opacity = 1;
+    document.querySelector('.frame__device').style.transform = 'none';
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ---------- Progress rail ---------- */
+  var railItems = document.querySelectorAll('[data-progress] span[data-i]');
+  document.querySelectorAll('.panel').forEach(function(panel, i){
+    ScrollTrigger.create({
+      trigger: panel,
+      start: 'top center',
+      end: 'bottom center',
+      onToggle: function(self){
+        if (self.isActive) {
+          railItems.forEach(function(el){ el.classList.remove('is-active'); });
+          if (railItems[i]) railItems[i].classList.add('is-active');
+        }
+      }
+    });
+  });
+
+  /* ---------- Hero entrance ---------- */
+  gsap.timeline({ delay: .2 })
+    .to('.hero .fx', { opacity: 1, y: 0, duration: 1, stagger: .12, ease: 'power3.out' })
+    .to('.hero .scrolldown', { opacity: 1, duration: .6 }, '-=.4');
+  gsap.set('.hero .scrolldown', { opacity: 0 });
+
+  /* ---------- Hero parallax out ---------- */
+  var heroPanel = document.querySelector('.hero');
+  gsap.to(heroPanel.querySelector('.media video'), {
+    scale: 1.18, ease: 'none',
+    scrollTrigger: { trigger: heroPanel, start: 'top top', end: 'bottom top', scrub: true }
+  });
+  gsap.to(heroPanel.querySelector('.hero__content'), {
+    opacity: 0, y: -80, ease: 'none',
+    scrollTrigger: { trigger: heroPanel, start: 'top top', end: '75% top', scrub: true }
+  });
+
+  /* ---------- Storage reveal ---------- */
+  var storagePanel = document.querySelector('.storage');
+  gsap.fromTo(storagePanel.querySelector('.media video'),
+    { scale: 1.2, opacity: .45 },
+    { scale: 1, opacity: 1, ease: 'none',
+      scrollTrigger: { trigger: storagePanel, start: 'top bottom', end: 'top 15%', scrub: true } });
+  gsap.fromTo(storagePanel.querySelectorAll('.fx'),
+    { opacity: 0, x: 50 },
+    { opacity: 1, x: 0, stagger: .08, ease: 'none',
+      scrollTrigger: { trigger: storagePanel, start: 'top 75%', end: 'top 25%', scrub: true } });
+
+  /* ---------- Product frame ---------- */
+  var framePanel = document.querySelector('.frame-panel');
+  var frameDevice = document.querySelector('[data-frame-device]');
+  gsap.set(framePanel.querySelectorAll('.frame__copy .fx'), { opacity: 0, y: 26 });
+
+  var frameMM = gsap.matchMedia();
+
+  frameMM.add('(min-width: 901px)', function(){
+    /* Desktop: pinned-feel parallax — background drifts, device scales/tilts in, copy fades in — all tied to scroll scrub. */
+    var frameTl = gsap.timeline({
+      scrollTrigger: { trigger: framePanel, start: 'top top', end: 'bottom bottom', scrub: true }
+    });
+    frameTl
+      .to(frameDevice, { opacity: 1, scale: 1, rotateX: 0, ease: 'none', duration: .6 })
+      .to(framePanel.querySelector('[data-parallax]'), { yPercent: 12, ease: 'none', duration: 1 }, 0)
+      .to(frameDevice.querySelector('video'), { scale: 1.08, ease: 'none', duration: 1 }, 0)
+      .to(framePanel.querySelectorAll('.frame__copy .fx'), { opacity: 1, y: 0, stagger: .08, ease: 'none', duration: .5 }, 0);
+
+    return function(){ frameTl.scrollTrigger && frameTl.scrollTrigger.kill(); frameTl.kill(); };
+  });
+
+  frameMM.add('(max-width: 900px)', function(){
+    /* Mobile: no pin/scale-scrub — content stacks naturally, device card just fades + scales in once. */
+    gsap.set(frameDevice, { rotateX: 0 });
+
+    var tl = gsap.timeline({
+      scrollTrigger: { trigger: framePanel, start: 'top 78%', toggleActions: 'play none none none' }
+    });
+    tl.to(framePanel.querySelectorAll('.frame__copy .fx'), { opacity: 1, y: 0, stagger: .08, ease: 'power2.out', duration: .6 })
+      .fromTo(frameDevice, { opacity: 0, y: 24, scale: .94 }, { opacity: 1, y: 0, scale: 1, ease: 'power2.out', duration: .7 }, '-=.3');
+
+    return function(){ tl.scrollTrigger && tl.scrollTrigger.kill(); tl.kill(); };
+  });
+
+  /* ---------- Horizontal card slider (reusable: juice cards + reviews) ---------- */
+  function initHSlider(panel){
+    if (!panel) return;
+    var track = panel.querySelector('[data-track]');
+    var cards = Array.prototype.slice.call(panel.querySelectorAll('[data-card]'));
+    var dotsWrap = panel.querySelector('[data-dots]');
+    var viewport = panel.querySelector('.slider__viewport');
+    if (!track || !cards.length) return;
+
+    dotsWrap.innerHTML = '';
+    cards.forEach(function(_, i){
+      var dot = document.createElement('span');
+      dot.dataset.i = i;
+      dotsWrap.appendChild(dot);
+    });
+    var dots = Array.prototype.slice.call(dotsWrap.children);
+
+    function updateCardFocus(){
+      var center = window.innerWidth / 2;
+      var maxDist = window.innerWidth * .55;
+      cards.forEach(function(card){
+        var rect = card.getBoundingClientRect();
+        var cardCenter = rect.left + rect.width / 2;
+        var dist = Math.min(Math.abs(cardCenter - center), maxDist);
+        var t = 1 - dist / maxDist; // 1 = centered, 0 = far
+        var scale = .8 + t * .32;
+        var blur = (1 - t) * 6;
+        var opacity = .5 + t * .5;
+        card.style.transform = 'scale(' + scale.toFixed(3) + ')';
+        card.style.filter = 'blur(' + blur.toFixed(2) + 'px)';
+        card.style.opacity = opacity.toFixed(2);
+        card.style.boxShadow = '0 ' + (20 + t * 30).toFixed(0) + 'px ' + (40 + t * 60).toFixed(0) +
+          'px rgba(0,0,0,' + (.25 + t * .25).toFixed(2) + '), 0 0 ' + (t * 46).toFixed(0) +
+          'px rgba(233,161,60,' + (t * .35).toFixed(2) + ')';
+      });
+    }
+
+    var scrollDistance;
+    function computeDistance(){
+      scrollDistance = Math.max(track.scrollWidth - viewport.clientWidth, window.innerHeight * .6);
+    }
+    computeDistance();
+
+    var trigger = ScrollTrigger.create({
+      trigger: panel,
+      start: 'top top',
+      end: function(){ return '+=' + scrollDistance; },
+      pin: true,
+      scrub: 1,
+      onUpdate: function(self){
+        gsap.set(track, { x: -self.progress * scrollDistance });
+        updateCardFocus();
+        dots.forEach(function(d, i){
+          d.classList.toggle('is-active', i === Math.round(self.progress * (cards.length - 1)));
+        });
+      }
+    });
+
+    updateCardFocus();
+
+    panel.querySelectorAll('[data-arrow]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var dir = parseInt(btn.dataset.arrow, 10);
+        var step = scrollDistance / (cards.length - 1);
+        var current = trigger.scroll();
+        var target = current + dir * step;
+        window.scrollTo({ top: target, behavior: 'smooth' });
+      });
+    });
+
+    dots.forEach(function(dot, i){
+      dot.addEventListener('click', function(){
+        var frac = i / (cards.length - 1);
+        var target = trigger.start + frac * scrollDistance;
+        window.scrollTo({ top: target, behavior: 'smooth' });
+      });
+    });
+
+    window.addEventListener('resize', function(){
+      computeDistance();
+      ScrollTrigger.refresh();
+    });
+  }
+
+  initHSlider(document.querySelector('.slider-panel:not(.review-panel)'));
+  initHSlider(document.querySelector('.review-panel'));
+
+  /* ---------- Final CTA reveal ---------- */
+  var finalPanel = document.querySelector('.final-panel');
+  gsap.fromTo(finalPanel.querySelectorAll('.fx'),
+    { opacity: 0, y: 30 },
+    { opacity: 1, y: 0, stagger: .1, ease: 'power2.out',
+      scrollTrigger: { trigger: finalPanel, start: 'top 70%' } });
+
+  /* ---------- Exploded / engineering view ---------- */
+  var explodedPanel = document.querySelector('.exploded-panel');
+  gsap.to(explodedPanel.querySelector('.media video'), {
+    scale: 1.15, ease: 'none',
+    scrollTrigger: { trigger: explodedPanel, start: 'top bottom', end: 'bottom top', scrub: true }
+  });
+  gsap.fromTo(explodedPanel.querySelectorAll('.fx'),
+    { opacity: 0, y: 30 },
+    { opacity: 1, y: 0, stagger: .1, ease: 'power2.out',
+      scrollTrigger: { trigger: explodedPanel, start: 'top 65%' } });
+
+  /* ---------- How it works demo ---------- */
+  var demoPanel = document.querySelector('.demo-panel');
+  gsap.to(demoPanel.querySelector('.media video'), {
+    scale: 1.15, ease: 'none',
+    scrollTrigger: { trigger: demoPanel, start: 'top bottom', end: 'bottom top', scrub: true }
+  });
+  gsap.fromTo(demoPanel.querySelectorAll('.fx'),
+    { opacity: 0, y: 30 },
+    { opacity: 1, y: 0, stagger: .1, ease: 'power2.out',
+      scrollTrigger: { trigger: demoPanel, start: 'top 65%' } });
+
+  /* ---------- Product features accordion ---------- */
+  var accordionPanel = document.querySelector('.accordion-panel');
+  if (accordionPanel) {
+    gsap.fromTo(accordionPanel.querySelectorAll('.fx'),
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, stagger: .1, ease: 'power2.out',
+        scrollTrigger: { trigger: accordionPanel, start: 'top 70%' } });
+
+    accordionPanel.querySelectorAll('[data-accordion-toggle]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var item = btn.closest('.accordion-item');
+        var panelEl = item.querySelector('.accordion-item__panel');
+        var wasOpen = item.classList.contains('is-open');
+
+        accordionPanel.querySelectorAll('.accordion-item.is-open').forEach(function(openItem){
+          if (openItem !== item) {
+            openItem.classList.remove('is-open');
+            openItem.querySelector('.accordion-item__panel').style.maxHeight = 0;
+          }
+        });
+
+        if (wasOpen) {
+          item.classList.remove('is-open');
+          panelEl.style.maxHeight = 0;
+        } else {
+          item.classList.add('is-open');
+          panelEl.style.maxHeight = panelEl.scrollHeight + 'px';
+        }
+      });
+    });
+
+    accordionPanel.querySelectorAll('.accordion-item.is-open .accordion-item__panel').forEach(function(panelEl){
+      panelEl.style.maxHeight = panelEl.scrollHeight + 'px';
+    });
+  }
+
+  /* ---------- Ritual in Motion (pinned step scroller) ---------- */
+  var ritualPanel = document.querySelector('.ritual-panel');
+  if (ritualPanel) {
+    var ritualSlides = Array.prototype.slice.call(ritualPanel.querySelectorAll('[data-ritual-slide]'));
+    var ritualSteps = Array.prototype.slice.call(ritualPanel.querySelectorAll('[data-ritual-step]'));
+    var ritualHeading = ritualPanel.querySelector('[data-ritual-heading]');
+    var ritualSub = ritualPanel.querySelector('[data-ritual-sub]');
+    var ritualProgressFill = ritualPanel.querySelector('[data-ritual-progress]');
+    var stepCount = ritualSteps.length;
+
+    var ritualCopy = [
+      { heading: 'Prepare', sub: 'Whole fruit, rinsed and ready — no peeling, no fuss.' },
+      { heading: 'Extract', sub: 'Cold-pressed, slowly, to protect every nutrient.' },
+      { heading: 'Pour', sub: 'Straight from the spout, into the glass.' },
+      { heading: 'Enjoy', sub: 'Fresh. Vibrant. Yours.' }
+    ];
+
+    var ritualIndex = 0;
+    var firstVideo = ritualSlides[0] && ritualSlides[0].querySelector('video');
+    if (firstVideo) firstVideo.play().catch(function(){});
+
+    function setRitualStep(i){
+      if (i === ritualIndex) return;
+      ritualIndex = i;
+
+      ritualSlides.forEach(function(slide, idx){
+        var isActive = idx === i;
+        slide.classList.toggle('is-active', isActive);
+        var v = slide.querySelector('video');
+        if (!v) return;
+        if (isActive) v.play().catch(function(){});
+        else v.pause();
+      });
+
+      ritualSteps.forEach(function(step, idx){
+        step.classList.toggle('is-active', idx === i);
+      });
+
+      var copy = ritualCopy[i];
+      gsap.to([ritualHeading, ritualSub], {
+        opacity: 0, y: -8, duration: .18, ease: 'power1.in',
+        onComplete: function(){
+          ritualHeading.textContent = copy.heading;
+          ritualSub.textContent = copy.sub;
+          gsap.to([ritualHeading, ritualSub], { opacity: 1, y: 0, duration: .32, ease: 'power2.out' });
+        }
+      });
+    }
+
+    var ritualScrollDistance = window.innerHeight * (stepCount - 1) * .9;
+
+    var ritualTrigger = ScrollTrigger.create({
+      trigger: ritualPanel,
+      start: 'top top',
+      end: function(){ return '+=' + ritualScrollDistance; },
+      pin: true,
+      scrub: 1,
+      onUpdate: function(self){
+        ritualProgressFill.style.width = (self.progress * 100) + '%';
+        var idx = Math.min(stepCount - 1, Math.floor(self.progress * stepCount));
+        setRitualStep(idx);
+      }
+    });
+
+    ritualSteps.forEach(function(step, idx){
+      step.addEventListener('click', function(){
+        var frac = idx / stepCount;
+        var target = ritualTrigger.start + frac * ritualScrollDistance + 2;
+        window.scrollTo({ top: target, behavior: 'smooth' });
+      });
+    });
+
+    window.addEventListener('resize', function(){
+      ritualScrollDistance = window.innerHeight * (stepCount - 1) * .9;
+    });
+  }
+
+  window.addEventListener('resize', function(){
+    ScrollTrigger.refresh();
+  });
+
+  document.querySelectorAll('video').forEach(function(v){
+    v.addEventListener('loadedmetadata', function(){ ScrollTrigger.refresh(); }, { once: true });
+  });
+})();
+</script>
+</body>
+</html>
