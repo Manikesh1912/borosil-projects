@@ -1386,881 +1386,6 @@ video{
 
 
 /* =========================================================
-   PRODUCT FEATURE DROP
-========================================================= */
-
-.feature-drop{
-  position:relative;
-  height:230vh;
-  overflow:visible;
-
-  background:
-    radial-gradient(
-      circle at 50% 20%,
-      rgba(108,195,232,.10),
-      transparent 55%
-    ),
-    linear-gradient(
-      135deg,
-      rgba(183,201,187,.14),
-      rgba(230,225,210,.5),
-      rgba(185,210,225,.14)
-    );
-}
-
-/* =========================================================
-   STAGE
-========================================================= */
-
-.feature-drop-stage{
-  position:sticky;
-  top:0;
-
-  width:100%;
-  height:100vh;
-
-  overflow:hidden;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  background:
-    radial-gradient(
-      circle at 50% 48%,
-      rgba(255,226,177,.28) 0%,
-      rgba(255,226,177,.10) 20%,
-      transparent 42%
-    );
-
-  /* NO BACKDROP BLUR */
-  backdrop-filter:none;
-  -webkit-backdrop-filter:none;
-}
-
-
-/* =========================================================
-   ATMOSPHERIC LIGHT
-========================================================= */
-
-.feature-drop-stage::before{
-  content:"";
-
-  position:absolute;
-  inset:-20%;
-
-  background:
-    radial-gradient(
-      ellipse at 50% 43%,
-      rgba(255,225,175,.24),
-      transparent 24%
-    );
-
-  pointer-events:none;
-  z-index:1;
-}
-
-
-/* =========================================================
-   FLOOR LIGHT
-========================================================= */
-
-.feature-drop-stage::after{
-  content:"";
-
-  position:absolute;
-
-  left:50%;
-  top:76%;
-
-  width:38vw;
-  height:7vw;
-
-  transform:translateX(-50%);
-
-  border-radius:50%;
-
-  background:
-    radial-gradient(
-      ellipse,
-      rgba(255,238,202,.28),
-      transparent 70%
-    );
-
-  filter:blur(12px);
-
-  opacity:.55;
-
-  z-index:2;
-}
-
-
-/* =========================================================
-   PRODUCT
-========================================================= */
-
-.drop-product{
-  position:absolute;
-
-  left:50%;
-  top:50%;
-
-  width:min(48vw,720px);
-
-  z-index:8;
-
-  transform:
-    translate3d(-50%,-50%,0)
-    rotate(-5deg)
-    scale(.78);
-
-  filter:
-    drop-shadow(
-      0 42px 42px
-      rgba(0,0,0,.30)
-    )
-    drop-shadow(
-      0 0 65px
-      rgba(255,235,195,.38)
-    );
-
-  will-change:transform;
-}
-
-
-.drop-product img{
-  display:block;
-
-  width:100%;
-  height:auto;
-
-  filter:
-    drop-shadow(
-      0 24px 22px
-      rgba(0,0,0,.18)
-    );
-}
-
-
-/* =========================================================
-   CENTER GLOW
-========================================================= */
-
-.feature-orbit{
-  position:absolute;
-
-  left:50%;
-  top:50%;
-
-  width:31vw;
-  height:31vw;
-
-  border-radius:50%;
-
-  border:1px solid rgba(47,136,173,.16);
-
-  box-shadow:
-    0 0 80px rgba(47,136,173,.08);
-
-  transform:
-    translate(-50%,-50%)
-    scale(.75);
-
-  opacity:0;
-
-  z-index:3;
-
-  pointer-events:none;
-}
-
-
-/* =========================================================
-   FEATURE CARD
-========================================================= */
-
-.drop-feature{
-  position:absolute;
-
-  width:216px;
-  min-height:88px;
-
-  padding:17px 19px;
-
-  display:flex;
-  align-items:center;
-  gap:14px;
-
-  border:1px solid rgba(169,140,100,.20);
-
-  border-radius:14px;
-
-  background:
-    linear-gradient(
-      165deg,
-      rgba(255,253,248,.94),
-      rgba(255,253,248,.66)
-    );
-
-  box-shadow:
-    0 20px 40px rgba(35,26,16,.10),
-    0 2px 10px rgba(35,26,16,.05),
-    inset 0 1px 0 rgba(255,255,255,.85);
-
-  backdrop-filter:
-    blur(14px)
-    saturate(120%);
-
-  -webkit-backdrop-filter:
-    blur(14px)
-    saturate(120%);
-
-  opacity:0;
-
-  transform:
-    translateY(25px)
-    scale(.94);
-
-  z-index:10;
-
-  will-change:transform,opacity;
-}
-
-
-/* =========================================================
-   ICON
-========================================================= */
-
-.feature-icon{
-  position:relative;
-
-  width:46px;
-  height:46px;
-
-  flex:none;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  border-radius:50%;
-
-  border:
-    1px solid
-    rgba(47,136,173,.30);
-
-  background:
-    radial-gradient(
-      circle at 32% 28%,
-      rgba(255,255,255,.95),
-      rgba(245,231,213,.55)
-    );
-
-  box-shadow:
-    0 4px 12px
-    rgba(47,136,173,.14),
-
-    inset 0 1px 3px
-    rgba(255,255,255,.9);
-
-  color:var(--crystal-blue-deep);
-}
-
-.feature-icon svg{
-  width:20px;
-  height:20px;
-
-  display:block;
-}
-
-
-/* =========================================================
-   TEXT
-========================================================= */
-
-.drop-feature small{
-  display:block;
-
-  margin-bottom:5px;
-
-  font-size:8px;
-
-  line-height:1;
-
-  font-weight:700;
-
-  letter-spacing:.22em;
-
-  color:
-    rgba(47,136,173,.62);
-}
-
-
-.drop-feature strong{
-  display:block;
-
-  font-family:Georgia, "Times New Roman", serif;
-
-  font-size:14px;
-  font-weight:400;
-
-  line-height:1.2;
-
-  letter-spacing:.01em;
-
-  color:#182019;
-}
-
-
-.drop-feature p{
-  margin:6px 0 0;
-
-  font-size:9px;
-
-  line-height:1.45;
-
-  color:
-    rgba(28,42,38,.58);
-}
-
-
-/* =========================================================
-   CONNECTOR LINE
-========================================================= */
-
-.drop-feature::after{
-  content:"";
-
-  position:absolute;
-
-  width:90px;
-  height:1px;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(47,136,173,.42),
-      rgba(47,136,173,0)
-    );
-
-  box-shadow:
-    0 0 6px
-    rgba(47,136,173,.18);
-
-  transform-origin:left center;
-}
-
-
-/* =========================================================
-   CONNECTOR DIRECTIONS
-========================================================= */
-
-.feature-1::after{
-  right:-86px;
-  top:78%;
-
-  transform:
-    rotate(22deg);
-}
-
-.feature-2::after{
-  left:50%;
-  bottom:-74px;
-
-  transform:
-    rotate(90deg);
-}
-
-.feature-3::after{
-  left:-86px;
-  top:78%;
-
-  transform:
-    rotate(158deg);
-}
-
-.feature-4::after{
-  left:-86px;
-  top:42%;
-
-  transform:
-    rotate(180deg);
-}
-
-.feature-5::after{
-  left:-88px;
-  top:20%;
-
-  transform:
-    rotate(205deg);
-}
-
-.feature-6::after{
-  left:50%;
-  top:-72px;
-
-  transform:
-    rotate(-90deg);
-}
-
-.feature-7::after{
-  right:-88px;
-  top:20%;
-
-  transform:
-    rotate(-25deg);
-}
-
-.feature-8::after{
-  right:-88px;
-  top:42%;
-
-  transform:
-    rotate(0deg);
-}
-
-
-/* =========================================================
-   FEATURE POSITIONS
-========================================================= */
-
-.feature-1{
-  left:13%;
-  top:18%;
-}
-
-.feature-2{
-  left:50%;
-  top:7%;
-
-  transform:
-    translateX(-50%)
-    translateY(25px)
-    scale(.94);
-}
-
-.feature-3{
-  right:13%;
-  top:18%;
-}
-
-.feature-4{
-  right:8%;
-  top:43%;
-}
-
-.feature-5{
-  right:13%;
-  top:68%;
-}
-
-.feature-6{
-  left:50%;
-  top:78%;
-
-  transform:
-    translateX(-50%)
-    translateY(25px)
-    scale(.94);
-}
-
-.feature-7{
-  left:13%;
-  top:68%;
-}
-
-.feature-8{
-  left:8%;
-  top:43%;
-}
-
-
-@media(max-width:700px){
-
-  /* =====================================================
-     FEATURE DROP
-  ===================================================== */
-
-  .feature-drop{
-
-    display:block;
-
-    position:relative;
-
-    width:100%;
-
-    height:auto;
-    min-height:0;
-
-    margin:0;
-
-    overflow:hidden;
-
-    background:
-      radial-gradient(
-        circle at 50% 15%,
-        rgba(108,195,232,.12),
-        transparent 50%
-      ),
-      linear-gradient(
-        160deg,
-        rgba(183,201,187,.16),
-        rgba(230,225,210,.55)
-      );
-  }
-
-
-  /* =====================================================
-     STAGE
-  ===================================================== */
-
-  .feature-drop-stage{
-
-    position:relative;
-
-    top:auto;
-    left:auto;
-
-    width:100%;
-    height:auto;
-
-    min-height:0;
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    justify-content:flex-start;
-
-    overflow:visible;
-
-    padding:
-      8vh
-      5vw
-      12vh;
-
-    background:
-      radial-gradient(
-        circle at 50% 15%,
-        rgba(255,226,177,.28),
-        transparent 40%
-      );
-
-    backdrop-filter:none;
-    -webkit-backdrop-filter:none;
-  }
-
-
-  /* =====================================================
-     PRODUCT
-  ===================================================== */
-
-  .drop-product{
-
-    position:relative;
-
-    left:auto;
-    top:auto;
-
-    width:88vw;
-
-    margin:0 auto;
-
-    transform:none !important;
-
-    opacity:1 !important;
-
-    z-index:5;
-
-    filter:
-      drop-shadow(
-        0 28px 28px
-        rgba(0,0,0,.22)
-      )
-      drop-shadow(
-        0 0 45px
-        rgba(255,235,195,.25)
-      );
-  }
-
-
-  .drop-product img{
-
-    display:block;
-
-    width:100%;
-
-    height:auto;
-  }
-
-
-  /* =====================================================
-     FEATURE HEADING
-  ===================================================== */
-
-  .feature-drop-stage::before{
-
-    content:"PRODUCT FEATURES";
-
-    position:relative;
-
-    inset:auto;
-
-    display:block;
-
-    width:100%;
-
-    margin:
-      5vh 0
-      3vh;
-
-    font-size:9px;
-
-    letter-spacing:.28em;
-
-    color:
-      rgba(28,42,38,.48);
-
-    background:none;
-
-    z-index:20;
-  }
-
-
-  /* =====================================================
-     FEATURE STACK
-  ===================================================== */
-
-  .mobile-feature-stack{
-
-    position:relative;
-
-    width:90vw;
-
-    margin:0 auto;
-
-    padding:0;
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    z-index:10;
-  }
-
-
-  /* =====================================================
-     FEATURE CARD
-  ===================================================== */
-
-  .mobile-feature-stack .drop-feature{
-
-    position:relative;
-
-    left:auto !important;
-    right:auto !important;
-    top:auto !important;
-
-    width:100%;
-
-    min-height:88px;
-
-    margin:0;
-
-    padding:16px 17px;
-
-    display:flex;
-
-    align-items:center;
-
-    gap:13px;
-
-    border:
-      1px solid
-      rgba(169,140,100,.22);
-
-    border-radius:16px;
-
-    box-shadow:
-      0 14px 30px
-      rgba(35,26,16,.10),
-
-      inset 0 1px 0
-      rgba(255,255,255,.85);
-
-    backdrop-filter:
-      blur(10px)
-      saturate(115%);
-
-    -webkit-backdrop-filter:
-      blur(10px)
-      saturate(115%);
-
-    opacity:1 !important;
-
-    transform:none !important;
-
-    z-index:auto;
-  }
-
-
-  /* =====================================================
-     STACK OVERLAP
-  ===================================================== */
-
-  .mobile-feature-stack .feature-1{
-    z-index:8;
-
-    transform:
-      translateX(-2px)
-      rotate(-1deg) !important;
-  }
-
-  .mobile-feature-stack .feature-2{
-    z-index:7;
-
-    margin-top:-48px;
-
-    transform:
-      translateX(6px)
-      rotate(1.2deg) !important;
-  }
-
-  .mobile-feature-stack .feature-3{
-    z-index:6;
-
-    margin-top:-48px;
-
-    transform:
-      translateX(-5px)
-      rotate(-1.3deg) !important;
-  }
-
-  .mobile-feature-stack .feature-4{
-    z-index:5;
-
-    margin-top:-48px;
-
-    transform:
-      translateX(7px)
-      rotate(1.2deg) !important;
-  }
-
-  .mobile-feature-stack .feature-5{
-    z-index:4;
-
-    margin-top:-48px;
-
-    transform:
-      translateX(-6px)
-      rotate(-1deg) !important;
-  }
-
-  .mobile-feature-stack .feature-6{
-    z-index:3;
-
-    margin-top:-48px;
-
-    transform:
-      translateX(6px)
-      rotate(1.2deg) !important;
-  }
-
-  .mobile-feature-stack .feature-7{
-    z-index:2;
-
-    margin-top:-48px;
-
-    transform:
-      translateX(-5px)
-      rotate(-1.2deg) !important;
-  }
-
-  .mobile-feature-stack .feature-8{
-    z-index:1;
-
-    margin-top:-48px;
-
-    transform:
-      translateX(5px)
-      rotate(1deg) !important;
-  }
-
-
-  /* =====================================================
-     ICON
-  ===================================================== */
-
-  .mobile-feature-stack .feature-icon{
-
-    width:40px;
-    height:40px;
-
-    flex:none;
-  }
-
-  .mobile-feature-stack .feature-icon svg{
-
-    width:18px;
-    height:18px;
-  }
-
-
-  /* =====================================================
-     TEXT
-  ===================================================== */
-
-  .mobile-feature-stack .drop-feature small{
-
-    font-size:7px;
-
-    margin-bottom:4px;
-  }
-
-
-  .mobile-feature-stack .drop-feature strong{
-
-    font-size:10px;
-
-    line-height:1.3;
-  }
-
-
-  .mobile-feature-stack .drop-feature p{
-
-    font-size:8px;
-
-    line-height:1.4;
-
-    margin-top:4px;
-  }
-
-
-  /* =====================================================
-     REMOVE DESKTOP ELEMENTS
-  ===================================================== */
-
-  .feature-orbit{
-    display:none;
-  }
-
-
-  .feature-drop-stage::after{
-    display:none;
-  }
-
-
-  .mobile-feature-stack .drop-feature::after{
-    display:none;
-  }
-
-}
-
-
-/* =========================================================
    MOBILE
 ========================================================= */
 
@@ -2799,58 +1924,6 @@ video{
   100%{ transform:translateX(120%) rotate(14deg); opacity:0; }
 }
 
-.crystal-stats{
-  position:relative;
-  z-index:2;
-
-  max-width:820px;
-  margin:0 auto;
-
-  padding:0 6vw 12vh;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  gap:0;
-}
-
-.crystal-stat{
-  padding:0 5vw;
-
-  text-align:center;
-
-  border-left:1px solid rgba(13,22,32,.15);
-}
-
-.crystal-stat:first-child{
-  border-left:none;
-}
-
-.crystal-stat strong{
-  display:block;
-
-  font-family:var(--crystal-serif);
-  font-weight:400;
-
-  font-size:clamp(24px,2.6vw,34px);
-
-  color:#0d1620;
-}
-
-.crystal-stat span{
-  display:block;
-
-  margin-top:8px;
-
-  font-size:9px;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-
-  color:rgba(13,22,32,.55);
-}
-
-
 /* =========================================================
    NEW SECTIONS — MOBILE
 ========================================================= */
@@ -2872,20 +1945,6 @@ video{
 
   .crystal-visual{
     width:min(72vw,300px);
-  }
-
-  .crystal-stats{
-    flex-wrap:wrap;
-    gap:4vh 0;
-
-    padding:0 6vw 10vh;
-  }
-
-  .crystal-stat{
-    width:50%;
-    border-left:none;
-
-    padding:0 3vw;
   }
 
   .video-cta-copy p{
@@ -2923,6 +1982,505 @@ video{
 
 }
 
+
+/* =========================================================
+   07 · KLIP USES
+========================================================= */
+
+@property --ku-tint{syntax:"<color>";inherits:true;initial-value:rgba(169,227,245,.45)}
+@property --ku-tint-2{syntax:"<color>";inherits:true;initial-value:rgba(159,180,234,.22)}
+
+.klip-uses{
+  position:relative;
+  height:560vh;
+  background:#f1eee6;
+}
+
+.ku-stage{
+  --ku-tint:rgba(169,227,245,.45);
+  --ku-tint-2:rgba(159,180,234,.22);
+  position:sticky;top:0;
+  height:100vh;height:100svh;min-height:620px;
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:minmax(300px,.85fr) 1.15fr;
+  grid-template-rows:1fr;
+  column-gap:4vw;
+  padding:110px max(96px,6vw) 40px 6vw;
+  background:
+    radial-gradient(ellipse 55% 60% at 68% 52%,var(--ku-tint),transparent 70%),
+    radial-gradient(ellipse 40% 45% at 12% 88%,var(--ku-tint-2),transparent 70%),
+    linear-gradient(160deg,#f6f4ee,#ebe6da);
+  transition:--ku-tint 1.1s ease,--ku-tint-2 1.1s ease;
+  color:#182019;
+}
+
+/* scene tints */
+.ku-stage[data-scene="snacks"]  {--ku-tint:rgba(169,227,245,.50);--ku-tint-2:rgba(159,180,234,.22)}
+.ku-stage[data-scene="bake"]    {--ku-tint:rgba(255,193,140,.55);--ku-tint-2:rgba(255,226,177,.35)}
+.ku-stage[data-scene="fridge"]  {--ku-tint:rgba(205,232,246,.75);--ku-tint-2:rgba(169,227,245,.28)}
+.ku-stage[data-scene="micro"]   {--ku-tint:rgba(255,214,150,.55);--ku-tint-2:rgba(255,236,200,.35)}
+.ku-stage[data-scene="go"]      {--ku-tint:rgba(159,180,234,.45);--ku-tint-2:rgba(108,195,232,.22)}
+.ku-stage[data-scene="baby"]    {--ku-tint:rgba(248,208,198,.55);--ku-tint-2:rgba(255,236,226,.40)}
+.ku-stage[data-scene="marinate"]{--ku-tint:rgba(190,221,178,.55);--ku-tint-2:rgba(236,226,196,.40)}
+.ku-stage[data-scene="freeze"]  {--ku-tint:rgba(169,227,245,.80);--ku-tint-2:rgba(214,238,250,.55)}
+.ku-stage[data-scene="prep"]    {--ku-tint:rgba(214,228,168,.55);--ku-tint-2:rgba(169,227,245,.25)}
+
+
+/* ---------- copy column ---------- */
+
+.ku-copy{
+  align-self:center;
+  position:relative;
+  z-index:5;
+  max-width:440px;
+}
+
+.ku-kicker{
+  display:block;
+  font-size:10px;letter-spacing:.32em;
+  color:var(--crystal-blue-deep);
+  margin-bottom:26px;
+}
+
+.ku-count{
+  display:flex;align-items:flex-end;gap:14px;
+  margin-bottom:22px;
+  font-family:var(--crystal-serif);
+}
+
+.ku-count-roll{
+  position:relative;
+  height:1em;
+  overflow:hidden;
+  font-size:clamp(64px,7vw,112px);
+  line-height:1;
+  font-style:italic;
+  color:var(--crystal-blue-deep);
+  min-width:1.2em;
+}
+
+.ku-count-roll span{
+  position:absolute;left:0;top:0;
+  transform:translateY(105%);
+  transition:transform .9s cubic-bezier(.16,1,.3,1);
+}
+.ku-count-roll span.is-active{transform:translateY(0)}
+.ku-count-roll span.is-past{transform:translateY(-105%)}
+
+.ku-count-total{
+  font-size:15px;letter-spacing:.06em;
+  color:rgba(24,32,27,.42);
+  padding-bottom:.9em;
+}
+
+.ku-steps{display:grid}
+
+.ku-step{
+  grid-area:1/1;
+  opacity:0;
+  transform:translateY(26px);
+  filter:blur(6px);
+  transition:
+    opacity .7s cubic-bezier(.16,1,.3,1),
+    transform .9s cubic-bezier(.16,1,.3,1),
+    filter .7s ease;
+  pointer-events:none;
+}
+.ku-step.is-past{transform:translateY(-26px)}
+.ku-step.is-active{
+  opacity:1;transform:none;filter:none;pointer-events:auto;
+  transition-delay:.12s;
+}
+
+.ku-step h3{
+  font-family:var(--crystal-serif);
+  font-weight:400;
+  font-size:clamp(34px,3.6vw,54px);
+  line-height:1.04;
+  letter-spacing:-.03em;
+}
+
+.ku-step p{
+  margin-top:18px;
+  max-width:360px;
+  font-size:14px;line-height:1.75;
+  color:rgba(24,32,27,.62);
+}
+
+.ku-note{
+  display:inline-flex;align-items:center;gap:10px;
+  margin-top:18px;
+  font-size:9px;letter-spacing:.2em;
+  color:var(--crystal-blue-deep);
+}
+.ku-note::before{
+  content:"";width:22px;height:1px;background:currentColor;
+}
+
+.ku-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  margin-top:34px;
+  padding:15px 30px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  background:var(--crystal-ink);color:var(--crystal-pearl);
+  font:inherit;font-size:12px;letter-spacing:.04em;
+  text-decoration:none;
+  box-shadow:0 14px 30px rgba(13,22,32,.22);
+  transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s cubic-bezier(.16,1,.3,1);
+}
+.ku-cta:hover{transform:translateY(-2px);box-shadow:0 18px 38px rgba(13,22,32,.3)}
+
+
+/* ---------- visual column ---------- */
+
+.ku-visual{
+  position:relative;
+  display:grid;place-items:center;
+  min-height:0;
+}
+
+.ku-orbit{
+  position:relative;
+  margin-right:48px; /* nudges the ring left so right-side labels clear the side progress nav */
+  width:min(36vw,56vh);
+  aspect-ratio:1;
+}
+
+.ku-ring{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  overflow:visible;
+  transform:rotate(-90deg);
+}
+.ku-ring circle{fill:none}
+.ku-ring .base{stroke:rgba(47,136,173,.16);stroke-width:.25}
+.ku-ring .spin{
+  stroke:rgba(47,136,173,.22);stroke-width:.2;
+  stroke-dasharray:.4 1.6;
+  transform-origin:50% 50%;
+  animation:ku-spin 60s linear infinite;
+}
+.ku-ring .fill{
+  stroke:var(--crystal-blue);stroke-width:.45;
+  stroke-linecap:round;
+  stroke-dasharray:1;stroke-dashoffset:1;
+  filter:drop-shadow(0 0 1.4px rgba(108,195,232,.9));
+}
+
+.ku-node{
+  position:absolute;
+  width:30px;height:30px;
+  margin:-15px 0 0 -15px;
+  border:none;border-radius:50%;
+  background:none;
+  cursor:pointer;
+  z-index:6;
+}
+.ku-node::before{
+  content:"";position:absolute;left:50%;top:50%;
+  width:9px;height:9px;margin:-4.5px 0 0 -4.5px;
+  border-radius:50%;
+  background:#f6f4ee;
+  border:1px solid rgba(47,136,173,.45);
+  transition:transform .5s cubic-bezier(.16,1,.3,1),background .4s,box-shadow .4s;
+}
+.ku-node.is-done::before{background:var(--crystal-cyan);border-color:var(--crystal-blue)}
+.ku-node.is-active::before{
+  background:var(--crystal-blue);border-color:#fff;
+  transform:scale(1.7);
+  box-shadow:0 0 0 5px rgba(108,195,232,.18),0 0 18px rgba(108,195,232,.9);
+}
+/* active-use label — editorial callout, always OUTSIDE the ring */
+.ku-node .ku-tag{
+  position:absolute;top:50%;
+  display:flex;flex-direction:column;
+  width:max-content;
+  padding:10px 16px 11px;
+  border-radius:10px;
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(255,255,255,.95);
+  box-shadow:0 14px 30px -18px rgba(13,22,32,.35),0 0 0 .5px rgba(47,136,173,.18);
+  backdrop-filter:blur(12px) saturate(130%);
+  -webkit-backdrop-filter:blur(12px) saturate(130%);
+  white-space:nowrap;
+  text-align:left;
+  opacity:0;
+  transition:opacity .45s ease,transform .7s cubic-bezier(.16,1,.3,1);
+  pointer-events:none;
+}
+.ku-node .ku-tag.to-right{left:38px;transform:translate(-10px,-50%)}
+.ku-node .ku-tag.to-left{right:38px;text-align:right;align-items:flex-end;transform:translate(10px,-50%)}
+.ku-node .ku-tag.to-top{left:50%;top:auto;bottom:36px;text-align:center;align-items:center;transform:translate(-50%,10px)}
+
+/* hairline leader from the node */
+.ku-node .ku-tag::after{
+  content:"";position:absolute;top:50%;
+  width:22px;height:1px;
+}
+.ku-node .ku-tag.to-right::after{right:100%;background:linear-gradient(90deg,rgba(47,136,173,.7),rgba(47,136,173,.2))}
+.ku-node .ku-tag.to-left::after{left:100%;background:linear-gradient(90deg,rgba(47,136,173,.2),rgba(47,136,173,.7))}
+.ku-node .ku-tag.to-top::after{top:100%;left:50%;width:1px;height:20px;background:linear-gradient(180deg,rgba(47,136,173,.2),rgba(47,136,173,.7))}
+
+.ku-tag em{
+  font-family:var(--crystal-serif);
+  font-style:normal;font-weight:400;
+  font-size:17px;line-height:1.1;
+  letter-spacing:-.01em;
+  color:#182019;
+}
+
+.ku-node.is-active .ku-tag{opacity:1;transition-delay:.2s}
+.ku-node.is-active .ku-tag.to-right,
+.ku-node.is-active .ku-tag.to-left{transform:translate(0,-50%)}
+.ku-node.is-active .ku-tag.to-top{transform:translate(-50%,0)}
+.ku-node:not(.is-active):hover .ku-tag,
+.ku-node:not(.is-active):focus-visible .ku-tag{opacity:.9}
+.ku-node:not(.is-active):hover .ku-tag.to-right,
+.ku-node:not(.is-active):hover .ku-tag.to-left{transform:translate(0,-50%)}
+.ku-node:not(.is-active):hover .ku-tag.to-top{transform:translate(-50%,0)}
+.ku-node:focus-visible{outline:1px solid var(--crystal-blue-deep);outline-offset:2px}
+
+/* product */
+.ku-prod{
+  position:absolute;
+  left:50%;top:52%;
+  width:84%;
+  transform:translate(-50%,-50%);
+  filter:drop-shadow(0 34px 30px rgba(24,32,27,.16));
+  transition:transform 1.1s cubic-bezier(.16,1,.3,1),opacity .6s ease,filter 1s ease;
+  z-index:4;
+}
+.ku-prod img{display:block;width:100%;height:auto;transform-origin:50% 90%}
+.ku-prod.clone{width:52%;opacity:0;z-index:3}
+
+.ku-stage[data-scene="snacks"]   .ku-prod.main img{animation:ku-float 6s ease-in-out infinite}
+.ku-stage[data-scene="bake"]     .ku-prod.main{transform:translate(-50%,-44%) scale(.9);filter:drop-shadow(0 30px 30px rgba(140,70,20,.2)) sepia(.1)}
+.ku-stage[data-scene="fridge"]   .ku-prod.main{transform:translate(-50%,-46%) scale(.9)}
+.ku-stage[data-scene="micro"]    .ku-prod.main{transform:translate(-50%,-30%) scale(.66)}
+.ku-stage[data-scene="go"]       .ku-prod.main img{animation:ku-bob 1.2s ease-in-out infinite}
+.ku-stage[data-scene="baby"]     .ku-prod.main img{animation:ku-float 5s ease-in-out infinite}
+.ku-stage[data-scene="marinate"] .ku-prod.main img{animation:ku-rock 3s ease-in-out infinite}
+.ku-stage[data-scene="freeze"]   .ku-prod.main{filter:drop-shadow(0 30px 30px rgba(47,136,173,.2)) saturate(.7) hue-rotate(-10deg) brightness(1.04)}
+.ku-stage[data-scene="prep"]     .ku-prod.main{transform:translate(-50%,-30%) scale(.74)}
+.ku-prod.clone-a{transform:translate(-112%,-60%) scale(.9)}
+.ku-prod.clone-b{transform:translate(12%,-60%) scale(.9)}
+.ku-stage[data-scene="prep"] .ku-prod.clone{opacity:1}
+.ku-stage[data-scene="prep"] .ku-prod.clone-a{transform:translate(-106%,-96%)}
+.ku-stage[data-scene="prep"] .ku-prod.clone-b{transform:translate(6%,-96%);transition-delay:.12s}
+
+
+/* ---------- scene effects ---------- */
+
+.ku-fx{
+  position:absolute;inset:-14%;
+  pointer-events:none;
+  opacity:0;visibility:hidden;
+  transition:opacity .7s ease,visibility 0s linear .7s;
+}
+.ku-fx *{animation-play-state:paused}
+.ku-stage[data-scene="snacks"]   .fx-snacks,
+.ku-stage[data-scene="bake"]     .fx-bake,
+.ku-stage[data-scene="fridge"]   .fx-fridge,
+.ku-stage[data-scene="micro"]    .fx-micro,
+.ku-stage[data-scene="go"]       .fx-go,
+.ku-stage[data-scene="baby"]     .fx-baby,
+.ku-stage[data-scene="marinate"] .fx-marinate,
+.ku-stage[data-scene="freeze"]   .fx-freeze{opacity:1;visibility:visible;transition:opacity .8s ease .2s}
+.ku-stage[data-scene="snacks"]   .fx-snacks *,
+.ku-stage[data-scene="bake"]     .fx-bake *,
+.ku-stage[data-scene="fridge"]   .fx-fridge *,
+.ku-stage[data-scene="micro"]    .fx-micro *,
+.ku-stage[data-scene="go"]       .fx-go *,
+.ku-stage[data-scene="baby"]     .fx-baby *,
+.ku-stage[data-scene="marinate"] .fx-marinate *,
+.ku-stage[data-scene="freeze"]   .fx-freeze *{animation-play-state:running}
+
+/* snacks — crystal flecks bursting */
+.fx-snacks i{
+  position:absolute;left:50%;top:52%;
+  width:12px;height:12px;
+  background:linear-gradient(135deg,#fff,var(--crystal-cyan));
+  border:1px solid rgba(47,136,173,.35);
+  transform:translate(-50%,-50%) rotate(45deg) scale(.2);
+  opacity:0;
+  animation:ku-burst 2.8s cubic-bezier(.16,1,.3,1) infinite;
+  animation-delay:var(--d);
+  box-shadow:0 0 12px rgba(108,195,232,.6);
+}
+.fx-snacks i.warm{background:linear-gradient(135deg,#fff3dc,#f0b560);border-color:rgba(180,110,40,.35);box-shadow:0 0 12px rgba(240,181,96,.5)}
+
+/* bake — warm glow + heat shimmer */
+.fx-bake .glow{
+  position:absolute;left:22%;right:22%;top:62%;height:18%;
+  border-radius:50%;
+  background:radial-gradient(closest-side,rgba(255,160,80,.55),transparent);
+  filter:blur(10px);
+  animation:ku-pulse 2.4s ease-in-out infinite;
+}
+.fx-bake svg{position:absolute;left:30%;width:40%;top:6%;height:30%;overflow:visible}
+.fx-bake path{
+  fill:none;stroke:rgba(220,120,50,.55);stroke-width:1.4;stroke-linecap:round;
+  opacity:0;animation:ku-rise 2.6s ease-out infinite;
+}
+.fx-bake path:nth-child(2){animation-delay:.85s}
+.fx-bake path:nth-child(3){animation-delay:1.7s}
+
+/* fridge — light switching on + glass shelf */
+.fx-fridge .light{
+  position:absolute;left:18%;right:18%;top:0;height:70%;
+  background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,255,255,0));
+  clip-path:polygon(30% 0,70% 0,100% 100%,0 100%);
+  animation:ku-flicker 4s ease-out infinite;
+}
+.fx-fridge .shelf{
+  position:absolute;left:8%;right:8%;top:72%;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent);
+  box-shadow:0 0 16px rgba(108,195,232,.7),0 6px 18px rgba(47,136,173,.18);
+}
+.fx-fridge i{
+  position:absolute;left:var(--x);top:78%;
+  width:4px;height:4px;border-radius:50%;
+  background:#fff;box-shadow:0 0 8px var(--crystal-cyan);
+  animation:ku-drift 5s ease-in-out infinite;animation-delay:var(--d);
+  opacity:0;
+}
+
+/* microwave — turntable + pulse + steam */
+.fx-micro .pulse{
+  position:absolute;inset:20%;
+  border-radius:50%;
+  background:radial-gradient(closest-side,rgba(255,196,110,.55),transparent);
+  animation:ku-pulse 1.6s ease-in-out infinite;
+}
+.fx-micro svg{position:absolute;left:22%;width:56%;top:64%;height:14%;overflow:visible}
+.fx-micro ellipse{
+  fill:rgba(255,255,255,.35);
+  stroke:rgba(190,140,70,.7);stroke-width:1.2;
+  stroke-dasharray:6 5;
+  animation:ku-dash 2.4s linear infinite;
+}
+.fx-micro .steam{position:absolute;left:40%;width:20%;top:16%;height:26%}
+.fx-micro .steam i{
+  position:absolute;bottom:0;width:5px;height:50%;
+  border-radius:6px;background:rgba(255,255,255,.95);
+  filter:blur(3px);
+  animation:ku-steam 2.4s ease-out infinite;opacity:0;
+}
+.fx-micro .steam i:nth-child(1){left:10%}
+.fx-micro .steam i:nth-child(2){left:48%;animation-delay:.8s}
+.fx-micro .steam i:nth-child(3){left:86%;animation-delay:1.6s}
+
+/* on the go — light streaks */
+.fx-go i{
+  position:absolute;right:-10%;top:var(--y);
+  height:1.5px;width:var(--w);
+  background:linear-gradient(90deg,transparent,var(--crystal-blue),transparent);
+  box-shadow:0 0 8px rgba(108,195,232,.8);
+  animation:ku-streak 1.3s linear infinite;animation-delay:var(--d);
+  opacity:0;
+}
+
+/* baby — pearl bubbles */
+.fx-baby i{
+  position:absolute;bottom:0;left:var(--x);
+  width:var(--s);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 32% 30%,#fff,rgba(255,255,255,.2) 60%,rgba(169,227,245,.25));
+  border:1px solid rgba(255,255,255,.8);
+  animation:ku-bubble var(--t) ease-in infinite;animation-delay:var(--d);
+  opacity:0;
+}
+
+/* marinate — herbs and chilli flakes */
+.fx-marinate i{
+  position:absolute;top:0;left:var(--x);
+  width:14px;height:8px;border-radius:100% 0;
+  background:#6a9a52;
+  animation:ku-leaf var(--t) linear infinite;animation-delay:var(--d);
+  opacity:0;
+}
+.fx-marinate i.chili{width:16px;height:5px;border-radius:6px 2px;background:#c9533b}
+
+/* freeze — frost + snow */
+.fx-freeze::before{
+  content:"";position:absolute;inset:6%;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(255,255,255,.0) 55%,rgba(255,255,255,.75) 100%);
+  animation:ku-pulse 4s ease-in-out infinite;
+}
+.fx-freeze svg{
+  position:absolute;top:0;left:var(--x);
+  width:var(--s);height:var(--s);
+  color:var(--crystal-blue-deep);
+  animation:ku-snow var(--t) linear infinite;animation-delay:var(--d);
+  opacity:0;
+}
+
+
+/* ---------- keyframes ---------- */
+
+@keyframes ku-spin{to{transform:rotate(360deg)}}
+@keyframes ku-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes ku-bob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-5px) rotate(-.6deg)}}
+@keyframes ku-rock{0%,100%{transform:rotate(-2.2deg)}50%{transform:rotate(2.2deg)}}
+@keyframes ku-burst{
+  0%{opacity:0;transform:translate(-50%,-50%) rotate(45deg) scale(.2)}
+  18%{opacity:1}
+  75%{opacity:.9}
+  100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) rotate(var(--r)) scale(1)}
+}
+@keyframes ku-pulse{0%,100%{opacity:.55;transform:scale(.96)}50%{opacity:1;transform:scale(1.04)}}
+@keyframes ku-rise{0%{opacity:0;transform:translateY(34px)}35%{opacity:1}100%{opacity:0;transform:translateY(-26px)}}
+@keyframes ku-flicker{0%{opacity:0}6%{opacity:1}9%{opacity:.4}14%,80%{opacity:1}100%{opacity:.85}}
+@keyframes ku-drift{0%{opacity:0;transform:translateY(0)}30%{opacity:1}100%{opacity:0;transform:translate(10px,-60px)}}
+@keyframes ku-dash{to{stroke-dashoffset:-110}}
+@keyframes ku-steam{0%{opacity:0;transform:translateY(20px) scaleY(.4)}35%{opacity:.9}100%{opacity:0;transform:translate(6px,-50px) scaleY(1.2)}}
+@keyframes ku-streak{0%{opacity:0;transform:translateX(0)}15%{opacity:1}100%{opacity:0;transform:translateX(-160%)}}
+@keyframes ku-bubble{0%{opacity:0;transform:translateY(0) scale(.5)}20%{opacity:1}100%{opacity:0;transform:translateY(-420px) scale(1.1)}}
+@keyframes ku-leaf{0%{opacity:0;transform:translate(0,0) rotate(0)}10%{opacity:1}90%{opacity:1}100%{opacity:0;transform:translate(-20px,520px) rotate(320deg)}}
+@keyframes ku-snow{0%{opacity:0;transform:translate(0,0) rotate(0)}10%{opacity:.9}90%{opacity:.9}100%{opacity:0;transform:translate(24px,540px) rotate(200deg)}}
+
+
+/* ---------- mobile ---------- */
+
+@media(max-width:700px){
+
+  .klip-uses{height:620vh}
+
+  .ku-stage{
+    grid-template-columns:1fr;
+    grid-template-rows:auto 1fr;
+    padding:92px 7vw 26px;
+    background:
+      radial-gradient(ellipse 90% 45% at 50% 62%,var(--ku-tint),transparent 70%),
+      radial-gradient(ellipse 70% 30% at 20% 100%,var(--ku-tint-2),transparent 70%),
+      linear-gradient(170deg,#f6f4ee,#ebe6da);
+  }
+
+  .ku-copy{align-self:start;max-width:none}
+  .ku-kicker{margin-bottom:14px}
+  .ku-count{margin-bottom:10px;gap:10px}
+  .ku-count-roll{font-size:54px}
+  .ku-count-total{font-size:12px}
+  .ku-step h3{font-size:30px}
+  .ku-step p{margin-top:10px;font-size:13px;line-height:1.65}
+  .ku-note{margin-top:10px}
+  .ku-cta{display:none}
+
+  .ku-prod{width:92%}
+  .ku-orbit{width:min(82vw,40svh);margin-right:0}
+  .ku-node .ku-tag{display:none}
+
+}
+
+/* short desktop windows */
+@media(min-width:701px) and (max-height:760px){
+  .ku-stage{padding-top:96px}
+  .ku-count-roll{font-size:64px}
+  .ku-step h3{font-size:34px}
+}
+
 </style>
 
 </head>
@@ -2944,7 +2502,7 @@ video{
   <nav class="nav">
     <span class="is-active" data-nav-target=".hero">KLIP N STORE</span>
     <span data-nav-target=".crystal-story">ABOUT</span>
-    <span data-nav-target=".feature-drop">EXPLORE</span>
+    <span data-nav-target=".klip-uses">EXPLORE</span>
   </nav>
 
   <div class="site-nav-cart">
@@ -2962,8 +2520,8 @@ video{
   <div class="side-progress-item is-active" data-progress-target=".hero">01</div>
   <div class="side-progress-item" data-progress-target=".video-section">02</div>
   <div class="side-progress-item" data-progress-target=".crystal-story">03</div>
-  <div class="side-progress-item" data-progress-target=".use-cases">04</div>
-  <div class="side-progress-item" data-progress-target=".feature-drop">05</div>
+  <div class="side-progress-item" data-progress-target=".klip-uses">04</div>
+  <div class="side-progress-item" data-progress-target=".use-cases">05</div>
   <div class="side-progress-item" data-progress-target=".video-cta">06</div>
 </nav>
 
@@ -3165,7 +2723,7 @@ video{
         <span class="play-toggle-label">Watch the demo</span>
       </button>
 
-      <button class="pill-btn" data-scroll-to=".feature-drop">
+      <button class="pill-btn" data-scroll-to=".use-cases">
         Shop Klip N Store
       </button>
 
@@ -3225,22 +2783,176 @@ video{
 
   </div>
 
-  <div class="crystal-stats reveal-stagger">
 
-    <div class="crystal-stat reveal" style="--stagger:0">
-      <strong>350°C</strong>
-      <span>Heat Resistant</span>
+</section>
+
+
+
+<!-- =====================================================
+     07 · KLIP USES
+===================================================== -->
+
+<section class="klip-uses" aria-labelledby="ku-heading">
+
+  <div class="ku-stage" data-scene="snacks">
+
+    <div class="ku-copy">
+
+      <span class="ku-kicker" id="ku-heading">NINE EVERYDAY USES</span>
+
+      <div class="ku-count" aria-hidden="true">
+        <div class="ku-count-roll">
+          <span class="is-active">01</span><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span><span>07</span><span>08</span><span>09</span>
+        </div>
+        <div class="ku-count-total">/ 09</div>
+      </div>
+
+      <div class="ku-steps" aria-live="polite">
+
+        <div class="ku-step is-active" data-scene="snacks" data-short="Store snacks" data-label="STORE SNACKS">
+          <h3>Store snacks</h3>
+          <p>The four-clip lid locks airtight, so namkeen, nuts and cookies stay crisp for longer.</p>
+        </div>
+
+        <div class="ku-step" data-scene="bake" data-short="Oven baking" data-label="BAKE IN THE OVEN">
+          <h3>Bake meals in the oven</h3>
+          <p>Borosilicate glass goes straight into the oven. Bake a pasta or a cake, then serve in the same dish.</p>
+          <span class="ku-note">REMOVE THE LID BEFORE BAKING</span>
+        </div>
+
+        <div class="ku-step" data-scene="fridge" data-short="Fridge leftovers" data-label="LEFTOVERS IN THE FRIDGE">
+          <h3>Store leftovers in the fridge</h3>
+          <p>Clear glass shows what's inside at a glance, and it doesn't hold on to curry stains or smells.</p>
+        </div>
+
+        <div class="ku-step" data-scene="micro" data-short="Microwave reheat" data-label="REHEAT IN THE MICROWAVE">
+          <h3>Reheat in the microwave</h3>
+          <p>Warm up lunch in the box you stored it in. No transferring, no extra dishes to wash.</p>
+          <span class="ku-note">REMOVE THE LID BEFORE HEATING</span>
+        </div>
+
+        <div class="ku-step" data-scene="go" data-short="Meals on the go" data-label="MEALS ON THE GO">
+          <h3>Carry meals on the go</h3>
+          <p>Clip it shut and pack it. The seal keeps dal and gravies inside the box, not in your bag.</p>
+        </div>
+
+        <div class="ku-step" data-scene="baby" data-short="Baby food" data-label="BABY FOOD STORAGE">
+          <h3>Store baby food</h3>
+          <p>Glass doesn't carry smells from one meal to the next, so purees taste only of what's in them.</p>
+        </div>
+
+        <div class="ku-step" data-scene="marinate" data-short="Marinating" data-label="MARINATE MEAT AND FISH">
+          <h3>Marinate meat and fish</h3>
+          <p>Marinate overnight. The seal keeps the juices in and the smell out of the rest of your fridge.</p>
+        </div>
+
+        <div class="ku-step" data-scene="freeze" data-short="Freezing" data-label="FREEZE CHUTNEYS">
+          <h3>Freeze chutneys and purees</h3>
+          <p>Make green chutney or tomato puree in a big batch and freeze it for the weeks ahead.</p>
+        </div>
+
+        <div class="ku-step" data-scene="prep" data-short="Meal prep" data-label="PREP FRUITS AND VEGETABLES">
+          <h3>Prep fruits and vegetables</h3>
+          <p>Chop in the morning, stack the boxes in the fridge, and dinner comes together faster.</p>
+        </div>
+
+      </div>
+
+      <button class="ku-cta" data-scroll-to=".use-cases">Shop Klip N Store</button>
+
     </div>
 
-    <div class="crystal-stat reveal" style="--stagger:1">
-      <strong>0%</strong>
-      <span>Chemical Leaching</span>
+
+    <div class="ku-visual" aria-hidden="true">
+      <div class="ku-orbit">
+
+        <svg class="ku-ring" viewBox="0 0 100 100">
+          <circle class="base" cx="50" cy="50" r="49.5"/>
+          <circle class="spin" cx="50" cy="50" r="46" pathLength="100"/>
+          <circle class="fill" cx="50" cy="50" r="49.5" pathLength="1"/>
+        </svg>
+
+        <!-- scene effects -->
+        <div class="ku-fx fx-snacks">
+          <i style="--d:0s;--dx:-210px;--dy:-150px;--r:225deg"></i>
+          <i class="warm" style="--d:.35s;--dx:190px;--dy:-170px;--r:-135deg"></i>
+          <i style="--d:.7s;--dx:-150px;--dy:-230px;--r:160deg"></i>
+          <i class="warm" style="--d:1.05s;--dx:240px;--dy:-90px;--r:90deg"></i>
+          <i style="--d:1.4s;--dx:-250px;--dy:-60px;--r:260deg"></i>
+          <i class="warm" style="--d:1.75s;--dx:110px;--dy:-240px;--r:-80deg"></i>
+          <i style="--d:2.1s;--dx:260px;--dy:-200px;--r:150deg"></i>
+          <i class="warm" style="--d:2.45s;--dx:-80px;--dy:-250px;--r:-120deg"></i>
+        </div>
+
+        <div class="ku-fx fx-bake">
+          <svg viewBox="0 0 200 100" preserveAspectRatio="none">
+            <path d="M50 100 q9 -15 0 -30 t0 -30 t0 -30"/>
+            <path d="M100 100 q9 -15 0 -30 t0 -30 t0 -30"/>
+            <path d="M150 100 q9 -15 0 -30 t0 -30 t0 -30"/>
+          </svg>
+          <div class="glow"></div>
+        </div>
+
+        <div class="ku-fx fx-fridge">
+          <div class="light"></div>
+          <div class="shelf"></div>
+          <i style="--x:24%;--d:0s"></i><i style="--x:40%;--d:1.2s"></i><i style="--x:62%;--d:.6s"></i><i style="--x:76%;--d:2s"></i>
+        </div>
+
+        <div class="ku-fx fx-micro">
+          <div class="pulse"></div>
+          <svg viewBox="0 0 200 40" preserveAspectRatio="none"><ellipse cx="100" cy="20" rx="97" ry="17"/></svg>
+          <div class="steam"><i></i><i></i><i></i></div>
+        </div>
+
+        <div class="ku-fx fx-go">
+          <i style="--y:34%;--w:38%;--d:0s"></i>
+          <i style="--y:46%;--w:24%;--d:.35s"></i>
+          <i style="--y:58%;--w:44%;--d:.7s"></i>
+          <i style="--y:68%;--w:20%;--d:1s"></i>
+          <i style="--y:40%;--w:18%;--d:.9s"></i>
+        </div>
+
+        <div class="ku-fx fx-baby">
+          <i style="--x:10%;--s:30px;--t:6s;--d:0s"></i>
+          <i style="--x:24%;--s:16px;--t:5s;--d:1.5s"></i>
+          <i style="--x:72%;--s:36px;--t:7s;--d:.6s"></i>
+          <i style="--x:86%;--s:20px;--t:5.5s;--d:2.4s"></i>
+          <i style="--x:56%;--s:14px;--t:4.6s;--d:3.1s"></i>
+          <i style="--x:38%;--s:24px;--t:6.4s;--d:3.8s"></i>
+        </div>
+
+        <div class="ku-fx fx-marinate">
+          <i style="--x:14%;--t:6s;--d:0s"></i>
+          <i class="chili" style="--x:28%;--t:7s;--d:1.8s"></i>
+          <i style="--x:70%;--t:6.4s;--d:.9s"></i>
+          <i style="--x:84%;--t:7.6s;--d:2.7s"></i>
+          <i class="chili" style="--x:52%;--t:8s;--d:3.5s"></i>
+          <i style="--x:40%;--t:6.8s;--d:4.4s"></i>
+        </div>
+
+        <div class="ku-fx fx-freeze">
+          <svg style="--x:10%;--s:20px;--t:7s;--d:0s"><use href="#ku-flake"/></svg>
+          <svg style="--x:24%;--s:12px;--t:5.6s;--d:1.6s"><use href="#ku-flake"/></svg>
+          <svg style="--x:42%;--s:16px;--t:8s;--d:.8s"><use href="#ku-flake"/></svg>
+          <svg style="--x:62%;--s:24px;--t:7.4s;--d:2.4s"><use href="#ku-flake"/></svg>
+          <svg style="--x:78%;--s:14px;--t:6s;--d:.3s"><use href="#ku-flake"/></svg>
+          <svg style="--x:90%;--s:18px;--t:6.8s;--d:3.2s"><use href="#ku-flake"/></svg>
+        </div>
+
+        <!-- product (real Klip N Store asset used elsewhere on this page) -->
+        <div class="ku-prod clone clone-a"><img src="assets/rectangle.png" alt=""></div>
+        <div class="ku-prod clone clone-b"><img src="assets/rectangle.png" alt=""></div>
+        <div class="ku-prod main"><img src="assets/rectangle.png" alt="Klip N Store rectangle glass container"></div>
+
+        <!-- step nodes are added by the script -->
+      </div>
     </div>
 
-    <div class="crystal-stat reveal" style="--stagger:2">
-      <strong>2 Yr</strong>
-      <span>Warranty</span>
-    </div>
+
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <symbol id="ku-flake" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 2v20M3.3 7l17.4 10M20.7 7L3.3 17"/><path d="M9.5 3.5L12 6l2.5-2.5M9.5 20.5L12 18l2.5 2.5"/></g></symbol>
+    </svg>
 
   </div>
 
@@ -3397,116 +3109,6 @@ video{
 
 
 </section>
-
-<!-- =====================================================
-     04 — PRODUCT FEATURE DROP
-===================================================== -->
-
-<section class="feature-drop">
-
-  <div class="feature-drop-stage">
-
-    <!-- CENTER PRODUCT -->
-
-    <div class="drop-product">
-
-      <img
-        src="assets/rectangle.png"
-        alt="Klip N Store"
-      >
-
-    </div>
-
-
-    <div class="mobile-feature-stack">
-
-  <div class="drop-feature feature-1">
-    <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="2.6"/></svg></span>
-    <div>
-      <small>01</small>
-      <strong>AIRTIGHT SEAL</strong>
-      <p>Keeps freshness in.</p>
-    </div>
-  </div>
-
-
-  <div class="drop-feature feature-2">
-    <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5c-1.3 3.6-5.3 5.6-5.3 10a5.3 5.3 0 0010.6 0c0-1.7-.8-2.9-1.7-3.8.2 1.7-.8 2.6-1.7 2.6.7-3.4-.8-5.1-1.9-8.8z"/></svg></span>
-    <div>
-      <small>02</small>
-      <strong>BOROSILICATE GLASS</strong>
-      <p>Built for everyday use.</p>
-    </div>
-  </div>
-
-
-  <div class="drop-feature feature-3">
-    <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 3s6 6.3 6 10.3a6 6 0 01-12 0C6 9.3 12 3 12 3z"/><line x1="4.5" y1="19.5" x2="19.5" y2="4.5"/></svg></span>
-    <div>
-      <small>03</small>
-      <strong>100% LEAK PROOF</strong>
-      <p>Carry with confidence.</p>
-    </div>
-  </div>
-
-
-  <div class="drop-feature feature-4">
-    <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3.5" y="3.5" width="9.5" height="9.5" rx="1.6"/><rect x="11" y="11" width="9.5" height="9.5" rx="1.6"/></svg></span>
-    <div>
-      <small>04</small>
-      <strong>MULTI-USE</strong>
-      <p>Microwave, fridge & freezer.</p>
-    </div>
-  </div>
-
-
-  <div class="drop-feature feature-5">
-    <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="7.5" fill="currentColor" opacity=".14" stroke="none"/></svg></span>
-    <div>
-      <small>05</small>
-      <strong>NON POROUS</strong>
-      <p>Resists stains and odours.</p>
-    </div>
-  </div>
-
-
-  <div class="drop-feature feature-6">
-    <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M12 3.5l3.6 5 5 3.5-5 3.5-3.6 5-3.6-5-5-3.5 5-3.5 3.6-5z"/></svg></span>
-    <div>
-      <small>06</small>
-      <strong>SCRATCH RESISTANT</strong>
-      <p>Made for everyday life.</p>
-    </div>
-  </div>
-
-
-  <div class="drop-feature feature-7">
-    <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M12 3c.7 3.6 2.1 5 5.7 5.7-3.6.7-5 2.1-5.7 5.7-.7-3.6-2.1-5-5.7-5.7C9.9 8 11.3 6.6 12 3z"/></svg></span>
-    <div>
-      <small>07</small>
-      <strong>RETAINS CLARITY</strong>
-      <p>Stays clear over time.</p>
-    </div>
-  </div>
-
-
-  <div class="drop-feature feature-8">
-    <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M12 3l7 3.2v5c0 5-3.2 8.4-7 9.8-3.8-1.4-7-4.8-7-9.8v-5L12 3z"/></svg></span>
-    <div>
-      <small>08</small>
-      <strong>STRONGER & TOUGHER</strong>
-      <p>Harder than ordinary glass.</p>
-    </div>
-  </div>
-
-</div>
-
-<div class="feature-orbit"></div>
-
-  </div>
-
-</section>
-
 
 <!-- =====================================================
      10.5 — CLOSING VIDEO CTA
@@ -4114,7 +3716,6 @@ function update(){
 
         updateHero();
         updateVideo();
-        updateFeatureDrop();
 
         if(window.innerWidth <= 700){
 
@@ -4468,222 +4069,6 @@ update();
 
 
 /* =========================================================
-   PRODUCT FEATURE DROP
-========================================================= */
-
-const featureDrop =
-  document.querySelector(".feature-drop");
-
-const dropProduct =
-  document.querySelector(".drop-product");
-
-const featureOrbit =
-  document.querySelector(".feature-orbit");
-
-const featureShadow =
-  document.querySelector(".feature-drop-stage");
-
-
-const dropFeatures =
-  document.querySelectorAll(".drop-feature");
-
-
-function updateFeatureDrop(){
-
-  if(!featureDrop){
-    return;
-  }
-
-  if(window.innerWidth <= 700){
-    return;
-  }
-
-
-  const rect =
-    featureDrop.getBoundingClientRect();
-
-  const vh =
-    window.innerHeight;
-
-
-  const totalDistance =
-    featureDrop.offsetHeight - vh;
-
-  const current =
-    clamp(
-      -rect.top,
-      0,
-      totalDistance
-    );
-
-  const progress =
-    totalDistance > 0
-      ? current / totalDistance
-      : 0;
-
-
-  /* =========================================
-     PRODUCT DROP
-     First part of section
-  ========================================= */
-
-  const productProgress =
-    clamp(
-      progress / .32,
-      0,
-      1
-    );
-
-  const productEase =
-    1 -
-    Math.pow(
-      1 - productProgress,
-      4
-    );
-
-
-  const productY =
-    -115 +
-    productEase * 115;
-
-
-  const productRotation =
-    -5 +
-    productEase * 5;
-
-
-  const productScale =
-    .78 +
-    productEase * .22;
-
-
-  dropProduct.style.transform = `
-    translate3d(
-      -50%,
-      calc(-50% + ${productY}vh),
-      0
-    )
-    rotate(${productRotation}deg)
-    scale(${productScale})
-  `;
-
-
-  /* =========================================
-     ORBIT
-  ========================================= */
-
-  const orbitProgress =
-    clamp(
-      (progress - .22) / .30,
-      0,
-      1
-    );
-
-  const orbitEase =
-    1 -
-    Math.pow(
-      1 - orbitProgress,
-      3
-    );
-
-
-  featureOrbit.style.opacity =
-    orbitEase * .85;
-
-
-  featureOrbit.style.transform = `
-    translate(-50%,-50%)
-    scale(${.72 + orbitEase * .28})
-  `;
-
-
-  /* =========================================
-     FEATURES
-  ========================================= */
-
-  const featureStarts = [
-
-    .34,  /* Airtight */
-
-    .40,  /* Borosilicate */
-
-    .46,  /* Leak proof */
-
-    .52,  /* Multi-use */
-
-    .58,  /* Non porous */
-
-    .64,  /* Scratch resistant */
-
-    .70,  /* Clarity */
-
-    .76   /* Stronger */
-
-  ];
-
-
-  dropFeatures.forEach(
-    (feature,index) => {
-
-      const start =
-        featureStarts[index];
-
-
-      const featureProgress =
-        clamp(
-          (progress - start) / .09,
-          0,
-          1
-        );
-
-
-      const eased =
-        1 -
-        Math.pow(
-          1 - featureProgress,
-          3
-        );
-
-
-      feature.style.opacity =
-        eased;
-
-
-      const isCentered =
-        feature.classList.contains(
-          "feature-2"
-        ) ||
-        feature.classList.contains(
-          "feature-6"
-        );
-
-
-      if(isCentered){
-
-        feature.style.transform = `
-          translateX(-50%)
-          translateY(${25 - eased * 25}px)
-          scale(${.94 + eased * .06})
-        `;
-
-      }
-      else{
-
-        feature.style.transform = `
-          translateY(${25 - eased * 25}px)
-          scale(${.94 + eased * .06})
-        `;
-
-      }
-
-    }
-  );
-
-}
-
-
-
-/* =========================================================
    REVEAL ON SCROLL
 ========================================================= */
 
@@ -4871,6 +4256,129 @@ if("IntersectionObserver" in window && trackedSections.length){
   });
 
 }
+
+
+
+/* =========================================================
+   07 · KLIP USES
+========================================================= */
+
+(function(){
+
+  const section = document.querySelector(".klip-uses");
+  if(!section) return;
+
+  const stage   = section.querySelector(".ku-stage");
+  const steps   = Array.from(section.querySelectorAll(".ku-step"));
+  const digits  = Array.from(section.querySelectorAll(".ku-count-roll span"));
+  const orbit   = section.querySelector(".ku-orbit");
+  const ring    = section.querySelector(".ku-ring .fill");
+  const total   = steps.length;
+
+  /* build nodes on the orbit and segments on the bar */
+  const nodes = [];
+
+  steps.forEach((step,i) => {
+
+    const angle = (-90 + i * (360 / total)) * Math.PI / 180;
+    const x = 50 + 50 * Math.cos(angle);
+    const y = 50 + 50 * Math.sin(angle);
+
+    const node = document.createElement("button");
+    node.className = "ku-node";
+    node.type = "button";
+    node.style.left = x + "%";
+    node.style.top  = y + "%";
+    node.setAttribute("aria-label", step.querySelector("h3").textContent);
+
+    /* label always sits outside the ring: right half → right, left half → left, top → above */
+    const cos = Math.cos(angle);
+    const tag = document.createElement("span");
+    tag.className = "ku-tag " + (i === 0 ? "to-top" : (cos > 0 ? "to-right" : "to-left"));
+    tag.innerHTML = "<em></em>";
+    tag.querySelector("em").textContent = step.dataset.short || step.dataset.label;
+    node.appendChild(tag);
+
+    node.addEventListener("click", () => scrollToStep(i));
+    orbit.appendChild(node);
+    nodes.push(node);
+
+
+  });
+
+  function clampNum(v,min,max){ return Math.min(Math.max(v,min),max); }
+
+  function metrics(){
+    const rect = section.getBoundingClientRect();
+    const distance = section.offsetHeight - window.innerHeight;
+    return { rect, distance };
+  }
+
+  function scrollToStep(i){
+    const { distance } = metrics();
+    const top = section.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: top + distance * ((i + 0.5) / total), behavior:"smooth" });
+  }
+
+  let current = -1;
+
+  function setStep(index){
+    if(index === current) return;
+    current = index;
+
+    stage.dataset.scene = steps[index].dataset.scene;
+
+    steps.forEach((s,i) => {
+      s.classList.toggle("is-active", i === index);
+      s.classList.toggle("is-past", i < index);
+    });
+
+    digits.forEach((d,i) => {
+      d.classList.toggle("is-active", i === index);
+      d.classList.toggle("is-past", i < index);
+    });
+
+    nodes.forEach((n,i) => {
+      n.classList.toggle("is-active", i === index);
+      n.classList.toggle("is-done", i < index);
+    });
+
+  }
+
+  let ticking = false;
+
+  function render(){
+    ticking = false;
+
+    const { rect, distance } = metrics();
+    const progress = distance > 0 ? clampNum(-rect.top / distance, 0, 1) : 0;
+
+      const index = clampNum(Math.floor(progress * total), 0, total - 1);
+
+    setStep(index);
+
+    ring.style.strokeDashoffset = 1 - progress;
+
+
+    /* pause looping effects when the section is off-screen */
+    const visible = rect.bottom > 0 && rect.top < window.innerHeight;
+    stage.style.animationPlayState = visible ? "" : "paused";
+  }
+
+  function onScroll(){
+    if(!ticking){
+      ticking = true;
+      requestAnimationFrame(render);
+    }
+  }
+
+  window.addEventListener("scroll", onScroll, { passive:true });
+  window.addEventListener("resize", onScroll);
+
+  setStep(0);
+  render();
+
+})();
 
 </script>
 
