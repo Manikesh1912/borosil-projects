@@ -1075,6 +1075,10 @@ video{
   transform:scale(1.04);
 }
 
+.cta-mobile-video{
+  display:none;
+}
+
 .video-cta-overlay{
   position:absolute;
   inset:0;
@@ -1546,6 +1550,14 @@ video{
   width:100%;
   height:100%;
   object-fit:cover;
+}
+
+.cta-desktop-video{
+  display:none;
+}
+
+.cta-mobile-video{
+  display:block;
 }
 
   .video-section{
@@ -3117,7 +3129,18 @@ video{
 <section class="video-cta">
 
   <video
+    class="cta-desktop-video"
     src="assets/klip-video.mp4"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="none"
+  ></video>
+
+  <video
+    class="cta-mobile-video"
+    src="https://cdn.shopify.com/videos/c/o/v/1eb65c1d90094330aa7ec92d4c775175.mp4"
     autoplay
     muted
     loop
