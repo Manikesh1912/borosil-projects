@@ -2493,6 +2493,332 @@ video{
   .ku-step h3{font-size:34px}
 }
 
+
+/* =========================================================
+   KLIP FEATURES (horizontal scroll)
+========================================================= */
+
+.klip-features{
+  position:relative;
+  height:500vh;           /* the script sets the exact height */
+  background:#8b9998;
+}
+
+.kf-stage{
+  --p:0;
+  position:sticky;top:0;
+  height:100vh;height:100svh;min-height:620px;
+  overflow:hidden;
+  isolation:isolate;
+  color:var(--crystal-ink);
+  display:flex;flex-direction:column;
+}
+
+
+/* ---------- transparent crystal background ---------- */
+
+.kf-liquid{
+  position:absolute;inset:0;
+  z-index:-1;
+  overflow:hidden;
+  /* frosted teal-grey glass, cooler on the left, warmer on the right */
+  background:linear-gradient(100deg,#7d9392 0%,#869796 30%,#929a97 62%,#9c9c96 100%);
+}
+
+/* slow liquid light moving behind the glass */
+.kf-blob{
+  position:absolute;
+  width:56vw;height:56vw;
+  max-width:880px;max-height:880px;
+  filter:blur(60px);
+  will-change:transform,border-radius;
+}
+.kf-blob.b1{
+  left:-12vw;top:-22vh;
+  background:radial-gradient(circle at 45% 45%,rgba(169,227,245,.55),rgba(108,195,232,.18) 50%,transparent 70%);
+  mix-blend-mode:soft-light;
+  animation:kf-morph-a 16s ease-in-out infinite;
+  transform:translateX(calc(var(--p) * 30vw));
+}
+.kf-blob.b2{
+  right:-16vw;top:6vh;
+  background:radial-gradient(circle at 55% 50%,rgba(255,255,255,.55),rgba(255,255,255,.12) 50%,transparent 70%);
+  mix-blend-mode:soft-light;
+  animation:kf-morph-b 19s ease-in-out infinite;
+  transform:translateX(calc(var(--p) * -26vw));
+}
+.kf-blob.b3{
+  left:22vw;bottom:-34vh;
+  background:radial-gradient(circle at 50% 40%,rgba(60,90,95,.45),transparent 68%);
+  mix-blend-mode:multiply;
+  animation:kf-morph-a 22s ease-in-out infinite reverse;
+  transform:translateY(calc(var(--p) * -12vh));
+}
+.kf-blob.b4{
+  left:50vw;top:-30vh;width:36vw;height:36vw;
+  background:radial-gradient(circle,rgba(255,255,255,.45),transparent 70%);
+  mix-blend-mode:soft-light;
+  animation:kf-morph-b 13s ease-in-out infinite reverse;
+  transform:translateX(calc(var(--p) * -40vw));
+}
+
+/* the glass itself: fine crystal crosshatch, soft top light, a sheen that sweeps across */
+.kf-glass{
+  position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(45deg,rgba(255,255,255,.07) 0 1px,transparent 1px 3px),
+    repeating-linear-gradient(-45deg,rgba(20,40,45,.06) 0 1px,transparent 1px 3px),
+    radial-gradient(ellipse 80% 60% at 30% 0%,rgba(255,255,255,.16),transparent 60%),
+    linear-gradient(180deg,rgba(255,255,255,.06),transparent 35%,transparent 75%,rgba(13,22,32,.12));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -1px 0 rgba(13,22,32,.08);
+  pointer-events:none;
+}
+.kf-glass::before{
+  content:"";position:absolute;inset:-30%;
+  background:linear-gradient(100deg,transparent 42%,rgba(255,255,255,.16) 50%,transparent 58%);
+  animation:kf-sheen 10s ease-in-out infinite;
+}
+.kf-glass::after{ /* glowing rim along the top edge, like the tabletop glass */
+  content:"";position:absolute;left:8%;right:8%;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(169,227,245,.9),transparent);
+  box-shadow:0 0 14px rgba(108,195,232,.6);
+}
+
+
+/* ---------- heading ---------- */
+
+.kf-head{
+  padding:108px 6vw 0;
+  display:flex;align-items:flex-end;justify-content:space-between;gap:30px;
+  position:relative;z-index:3;
+}
+.kf-kicker{
+  display:block;
+  font-size:10px;letter-spacing:.32em;
+  color:rgba(13,22,32,.7);
+  margin-bottom:14px;
+}
+.kf-head h2{
+  font-family:var(--crystal-serif);
+  font-weight:400;
+  font-size:clamp(30px,3.6vw,50px);
+  line-height:1.05;letter-spacing:-.03em;
+}
+.kf-counter{
+  font-family:var(--crystal-serif);
+  font-style:italic;
+  font-size:15px;
+  color:rgba(13,22,32,.5);
+  white-space:nowrap;
+}
+.kf-counter b{
+  font-weight:400;
+  font-size:28px;
+  color:var(--crystal-ink);
+}
+
+
+/* ---------- horizontal track ---------- */
+
+.kf-viewport{
+  flex:1;
+  min-height:0;
+  display:flex;align-items:center;
+  position:relative;z-index:2;
+}
+
+.kf-track{
+  display:flex;
+  gap:4vw;
+  padding:0 14vw 0 6vw;
+  will-change:transform;
+}
+
+.kf-slide{
+  --d:0;--ad:0;
+  flex:none;
+  width:80vw;
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+  align-items:center;
+  gap:5vw;
+}
+.kf-slide.is-flip .kf-media{order:2}
+
+/* glass frame around the photo */
+.kf-media{
+  position:relative;
+  width:100%;
+  max-width:min(40vw,calc((100vh - 320px) * 1.27));
+  justify-self:center;
+  padding:12px;
+  border-radius:28px;
+  background:linear-gradient(160deg,rgba(255,255,255,.38),rgba(255,255,255,.12));
+  border:1px solid rgba(255,255,255,.55);
+  box-shadow:
+    0 40px 80px -34px rgba(13,22,32,.45),
+    0 0 0 .5px rgba(13,22,32,.08),
+    inset 0 1px 0 rgba(255,255,255,.7);
+  backdrop-filter:blur(18px) saturate(140%);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);
+  transform:
+    perspective(1200px)
+    rotateY(calc(var(--d) * -14deg))
+    scale(calc(1 - var(--ad) * .1));
+  opacity:calc(1 - var(--ad) * .45);
+}
+.kf-media::after{ /* glass rim highlight */
+  content:"";position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(125deg,rgba(255,255,255,.35),transparent 28%,transparent 72%,rgba(169,227,245,.18));
+  mix-blend-mode:overlay;
+  pointer-events:none;
+}
+.kf-photo{
+  position:relative;
+  border-radius:18px;
+  overflow:hidden;
+  aspect-ratio:624/490;
+  background:#e5e8e8;
+}
+.kf-photo img{
+  width:100%;height:100%;
+  object-fit:cover;
+  display:block;
+  transform:scale(1.12) translateX(calc(var(--d) * -7%));
+}
+
+.kf-badge{
+  position:absolute;
+  left:26px;top:26px;
+  display:inline-flex;align-items:center;gap:10px;
+  padding:6px 16px 6px 6px;
+  border-radius:999px;
+  background:rgba(13,22,32,.62);
+  border:1px solid rgba(169,227,245,.35);
+  box-shadow:0 10px 24px rgba(0,0,0,.25);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  font-size:9px;letter-spacing:.2em;
+  color:var(--crystal-pearl);
+  white-space:nowrap;
+  z-index:2;
+}
+.kf-badge i{
+  display:grid;place-items:center;
+  width:28px;height:28px;border-radius:50%;
+  background:radial-gradient(circle at 32% 28%,#fff,var(--crystal-cyan) 75%);
+  color:var(--crystal-ink);
+  box-shadow:0 0 14px rgba(108,195,232,.6);
+}
+.kf-badge svg{width:15px;height:15px}
+
+/* copy */
+.kf-text{
+  max-width:430px;
+  opacity:calc(1 - var(--ad) * 1.6);
+  transform:translateX(calc(var(--d) * 90px));
+}
+.kf-num{
+  display:block;
+  font-family:var(--crystal-serif);
+  font-style:italic;
+  font-size:15px;
+  color:var(--crystal-ink);
+  opacity:.6;
+  margin-bottom:18px;
+}
+.kf-text h3{
+  font-family:var(--crystal-serif);
+  font-weight:400;
+  font-size:clamp(32px,3.4vw,52px);
+  line-height:1.04;letter-spacing:-.03em;
+}
+.kf-text p{
+  margin-top:20px;
+  font-size:14px;line-height:1.8;
+  color:rgba(13,22,32,.74);
+}
+.kf-note{
+  display:inline-flex;align-items:center;gap:10px;
+  margin-top:20px;
+  font-size:9px;letter-spacing:.2em;
+  color:var(--crystal-ink);
+}
+.kf-note::before{content:"";width:22px;height:1px;background:currentColor}
+
+
+/* ---------- bottom progress ---------- */
+
+.kf-foot{
+  display:flex;align-items:center;gap:26px;
+  padding:0 6vw 30px;
+  position:relative;z-index:3;
+  font-size:9px;letter-spacing:.2em;
+  color:rgba(13,22,32,.6);
+}
+.kf-line{flex:1;height:1px;background:rgba(13,22,32,.14);overflow:hidden}
+.kf-line span{
+  display:block;height:100%;width:100%;
+  background:linear-gradient(90deg,var(--crystal-ink),var(--crystal-blue-deep));
+  box-shadow:0 0 10px rgba(169,227,245,.9);
+  transform:scaleX(0);transform-origin:left;
+}
+.kf-current{min-width:180px;text-align:right;color:var(--crystal-ink)}
+
+
+/* ---------- keyframes ---------- */
+
+@keyframes kf-morph-a{
+  0%,100%{border-radius:58% 42% 39% 61% / 55% 38% 62% 45%}
+  33%{border-radius:40% 60% 60% 40% / 45% 60% 40% 55%}
+  66%{border-radius:62% 38% 45% 55% / 38% 52% 48% 62%}
+}
+@keyframes kf-morph-b{
+  0%,100%{border-radius:45% 55% 60% 40% / 55% 45% 55% 45%}
+  50%{border-radius:60% 40% 42% 58% / 40% 62% 38% 60%}
+}
+@keyframes kf-sheen{
+  0%{transform:translateX(-120%) rotate(12deg);opacity:0}
+  15%{opacity:1}
+  55%{opacity:1}
+  70%,100%{transform:translateX(120%) rotate(12deg);opacity:0}
+}
+
+
+/* ---------- mobile ---------- */
+
+@media(max-width:700px){
+
+  .kf-head{padding:88px 7vw 0}
+  .kf-counter{display:none}
+  .kf-head h2{font-size:30px}
+
+  .kf-track{gap:5vw;padding:0 11vw 0 7vw}
+
+  .kf-slide{
+    width:82vw;
+    grid-template-columns:1fr;
+    gap:24px;
+    align-content:center;
+  }
+  .kf-slide.is-flip .kf-media{order:0}
+
+  .kf-media{max-width:none;padding:8px;border-radius:22px}
+  .kf-photo{border-radius:15px}
+  .kf-badge{left:16px;top:16px;font-size:8px;padding:5px 12px 5px 5px;gap:8px}
+  .kf-badge i{width:24px;height:24px}
+  .kf-badge svg{width:13px;height:13px}
+
+  .kf-text{max-width:none}
+  .kf-num{margin-bottom:10px}
+  .kf-text h3{font-size:28px}
+  .kf-text p{margin-top:12px;font-size:13px;line-height:1.7}
+  .kf-note{margin-top:12px}
+
+  .kf-foot{padding:0 7vw 22px;gap:16px}
+  .kf-current{min-width:0}
+  .kf-blob{width:95vw;height:95vw}
+}
+
 </style>
 
 </head>
@@ -2534,7 +2860,8 @@ video{
   <div class="side-progress-item" data-progress-target=".crystal-story">03</div>
   <div class="side-progress-item" data-progress-target=".klip-uses">04</div>
   <div class="side-progress-item" data-progress-target=".use-cases">05</div>
-  <div class="side-progress-item" data-progress-target=".video-cta">06</div>
+  <div class="side-progress-item" data-progress-target=".klip-features">06</div>
+  <div class="side-progress-item" data-progress-target=".video-cta">07</div>
 </nav>
 
 
@@ -3119,6 +3446,112 @@ video{
 
   </article>
 
+
+</section>
+
+<!-- =====================================================
+     10 — KLIP FEATURES
+===================================================== -->
+
+<section class="klip-features" aria-labelledby="kf-title">
+
+  <div class="kf-stage">
+
+    <div class="kf-liquid" aria-hidden="true">
+      <div class="kf-blob b1"></div>
+      <div class="kf-blob b2"></div>
+      <div class="kf-blob b3"></div>
+      <div class="kf-blob b4"></div>
+      <div class="kf-glass"></div>
+    </div>
+
+    <header class="kf-head">
+      <div>
+        <span class="kf-kicker">WHAT MAKES IT GREAT</span>
+        <h2 id="kf-title">Five reasons. One klip.</h2>
+      </div>
+      <div class="kf-counter" aria-hidden="true"><b class="kf-counter-now">01</b> / 05</div>
+    </header>
+
+    <div class="kf-viewport">
+      <div class="kf-track">
+
+        <!-- 01 -->
+        <article class="kf-slide" data-label="ENVIRONMENT FRIENDLY">
+          <figure class="kf-media">
+            <div class="kf-photo"><img src="assets/feature-eco.jpg" alt="Klip N Store square glass container filled with green peas" loading="lazy"></div>
+            <span class="kf-badge"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14"/><path d="M5 19c3-4 6-7 10-9"/></svg></i>ENVIRONMENT FRIENDLY</span>
+          </figure>
+          <div class="kf-text">
+            <span class="kf-num">01</span>
+            <h3>Good for you.<br>Good for the planet.</h3>
+            <p>Glass doesn't leach chemicals or react with food, and the lids are BPA free. No more worrying about what plastic does to your food, or to the environment.</p>
+          </div>
+        </article>
+
+        <!-- 02 -->
+        <article class="kf-slide is-flip" data-label="FREEZER SAFE TO -40°C">
+          <figure class="kf-media">
+            <div class="kf-photo"><img src="assets/feature-freezer.jpg" alt="Klip N Store containers of fruit, vegetables and leftovers on fridge shelves" loading="lazy"></div>
+            <span class="kf-badge"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v18M4.2 7.5l15.6 9M19.8 7.5l-15.6 9"/><path d="M9.5 4.5L12 7l2.5-2.5M9.5 19.5L12 17l2.5 2.5"/></svg></i>FREEZER SAFE TO -40°C</span>
+          </figure>
+          <div class="kf-text">
+            <span class="kf-num">02</span>
+            <h3>Fridge and freezer safe</h3>
+            <p>Refrigerate leftovers, keep cut fruits and vegetables fresh, or freeze marinated and raw meat, all in the same glass container.</p>
+          </div>
+        </article>
+
+        <!-- 03 -->
+        <article class="kf-slide" data-label="MICROWAVE AND OVEN SAFE">
+          <figure class="kf-media">
+            <div class="kf-photo"><img src="assets/feature-microwave.jpg" alt="Hand placing a Klip N Store container of noodles into a microwave" loading="lazy"></div>
+            <span class="kf-badge"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><rect x="6" y="8" width="9" height="8" rx="1"/><path d="M18 9v.5M18 13v2"/></svg></i>MICROWAVE AND OVEN SAFE</span>
+          </figure>
+          <div class="kf-text">
+            <span class="kf-num">03</span>
+            <h3>Microwave and oven safe</h3>
+            <p>The glass can be heated up to 350°C. Reheat your meals, or bake brownies and pasta right in the container.</p>
+            <span class="kf-note">REMOVE THE LID BEFORE HEATING</span>
+          </div>
+        </article>
+
+        <!-- 04 -->
+        <article class="kf-slide is-flip" data-label="LEAKPROOF AND AIRTIGHT">
+          <figure class="kf-media">
+            <div class="kf-photo"><img src="assets/feature-leakproof.jpg" alt="Hand tilting a sealed Klip N Store container of soup without spilling" loading="lazy"></div>
+            <span class="kf-badge"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6 6.3 6 10.3a6 6 0 01-12 0C6 9.3 12 3 12 3z"/><path d="M9.5 14l1.8 1.8 3.4-3.6"/></svg></i>LEAKPROOF AND AIRTIGHT</span>
+          </figure>
+          <div class="kf-text">
+            <span class="kf-num">04</span>
+            <h3>Leak-proof, airtight lids</h3>
+            <p>The good stays in and nothing leaks out. Carry dal, gravies and soups with confidence, while the locking clips keep food fresh and tasting good.</p>
+          </div>
+        </article>
+
+        <!-- 05 -->
+        <article class="kf-slide" data-label="100% HYGIENIC">
+          <figure class="kf-media">
+            <div class="kf-photo"><img src="assets/feature-hygienic.jpg" alt="Hand lifting the removable silicone gasket from a Klip N Store lid" loading="lazy"></div>
+            <span class="kf-badge"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6 6.3 6 10.3a6 6 0 01-12 0C6 9.3 12 3 12 3z"/><path d="M12 10.5v6M9 13.5h6"/></svg></i>100% HYGIENIC</span>
+          </figure>
+          <div class="kf-text">
+            <span class="kf-num">05</span>
+            <h3>Easy to clean, inside and out</h3>
+            <p>The silicone gasket lifts out, so every part of the lid gets a proper wash. The containers are dishwasher safe too.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <div class="kf-foot" aria-hidden="true">
+      <span>SCROLL</span>
+      <div class="kf-line"><span></span></div>
+      <span class="kf-current">ENVIRONMENT FRIENDLY</span>
+    </div>
+
+  </div>
 
 </section>
 
@@ -4399,6 +4832,90 @@ if("IntersectionObserver" in window && trackedSections.length){
   window.addEventListener("resize", onScroll);
 
   setStep(0);
+  render();
+
+})();
+
+
+/* =========================================================
+   KLIP FEATURES
+========================================================= */
+
+(function(){
+
+  const section = document.querySelector(".klip-features");
+  if(!section) return;
+
+  const stage    = section.querySelector(".kf-stage");
+  const viewport = section.querySelector(".kf-viewport");
+  const track    = section.querySelector(".kf-track");
+  const slides   = Array.from(section.querySelectorAll(".kf-slide"));
+  const line     = section.querySelector(".kf-line span");
+  const current  = section.querySelector(".kf-current");
+  const counter  = section.querySelector(".kf-counter-now");
+
+  const HOLD = 0.06;   /* short pause at the start and end of the pinned scroll */
+  let travel = 0;
+
+  function clamp(v,a,b){ return Math.min(Math.max(v,a),b); }
+
+  function measure(){
+    travel = Math.max(0, track.offsetWidth - viewport.clientWidth);
+    const vh = window.innerHeight;
+    /* vertical scroll distance = horizontal travel (+ holds) so it feels 1:1 */
+    section.style.height = (vh + travel / (1 - HOLD * 2)) + "px";
+  }
+
+  let activeIndex = -1;
+  let ticking = false;
+
+  function render(){
+    ticking = false;
+
+    const liveTravel = Math.max(0, track.offsetWidth - viewport.clientWidth);
+    if(Math.abs(liveTravel - travel) > 1){ travel = liveTravel; measure(); }
+
+    const rect = section.getBoundingClientRect();
+    const distance = section.offsetHeight - window.innerHeight;
+    const raw = distance > 0 ? clamp(-rect.top / distance, 0, 1) : 0;
+    const p = clamp((raw - HOLD) / (1 - HOLD * 2), 0, 1);
+
+    track.style.transform = "translate3d(" + (-p * travel) + "px,0,0)";
+    stage.style.setProperty("--p", p.toFixed(4));
+    line.style.transform = "scaleX(" + p + ")";
+
+    /* depth per slide, based on distance from the viewport centre */
+    const vw = window.innerWidth;
+    const mid = vw / 2;
+    let best = 0, bestDist = Infinity;
+
+    slides.forEach((s,i) => {
+      const r = s.getBoundingClientRect();
+      const d = clamp((r.left + r.width / 2 - mid) / vw, -1, 1);
+      s.style.setProperty("--d", d.toFixed(3));
+      s.style.setProperty("--ad", Math.abs(d).toFixed(3));
+      if(Math.abs(d) < bestDist){ bestDist = Math.abs(d); best = i; }
+    });
+
+    if(best !== activeIndex){
+      activeIndex = best;
+      current.textContent = slides[best].dataset.label;
+      counter.textContent = String(best + 1).padStart(2,"0");
+    }
+  }
+
+  function onScroll(){
+    if(!ticking){ ticking = true; requestAnimationFrame(render); }
+  }
+
+  function onResize(){ measure(); render(); }
+
+  window.addEventListener("scroll", onScroll, { passive:true });
+  window.addEventListener("resize", onResize);
+  window.addEventListener("load", onResize);
+  if("ResizeObserver" in window) new ResizeObserver(onResize).observe(track);
+
+  measure();
   render();
 
 })();
