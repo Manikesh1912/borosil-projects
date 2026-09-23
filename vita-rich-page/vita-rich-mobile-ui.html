@@ -299,7 +299,7 @@
   /* ---------------- Final CTA ---------------- */
   .final-panel{
     height:auto;min-height:100vh;padding:130px 8vw;flex-direction:column;align-items:center;text-align:center;
-    background:radial-gradient(90% 70% at 50% 0%,rgba(233,161,60,.09),transparent 60%),#10130d;
+    background:radial-gradient(90% 70% at 50% 0%,rgba(233,161,60,.09),transparent 60%),#10130d;justify-content:center;
   }
   .final-panel .media img{opacity:.28;}
   .final__heading{font-size:clamp(2.4rem,5vw,3.6rem);margin-bottom:52px;position:relative;z-index:3;}
@@ -389,7 +389,7 @@
   .accordion-item.is-open .accordion-item__icon::after{transform:rotate(90deg) scaleY(0);}
   .accordion-item__panel{max-height:0;overflow:hidden;transition:max-height .5s var(--ease);}
   .accordion-item.is-open .accordion-item__panel{max-height:220px;}
-  .accordion-item__panel p{
+  .accordion-item__panel p, ul{
     padding:0 2px 24px 42px;color:var(--ink-dim);font-size:.92rem;line-height:1.65;font-weight:300;max-width:440px;
   }
   @media (max-width:900px){
@@ -679,10 +679,14 @@
 
 <!-- 6. FINAL CTA -->
 <section class="panel final-panel" data-panel="5">
-  <div class="media"><img src="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/vita-rich.png?v=1789633755" alt="" /></div>
+  <div class="media">
+    <video autoplay muted loop playsinline preload="auto" poster="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/vita-rich.png?v=1789633755">
+      <source src="https://cdn.shopify.com/videos/c/o/v/1be49cc939c5401aaf756c6ebb497ecc.mp4" type="video/mp4" />
+    </video>
+  </div>
   <span class="eyebrow fx">The Complete</span>
   <h2 class="final__heading fx">Juicing Experience</h2>
-  <div class="features">
+  <!-- <div class="features">
     <div class="feature fx">
       <span class="feature__icon"><svg viewBox="0 0 24 24" stroke-width="1.4"><path d="M4 14c0-6 4-10 10-10 0 6-4 10-10 10zM4 14c4 0 8 2 8 8"/></svg></span>
       <strong>100% Natural</strong>
@@ -698,7 +702,7 @@
       <strong>Easy to Clean</strong>
       <span>Hassle-free maintenance</span>
     </div>
-  </div>
+  </div> -->
   <a href="#" class="cta-btn fx">Shop Now →</a>
 </section>
 
@@ -761,41 +765,83 @@
       <div class="accordion-item is-open">
         <button type="button" class="accordion-item__head" data-accordion-toggle>
           <span class="accordion-item__num">01</span>
-          <span class="accordion-item__title">Cold-Press Technology</span>
+          <span class="accordion-item__title">About</span>
           <span class="accordion-item__icon"></span>
         </button>
         <div class="accordion-item__panel">
-          <p>Juices at low speed to minimize heat and oxidation — preserving more nutrients, enzymes, and natural flavor in every glass.</p>
+          <p>Want fresh, nutrient-packed juices every morning? Say hello to the Borosil Slow Juicer! Its low RPM technology extracts every drop of goodness, keeping your juices packed with nutrients (and flavour!). Enjoy smooth and pulp-free drinks, from beetroot juice for your health-conscious mornings to mosambi juicer for those hot afternoons. Plus, it’s so quiet that it won’t even wake up your toddler. Cleaning? Super easy! Healthy mornings are now effortless—and much tastier.</p>
         </div>
       </div>
       <div class="accordion-item">
         <button type="button" class="accordion-item__head" data-accordion-toggle>
           <span class="accordion-item__num">02</span>
-          <span class="accordion-item__title">Whisper-Quiet Motor</span>
+          <span class="accordion-item__title">Features</span>
           <span class="accordion-item__icon"></span>
         </button>
-        <div class="accordion-item__panel">
+        <!-- <div class="accordion-item__panel">
           <p>Powerful enough for the toughest greens, yet virtually silent — so mornings stay peaceful, not noisy.</p>
+        </div> -->
+        <div class="accordion-item__panel">
+          <ul><li>250W Low-Noise Motor: Powerful yet quiet for a peaceful juicing experience.</li><li>1.5L Feeder Hopper with Wide Mouth: Large capacity to fit whole fruits for faster, more efficient juicing.</li><li>90-Min Non-Stop Running Time: Perfect for large batches, juice your fruits non-stop for up to 90 minutes.</li><li>Reverse Function: Easily clears out any pulp blockages, ensuring smooth juicing every time.</li><li>Slow Juicer Speed (55 RPM): Gently extracts juice to retain more nutrients and minimize heat build-up, preserving the natural taste.</li><li>Hands-Free Operation: Sit back while the juicer does the work, delivering fresh juice without constant monitoring.</li><li>1000ml Juice Jug &amp; Pulp Collector: Comes with convenient containers for juice and pulp collection.</li><li>Overheat Protection: Keeps the motor safe with automatic shutdown if it overheats, ensuring long-lasting use.</li><li>Safety Switch for Feeder Hopper: Ensures the juicer is properly assembled for safe operation.</li><li>Easy to Use &amp; Clean: Simple assembly and easy-to-clean parts make juicing a breeze.</li></ul><ul> </ul>
         </div>
       </div>
       <div class="accordion-item">
         <button type="button" class="accordion-item__head" data-accordion-toggle>
           <span class="accordion-item__num">03</span>
-          <span class="accordion-item__title">Wide Feeding Chute</span>
+          <span class="accordion-item__title">Packaging & Sizing</span>
           <span class="accordion-item__icon"></span>
         </button>
-        <div class="accordion-item__panel">
+        <!-- <div class="accordion-item__panel">
           <p>Fits whole fruits and vegetables with minimal chopping, cutting prep time down so you juice more and prep less.</p>
+        </div> -->
+
+        <div class="accordion-item__panel">
+          <p><strong>Vita Rich Cold Press Slow Juicer</strong></p>
+          <ul>
+            <li><strong>Generic Name: </strong>Juicers</li>
+            <li><strong>Item Dimensions with Box: </strong>41.2 cm x 21.7 cm x 39.9 cm</li>
+            <li><strong>Item Weight with Box: </strong>4.1 kg</li>
+            <li><strong>Item SKU Code: </strong>BSJU25W04</li>
+            <li><strong>Country of Origin: </strong>People's Republic of China</li>
+            <li><strong>Net Quantity: </strong>‎1 N </li>
+            <li><strong>Included Components: </strong>1N Slow Juicer Unit, 2N Containers, 1N Cleaning Brush,   &amp; 1N User Manual</li>
+            <li>Borosil Limited, 1101 Crescenzo, G-Block, Bandra Kurla Complex, Bandra East, Mumbai - 400051, Maharashtra; 1-800-22-4552 &amp; 1-800-21-06520</li>
+            <li>Our Customer care Coordinator can be contacted at the above address, and :<br> -Toll Free Number: 1-800-22-4552 &amp; 1-800-21-06520 <br> -Email Address: <a href="" target="">myborosil@borosil.com</a> <br> -Whatsapp @ <a href="" title="">+917208487334</a> </li>
+            <li><strong>Warranty:</strong> 2 years on product &amp; 2 years on motor</li></ul>
+          </div>
+        </div>
+      <div class="accordion-item">
+        <button type="button" class="accordion-item__head" data-accordion-toggle>
+          <span class="accordion-item__num">04</span>
+          <span class="accordion-item__title">Usage & Care</span>
+          <span class="accordion-item__icon"></span>
+        </button>
+        <!-- <div class="accordion-item__panel">
+          <p>Detachable, dishwasher-safe parts mean cleanup takes minutes — not the chore that keeps juicers in the cupboard.</p>
+        </div> -->
+        <div class="accordion-item__panel">
+          <p>Do's:</p><ul><li>Ensure all parts are securely assembled before operating.</li><li>Cut large fruits or vegetables into smaller pieces for smoother juicing.</li><li>Use the reverse function if you experience any blockages.</li><li>Clean the filter and juicing parts after every use to prevent build-up.</li></ul><p><br></p><ul></ul><p>Don’ts:</p><ul><li>Don’t operate the juicer without the safety switch in place.</li><li>Avoid using hard pits or seeds, as they may damage the filter.</li><li>Don’t use abrasive materials to clean the parts—stick to soft brushes or cloths.</li><li>Don’t overload the hopper; allow space for optimal juicing performance.</li></ul>
         </div>
       </div>
       <div class="accordion-item">
         <button type="button" class="accordion-item__head" data-accordion-toggle>
-          <span class="accordion-item__num">04</span>
-          <span class="accordion-item__title">Easy-Clean Design</span>
+          <span class="accordion-item__num">05</span>
+          <span class="accordion-item__title">Technical Specs</span>
           <span class="accordion-item__icon"></span>
         </button>
-        <div class="accordion-item__panel">
+        <!-- <div class="accordion-item__panel">
           <p>Detachable, dishwasher-safe parts mean cleanup takes minutes — not the chore that keeps juicers in the cupboard.</p>
+        </div> -->
+        <div class="accordion-item__panel">
+          <p><strong>Vita Rich Slow Juicer</strong></p><ul>
+            <li><strong>Net Weight: </strong>3.66 kg</li>
+            <li><strong>Power: </strong>250W</li>
+            <li><strong>Motor: </strong>DC Motor</li>
+            <li><strong>RPM: </strong>~ 55 RPM</li>
+            <li><strong>Voltage:&nbsp;</strong>230V AC / 50 Hz</li>
+            <li><strong>Power Cord: </strong>Long power cord for convenience</li>
+            <li><strong>Product Dimensions: </strong>21 cm x 20 cm x 50 cm</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -816,42 +862,42 @@
     <div class="slider__track" data-track>
       <div class="card review-card" data-card>
         <span class="review-card__stars">★★★★★</span>
-        <p class="review-card__quote">"The quietest juicer I've ever owned. My mornings actually feel calm now — and the juice yield is noticeably higher than my old one."</p>
+        <p class="review-card__quote">"Tried so many brands but found this as Best home juicer for Watermelon, Mausambi, Pomgranate etc. very easy to clean & assemble."</p>
         <div class="review-card__author">
           <span class="review-card__avatar">P</span>
-          <div><span class="review-card__name">Priya M.</span><span class="review-card__meta">Verified Buyer · Mumbai</span></div>
+          <div><span class="review-card__name">Pramod</span><span class="review-card__meta">Verified Buyer</span></div>
         </div>
       </div>
       <div class="card review-card" data-card>
         <span class="review-card__stars">★★★★★</span>
-        <p class="review-card__quote">"Cleanup used to be my least favorite part of juicing. With Vita Rich, I'm done rinsing parts in under two minutes."</p>
+        <p class="review-card__quote">"I m using this juicer since March and I m well satisfied with the quality of material used , build , design , ease of use and easy cleaning. Juicer is very easy to disassemble and clean. Quality of juice is superb. Very thick and balanced. If you like drink regularly juice then go for it."</p>
         <div class="review-card__author">
-          <span class="review-card__avatar">R</span>
-          <div><span class="review-card__name">Rohit S.</span><span class="review-card__meta">Verified Buyer · Pune</span></div>
+          <span class="review-card__avatar">J</span>
+          <div><span class="review-card__name">Jitender Singh</span><span class="review-card__meta">Verified Buyer</span></div>
         </div>
       </div>
       <div class="card review-card" data-card>
         <span class="review-card__stars">★★★★★</span>
-        <p class="review-card__quote">"Beautifully built and genuinely premium. It looks as good on my counter as the juice tastes fresh in my glass."</p>
-        <div class="review-card__author">
-          <span class="review-card__avatar">A</span>
-          <div><span class="review-card__name">Ananya K.</span><span class="review-card__meta">Verified Buyer · Bengaluru</span></div>
-        </div>
-      </div>
-      <div class="card review-card" data-card>
-        <span class="review-card__stars">★★★★★</span>
-        <p class="review-card__quote">"The wide chute is a game changer — I can drop in whole apples without chopping. Saves me so much time every day."</p>
+        <p class="review-card__quote">"Awesome product, it’s worth of money"</p>
         <div class="review-card__author">
           <span class="review-card__avatar">V</span>
-          <div><span class="review-card__name">Vikram T.</span><span class="review-card__meta">Verified Buyer · Delhi</span></div>
+          <div><span class="review-card__name">Vinay Ramani</span><span class="review-card__meta">Verified Buyer</span></div>
         </div>
       </div>
       <div class="card review-card" data-card>
         <span class="review-card__stars">★★★★★</span>
-        <p class="review-card__quote">"Worth every rupee. The cold-press difference is real — juice stays fresh in the fridge for days without separating."</p>
+        <p class="review-card__quote">"This is the best juice maker. Slow speed of the motor helps in keeping the nutrient intact."</p>
+        <div class="review-card__author">
+          <span class="review-card__avatar">K</span>
+          <div><span class="review-card__name">Kirandeep S.</span><span class="review-card__meta">Verified Buyer</span></div>
+        </div>
+      </div>
+      <div class="card review-card" data-card>
+        <span class="review-card__stars">★★★★</span>
+        <p class="review-card__quote">"Such a good product. The juice comes out nicely ams it’s easy to clean. They give a cleaning brush as well. It’s value for money. And the taste is awesome. For some fruits you might have to reuse the pulp to extract more juice. And it’s quite fast."</p>
         <div class="review-card__author">
           <span class="review-card__avatar">S</span>
-          <div><span class="review-card__name">Sneha D.</span><span class="review-card__meta">Verified Buyer · Chennai</span></div>
+          <div><span class="review-card__name">Sheily</span><span class="review-card__meta">Verified Buyer · Chennai</span></div>
         </div>
       </div>
     </div>
