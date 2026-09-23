@@ -194,8 +194,9 @@
   .storage .play-cta{position:absolute;left:8vw;bottom:64px;z-index:5;}
 
   /* ---------------- Frame / product experience ---------------- */
-  .frame-panel{height:130vh;}
-  .frame-panel .media{position:sticky;top:0;height:100vh;}
+  .frame-panel{height:auto;min-height:0;}
+  .frame-panel .media{position:relative;inset:auto;aspect-ratio:750/1038;height:auto;}
+  .frame-panel .media img{position:static;object-fit:cover;}
   .frame__copy{
     position:relative;z-index:6;padding:0 8vw;max-width:380px;
   }
@@ -237,12 +238,6 @@
   }
   .scroll-indicator .line{width:1px;height:48px;background:rgba(244,241,233,.3);}
   @media (max-width:900px){
-    .frame-panel{
-      height:auto;min-height:auto;overflow:visible;
-      flex-direction:column;justify-content:flex-start;align-items:center;text-align:center;
-      padding:110px 8vw 70px;
-    }
-    .frame-panel .media{position:absolute;inset:0;height:100%;}
     .frame__copy{position:relative;padding:0;max-width:100%;margin-bottom:36px;}
     .frame__sub{margin-left:auto;margin-right:auto;}
     .frame__device{
@@ -511,14 +506,14 @@
 <section class="panel hero" data-panel="0">
   <div class="media" data-media>
     <video autoplay muted loop playsinline preload="auto" poster="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/vita-rich.png?v=1789633755">
-      <source src="https://cdn.shopify.com/videos/c/o/v/37115ebe25524c7d9ddea970cc3231f5.mp4" type="video/mp4" />
+      <source src="https://cdn.shopify.com/videos/c/o/v/36ca9415e37d479b81ffa47226fe5634.mp4" type="video/mp4" />
     </video>
     <div class="media__overlay"></div>
   </div>
   <div class="hero__content">
     <span class="eyebrow fx">The Ritual Of</span>
     <h1 class="hero__heading fx">Freshness</h1>
-    <p class="hero__sub fx">From nature's best, to your glass.<br />Pure. Fresh. Every time.</p>
+    <!-- <p class="hero__sub fx">From nature's best, to your glass.<br />Pure. Fresh. Every time.</p> -->
     <button type="button" class="play-cta fx" data-video-toggle>
       <span class="play-cta__icon is-playing">
         <svg class="icon-play" viewBox="0 0 24 24"><path d="M6 4l16 8-16 8z"/></svg>
@@ -530,11 +525,68 @@
   <div class="scrolldown"><span class="scrolldown__pill"></span> Scroll Down</div>
 </section>
 
-<!-- 2. STORAGE -->
-<section class="panel storage" data-panel="1">
+<!-- 2. RITUAL IN MOTION — pinned step scroller -->
+<section class="panel ritual-panel" data-panel="1">
+  <div class="ritual__media" data-ritual-media>
+    <div class="ritual__slide is-active" data-ritual-slide="0">
+      <video muted loop playsinline preload="auto" poster="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/vita-rich.png?v=1789633755">
+        <source src="https://cdn.shopify.com/videos/c/o/v/69e1950975f24621b67d834c55d2e71f.mp4" type="video/mp4" />
+      </video>
+      <div class="media__overlay"></div>
+    </div>
+    <div class="ritual__slide" data-ritual-slide="1">
+      <video muted loop playsinline preload="auto" poster="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/vita-rich.png?v=1789633755">
+        <source src="https://cdn.shopify.com/videos/c/o/v/4c92e21514b1456cb239a972321ed710.mp4" type="video/mp4" />
+      </video>
+      <div class="media__overlay"></div>
+    </div>
+    <div class="ritual__slide" data-ritual-slide="2">
+      <video muted loop playsinline preload="auto" poster="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/borosil-slow-juicer.webp?v=1789633756">
+        <source src="https://cdn.shopify.com/videos/c/o/v/f1498558db154993a12f250d2902664e.mp4" type="video/mp4" />
+      </video>
+      <div class="media__overlay"></div>
+    </div>
+    <div class="ritual__slide" data-ritual-slide="3">
+      <video muted loop playsinline preload="auto" poster="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/vita-rich.png?v=1789633755">
+        <source src="https://cdn.shopify.com/videos/c/o/v/9102cba64b094ceb8cf016ab1d5e78a5.mp4" type="video/mp4" />
+      </video>
+      <div class="media__overlay"></div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator"><span class="dot"></span><span class="line"></span>Scroll</div>
+
+  <div class="ritual__content">
+    <span class="eyebrow fx">The Ritual, Frame By Frame</span>
+    <h2 class="ritual__heading" data-ritual-heading>Prepare</h2>
+    <p class="ritual__sub" data-ritual-sub>Whole fruit, rinsed and ready — no peeling, no fuss.</p>
+  </div>
+
+  <div class="ritual__progress">
+    <span class="ritual__progress-track"><span class="ritual__progress-fill" data-ritual-progress></span></span>
+  </div>
+
+  <div class="ritual__steps" data-ritual-steps>
+    <button type="button" class="ritual__step is-active" data-ritual-step="0">
+      <span class="ritual__step-num">01</span><span class="ritual__step-label">Prepare</span>
+    </button>
+    <button type="button" class="ritual__step" data-ritual-step="1">
+      <span class="ritual__step-num">02</span><span class="ritual__step-label">Extract</span>
+    </button>
+    <button type="button" class="ritual__step" data-ritual-step="2">
+      <span class="ritual__step-num">03</span><span class="ritual__step-label">Pour</span>
+    </button>
+    <button type="button" class="ritual__step" data-ritual-step="3">
+      <span class="ritual__step-num">04</span><span class="ritual__step-label">Enjoy</span>
+    </button>
+  </div>
+</section>
+
+<!-- 3. STORAGE -->
+<section class="panel storage" data-panel="2">
   <div class="media" data-media>
     <video autoplay muted loop playsinline preload="auto" poster="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/borosil-slow-juicer.webp?v=1789633756">
-      <source src="https://cdn.shopify.com/videos/c/o/v/6f5751cfd8b54f19b7ea19cda7d570bf.mp4" type="video/mp4" />
+      <source src="https://cdn.shopify.com/videos/c/o/v/7fbe20d894234023a5f9c6f973cfbf8e.mp4" type="video/mp4" />
     </video>
     <div class="media__overlay"></div>
   </div>
@@ -548,23 +600,23 @@
   <div class="storage__content">
     <span class="eyebrow fx">Pure Goodness</span>
     <h2 class="storage__heading fx">Stored Fresh</h2>
-    <p class="storage__sub fx">Every drop, locked in for a healthier tomorrow.</p>
+    <!-- <p class="storage__sub fx">Every drop, locked in for a healthier tomorrow.</p> -->
   </div>
 </section>
 
-<!-- 3. PRODUCT EXPERIENCE (frame) -->
-<section class="panel frame-panel" data-panel="2">
+<!-- 4. PRODUCT EXPERIENCE (frame) -->
+<section class="panel frame-panel" data-panel="3">
   <div class="media" data-media data-parallax>
-    <img src="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/vita-rich.png?v=1789633755" alt="" />
+    <img src="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/Levitating_shot.png?v=1790142252" alt="" />
     <div class="media__overlay"></div>
   </div>
-  <div class="frame__copy">
+  <!-- <div class="frame__copy">
     <span class="eyebrow fx">Designed For</span>
     <h2 class="frame__heading fx">A Healthier<br />You</h2>
     <p class="frame__sub fx">Premium design. Everyday wellness.<br />The Borosil Juicer.</p>
     <a href="#" class="frame__link fx">— Explore Product →</a>
-  </div>
-  <div class="frame__device" data-frame-device>
+  </div> -->
+  <!-- <div class="frame__device" data-frame-device>
     <div class="frame__bezel">
       <div class="frame__screen">
         <video muted loop playsinline preload="auto" poster="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/borosil-slow-juicer.webp?v=1789633756">
@@ -573,12 +625,12 @@
         <span class="play-badge"><svg viewBox="0 0 24 24"><path d="M6 4l16 8-16 8z"/></svg></span>
       </div>
     </div>
-  </div>
+  </div> -->
   <div class="scroll-indicator"><span class="dot"></span><span class="line"></span>Scroll</div>
 </section>
 
-<!-- 4. HORIZONTAL SLIDER -->
-<section class="panel slider-panel" data-panel="3">
+<!-- 5. HORIZONTAL SLIDER -->
+<section class="panel slider-panel" data-panel="4">
   <div class="slider__head">
     <div>
       <span class="eyebrow fx">Real Ingredients. Real Goodness.</span>
@@ -590,24 +642,24 @@
     <button class="slider__arrow slider__arrow--prev" aria-label="Previous" data-arrow="-1">‹</button>
     <div class="slider__track" data-track>
       <div class="card" data-card>
-        <video muted loop playsinline preload="metadata"><source src="https://cdn.shopify.com/videos/c/o/v/d8d0b2c298274d8d80b6edbd2fba5db8.mp4" type="video/mp4" /></video>
+        <video muted loop playsinline preload="metadata"><source src="https://cdn.shopify.com/videos/c/o/v/7fbe20d894234023a5f9c6f973cfbf8e.mp4" type="video/mp4" /></video>
         <div class="card__overlay"></div>
         <span class="card__play"><svg viewBox="0 0 24 24"><path d="M6 4l16 8-16 8z"/></svg></span>
         <div class="card__label"><span class="card__title">Green Detox</span><span class="card__subtitle">Fresh. Clean. Energize.</span></div>
       </div>
       <div class="card" data-card>
-        <video muted loop playsinline preload="metadata"><source src="https://cdn.shopify.com/videos/c/o/v/0c3b0591efda445ca6f6eb3e9766ba0d.mp4" type="video/mp4" /></video>
+        <video muted loop playsinline preload="metadata"><source src="https://cdn.shopify.com/videos/c/o/v/636e821d9b804efc9973a7848d7e745c.mp4" type="video/mp4" /></video>
         <div class="card__overlay"></div>
         <span class="card__play"><svg viewBox="0 0 24 24"><path d="M6 4l16 8-16 8z"/></svg></span>
         <div class="card__label"><span class="card__title">Orange Zest</span><span class="card__subtitle">Vitamin C, Naturally.</span></div>
       </div>
       <div class="card" data-card>
-        <video muted loop playsinline preload="metadata"><source src="https://cdn.shopify.com/videos/c/o/v/37115ebe25524c7d9ddea970cc3231f5.mp4" type="video/mp4" /></video>
+        <video muted loop playsinline preload="metadata"><source src="https://cdn.shopify.com/videos/c/o/v/b1a3afa71f3c4d4b8e100c92dc8974e4.mp4" type="video/mp4" /></video>
         <div class="card__overlay"></div>
         <span class="card__play"><svg viewBox="0 0 24 24"><path d="M6 4l16 8-16 8z"/></svg></span>
         <div class="card__label"><span class="card__title">Glow Blend</span><span class="card__subtitle">Beet. Apple. Better You.</span></div>
       </div>
-      <div class="card" data-card>
+      <!-- <div class="card" data-card>
         <video muted loop playsinline preload="metadata"><source src="https://cdn.shopify.com/videos/c/o/v/034735f197c94e5db13fc43f1a604869.mp4" type="video/mp4" /></video>
         <div class="card__overlay"></div>
         <span class="card__play"><svg viewBox="0 0 24 24"><path d="M6 4l16 8-16 8z"/></svg></span>
@@ -618,15 +670,15 @@
         <div class="card__overlay"></div>
         <span class="card__play"><svg viewBox="0 0 24 24"><path d="M6 4l16 8-16 8z"/></svg></span>
         <div class="card__label"><span class="card__title">Berry Bliss</span><span class="card__subtitle">Antioxidant Rich.</span></div>
-      </div>
+      </div> -->
     </div>
     <button class="slider__arrow slider__arrow--next" aria-label="Next" data-arrow="1">›</button>
   </div>
   <div class="slider__dots" data-dots></div>
 </section>
 
-<!-- 5. FINAL CTA -->
-<section class="panel final-panel" data-panel="4">
+<!-- 6. FINAL CTA -->
+<section class="panel final-panel" data-panel="5">
   <div class="media"><img src="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/vita-rich.png?v=1789633755" alt="" /></div>
   <span class="eyebrow fx">The Complete</span>
   <h2 class="final__heading fx">Juicing Experience</h2>
@@ -650,8 +702,8 @@
   <a href="#" class="cta-btn fx">Shop Now →</a>
 </section>
 
-<!-- 6. ENGINEERED / EXPLODED VIEW -->
-<section class="panel exploded-panel" data-panel="5">
+<!-- 7. ENGINEERED / EXPLODED VIEW -->
+<section class="panel exploded-panel" data-panel="6">
   <div class="media" data-media>
     <video autoplay muted loop playsinline preload="auto" poster="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/vita-rich.png?v=1789633755">
       <source src="https://cdn.shopify.com/videos/c/o/v/1be49cc939c5401aaf756c6ebb497ecc.mp4" type="video/mp4" />
@@ -673,8 +725,8 @@
   </div>
 </section>
 
-<!-- 7. HOW IT WORKS — product demo -->
-<section class="panel demo-panel" data-panel="6">
+<!-- 8. HOW IT WORKS — product demo -->
+<section class="panel demo-panel" data-panel="7">
   <div class="media" data-media>
     <video autoplay muted loop playsinline preload="auto" poster="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/vita-rich.png?v=1789633755">
       <source src="https://cdn.shopify.com/videos/c/o/v/0c3b0591efda445ca6f6eb3e9766ba0d.mp4" type="video/mp4" />
@@ -697,7 +749,7 @@
 </section>
 
 <!-- 8. PRODUCT FEATURES — accordion -->
-<section class="panel accordion-panel" data-panel="7">
+<section class="panel accordion-panel" data-panel="8">
   <div class="accordion__visual fx">
     <img src="https://cdn.shopify.com/s/files/1/0891/8935/1733/files/vita-rich.png?v=1789633755" alt="Borosil Vita Rich Juicer" />
   </div>
@@ -750,8 +802,8 @@
   </div>
 </section>
 
-<!-- 9. CUSTOMER REVIEWS — horizontal slider -->
-<section class="panel slider-panel review-panel" data-panel="8">
+<!-- 10. CUSTOMER REVIEWS — horizontal slider -->
+<section class="panel slider-panel review-panel" data-panel="9">
   <div class="slider__head">
     <div>
       <span class="eyebrow fx">Loved By Thousands</span>
@@ -808,7 +860,7 @@
   <div class="slider__dots" data-dots></div>
 </section>
 
-<!-- 10. RITUAL IN MOTION — pinned step scroller -->
+<!-- 10. RITUAL IN MOTION — pinned step scroller
 <section class="panel ritual-panel" data-panel="9">
   <div class="ritual__media" data-ritual-media>
     <div class="ritual__slide is-active" data-ritual-slide="0">
@@ -863,7 +915,7 @@
       <span class="ritual__step-num">04</span><span class="ritual__step-label">Enjoy</span>
     </button>
   </div>
-</section>
+</section> -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -913,6 +965,13 @@
   }
 
   gsap.registerPlugin(ScrollTrigger);
+
+  /* Prevent mobile address-bar collapse/expand (which changes window.innerHeight
+     without a real layout change) from triggering spurious ScrollTrigger refreshes
+     that desync pinned-section scroll math. (normalizeScroll was tried here too,
+     but it hijacks native scroll and caused sections to get skipped when flicked
+     past back-to-back pinned panels, so it's intentionally not used.) */
+  ScrollTrigger.config({ ignoreMobileResize: true });
 
   /* ---------- Progress rail ---------- */
   var railItems = document.querySelectorAll('[data-progress] span[data-i]');
@@ -1201,6 +1260,14 @@
       end: function(){ return '+=' + ritualScrollDistance; },
       pin: true,
       scrub: 1,
+      /* Ritual sits 2nd on the page but its pin is defined last in this script.
+         The product/review card sliders below pin themselves earlier in the
+         script (initHSlider), so without a higher refreshPriority, ScrollTrigger
+         recalculates those pins' positions before it knows how much extra scroll
+         distance Ritual's pin reserves — pushing every section after Ritual
+         (Storage, Product frame) out of the sliders' calculated start position
+         and making scrolling appear to skip straight to the slider. */
+      refreshPriority: 1,
       onUpdate: function(self){
         ritualProgressFill.style.width = (self.progress * 100) + '%';
         var idx = Math.min(stepCount - 1, Math.floor(self.progress * stepCount));
@@ -1228,6 +1295,16 @@
   document.querySelectorAll('video').forEach(function(v){
     v.addEventListener('loadedmetadata', function(){ ScrollTrigger.refresh(); }, { once: true });
   });
+
+  /* Triggers created earlier in this script (Storage's reveal, the product
+     slider's pin, etc.) have their start/end pixel positions locked in at the
+     moment they're created. Since the Ritual and Review pins created later add
+     large spacers that push everything below them further down the page,
+     those earlier triggers are left pointing at stale, pre-spacer positions
+     unless everything is recalculated once after all pins exist — without
+     this, scrolling appears to jump straight from Ritual to the product
+     slider, skipping Storage and the product frame entirely. */
+  ScrollTrigger.refresh();
 })();
 </script>
 </body>
